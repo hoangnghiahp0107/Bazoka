@@ -1,4 +1,17 @@
+let userId;
+
+
 document.addEventListener("DOMContentLoaded", function () {
+    
+    const token = localStorage.getItem('localStorageToken'); 
+    
+    if (token){
+        const decodedToken = jwt_decode(token);
+        userId = decodedToken.MA_ND;
+    }
+
+   
+
     const urlParams = new URLSearchParams(window.location.search);
     const roomID = urlParams.get('roomID');
     if (roomID) {
@@ -25,6 +38,8 @@ async function getRoomID(roomID){
             room.MA_VITRI_VITRI,
             room.MA_QUOCGIA_QUOCGIum
         ))
+
+  
         renderRoomID(roomObj);
     } catch (error) {
         console.log("Lỗi từ máy chủ", error);
@@ -49,6 +64,31 @@ async function getRateID(roomID){
         console.log("Lỗi từ máy chủ", error);
     }
 }
+
+async function createReview() {
+    const inputComment = document.getElementById("reviewText").value;
+    const rateRoom = document.getElementById("ratingStars").value;
+    
+    try {
+        let formData ={
+            SO_SAO: 5,
+            BINH_LUAN: inputComment,
+            NGAY_DG: new Date(),
+            MA_KS: roomID,
+            MA_ND: userId
+        }
+
+
+        // const respond = await apiCreateReviews(formData);
+         console.log(formData)
+      
+    } catch (error) {
+        console.error(error);
+      
+    }
+}
+
+  
 
 async function getConvenient(roomID){
     try {
@@ -133,7 +173,7 @@ function renderRoomID(rooms){
                                 </section>
                                 <section class="rating">
                                     <h2>Đánh giá của bạn</h2>
-                                    <form>
+                                    <form onsubmit="createReview()">
                                         <div class="mb-3">
                                             <div id="ratingStars" class="star-rating">
                                                 <i class="far fa-star" data-rating="1"></i>
@@ -157,6 +197,7 @@ function renderRoomID(rooms){
         );
     }, "");
     document.getElementById("detailsRoom").innerHTML = html;
+    
 }
 
 function renderRateID(rates) {
