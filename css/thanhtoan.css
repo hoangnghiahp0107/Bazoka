@@ -1,0 +1,153 @@
+body {
+    background-color: #f4f7fa;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+.header {
+    background-color: #1e6bb8;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.header .timer {
+    color: rgb(62, 247, 6);
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.header .timer-icon {
+    color: #fff;
+    margin-right: 8px;
+    vertical-align: middle; /* Căn giữa biểu tượng với văn bản */
+}
+
+.payment-option {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.payment-option:hover, .payment-option.active {
+    border-color: #1e6bb8;
+    background-color: #f4f9ff;
+}
+
+.payment-option input[type="radio"] {
+    margin-right: 10px;
+}
+
+.badge {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+}
+
+.summary-box {
+    background-color: #e9f0f8;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.summary-box h5 {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.special-request {
+    background-color: #e9f0f8; /* Màu nền nhạt */
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-top: 15px; /* Khoảng cách giữa các phần tử */
+}
+
+.special-request p {
+    margin: 0;
+    font-size: 1rem; /* Kích thước chữ phù hợp */
+}
+
+.contact-details {
+    background-color: #e9f0f8;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-top: 15px;
+}
+
+.contact-details h5 {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.contact-details p {
+    margin: 0;
+    color: #333;
+}
+
+.total-price {
+    font-size: 1.6rem;
+    color: #0e2a77;
+    font-weight: bold;
+}
+
+.pay-button {
+    background-color: #0e2a77;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    border: none;
+    width: 100%;
+}
+
+.pay-button:hover {
+    background-color: #0e2a77;
+    }
+
+.discount-code {
+    margin: 20px 0;
+}
+
+.discount-code .btn-link {
+    color: #1e6bb8;
+    text-decoration: none;
+}
+
+.discount-code .btn-link:hover {
+    text-decoration: underline;
+}
+
+.disabled-option {
+    color: #999;
+    background-color: #f4f4f4;
+}
+
+.disabled-option input {
+    cursor: not-allowed;
+}
+
+.holiday-message {
+    background-color: #fff4e6; /* Màu nền nhạt để nổi bật */
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #f5c6a5;
+    text-align: center;
+    font-style: italic;
+    color: #ca741e; /* Màu chữ nổi bật */
+}
+
+.holiday-message p {
+    margin: 0;
+    font-size: 1.1rem;
+}
