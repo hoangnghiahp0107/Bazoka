@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Trang thống kê hệ thống dành cho admin quản lý hệ thống" />
+    <meta name="author" content="" />
+    <title>Thống kê hệ thống - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="../css/adminquanly.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+    <!-- Navbar -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="dashboard.html">
+            <img src="../img/logo.png" alt="Logo" style="height: 40px;"> <!-- Chỉnh sửa đường dẫn và kích thước theo yêu cầu -->
+            Quản lý hệ thống</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <!-- Tìm kiếm trên Navbar -->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Tìm kiếm..." aria-label="Tìm kiếm..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <!-- Navbar -->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Cài đặt</a></li>
+                        <li><a class="dropdown-item" href="#!">Nhật ký hoạt động</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#!">Đăng xuất</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    <!-- Sidebar -->
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Chính</div>
+                        <a class="nav-link" href="adminhethong.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Bảng điều khiển
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Quản lý</div>
+                        <a class="nav-link" href="quanlynguoidung.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                            Quản lý người dùng
+                        </a>
+                        <a class="nav-link" href="quanlyvaitro.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-tag"></i></div>
+                            Quản lý vai trò & quyền hạn
+                        </a>
+                        <a class="nav-link" href="thongkehethong.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
+                            Thống kê hệ thống
+                        </a>
+                        <a class="nav-link" href="caidathethong.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
+                            Thiết lập hệ thống
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Đăng nhập với vai trò:</div>
+                    Admin
+                </div>
+            </nav>
+        </div>
+
+        <!-- Content -->
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Thống kê hệ thống</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="adminkhachsan.html">Bảng điều khiển</a></li> 
+                        <li class="breadcrumb-item active">Quản lý hệ thống</li>
+                    </ol>
+                    
+                    <!-- Thống kê tổng quan -->
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card bg-primary text-white h-100">
+                                <div class="card-body">Tổng số người dùng</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <h2>1200</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card bg-warning text-white h-100">
+                                <div class="card-body">Tổng số khách sạn</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <h2>300</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card bg-success text-white h-100">
+                                <div class="card-body">Tổng số đánh giá</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <h2>5000</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card bg-danger text-white h-100">
+                                <div class="card-body">Tổng số đặt phòng</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <h2>1500</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biểu đồ -->
+                    <div class="row">
+                        <!-- Biểu đồ số lượng đặt phòng theo tháng -->
+                        <div class="col-lg-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-line me-1"></i>
+                                    Số lượng đặt phòng theo tháng
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="bookingChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Biểu đồ đánh giá sao -->
+                        <div class="col-lg-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fas fa-star me-1"></i>
+                                    Phân bố đánh giá sao
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="ratingChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">&copy; Hệ thống của bạn 2024</div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script>
+        const dataTable = new simpleDatatables.DataTable("#datatablesSimple", {
+            perPage: 10,
+            perPageSelect: [10, 25, 50, 100],
+            labels: {
+                placeholder: "Tìm kiếm...",
+                perPage: "{select} mục mỗi trang",
+                noRows: "Không tìm thấy kết quả nào",
+                noResults: "Không có kết quả nào cho '{search}'",
+                info: "Hiển thị {start} đến {end} của {rows} mục",
+            },
+        });
+    </script>
+    <script src="js/datatables-simple-demo.js"></script>
+    <script src="js/scripts.js"></script>
+
+    <script>
+        // Biểu đồ số lượng đặt phòng theo tháng
+        const bookingCtx = document.getElementById('bookingChart').getContext('2d');
+        const bookingChart = new Chart(bookingCtx, {
+            type: 'line',
+            data: {
+                labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                datasets: [{
+                    label: 'Số lượng đặt phòng',
+                    data: [150, 200, 180, 220, 170, 250, 300, 280, 260, 310, 290, 330],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Biểu đồ đánh giá sao
+        const ratingCtx = document.getElementById('ratingChart').getContext('2d');
+        const ratingChart = new Chart(ratingCtx, {
+            type: 'bar',
+            data: {
+                labels: ['1 Sao', '2 Sao', '3 Sao', '4 Sao', '5 Sao'],
+                datasets: [{
+                    label: 'Số lượng đánh giá',
+                    data: [50, 80, 150, 200, 520],
+                    backgroundColor: ['#ff6b6b', '#ff8e72', '#ffd93b', '#6bcf63', '#4eaceb'],
+                    borderColor: '#333',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
