@@ -86,6 +86,24 @@ async function apiGetUsers() {
   }
 }
 
+async function apiCreateReviews(formData) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "POST",
+      url: `${URL}/api/reviews/create-review`,
+      data: formData,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
 async function apiGetDiscount() {
   return await axios({
     method: "GET",
