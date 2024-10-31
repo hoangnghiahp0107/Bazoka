@@ -15,7 +15,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
         crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../css/loginAdmin.css">
+    <link rel="stylesheet" href="../css/loginUser.css">
 </head>
 
 <body id="myBody">
@@ -62,7 +62,7 @@
                 <div class="form-box login" id="login">
                     <h2>Đăng nhập</h2>
                     <form action="#" id="signInForm">
-                        <div class="input-box">
+                      <div class="input-box">
                             <span class="icon">
                                 <ion-icon name="person"></ion-icon>
                             </span>
@@ -78,8 +78,56 @@
                         </div>
                         <div class="remember-forgot">
                             <label><input type="checkbox">Lưu mật khẩu</label>
+                            <!-- <a href="#">Quên mật khẩu?</a> -->
                         </div>
-                        <button type="submit" class="btn">Đăng nhập</button>               
+                        <button type="submit" class="btn">Đăng nhập</button>
+                        <div class="login-register">
+                            <p>Chưa có tài khoản?
+                                <a href="#" class="register-link">Đăng ký</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+                <div class="form-box register" id="register">
+                    <h2>Đăng ký</h2>
+                    <form action="#" id="signUpForm">
+                        <div class="input-box">
+                            <span class="icon">
+                                <ion-icon name="person"></ion-icon>
+                            </span>
+                            <input id="tai_khoan" type="text" required>
+                            <label>Tài khoản</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon">
+                                <ion-icon name="accessibility-outline"></ion-icon>
+                            </span>
+                            <input id="ho_ten" type="text" required>
+                            <label>Họ tên</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon">
+                                <ion-icon name="lock-closed"></ion-icon>
+                            </span>
+                            <input id="mat_khau" type="password" required>
+                            <label>Mật khẩu</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon">
+                                <ion-icon name="lock-closed"></ion-icon>
+                            </span>
+                            <input id="nhap_lai_mk" type="password" required>
+                            <label>Nhập lại mật khẩu</label>
+                        </div>
+                        <div class="remember-forgot">
+                            <label><input type="checkbox" required>Tôi đồng ý với các điều khoản</label>
+                        </div>
+                        <button type="submit" class="btn">Đăng ký</button>
+                        <div class="login-register">
+                            <p>Bạn đã có tài khoản?
+                                <a href="#" class="login-link">Đăng nhập</a>
+                            </p>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -101,6 +149,7 @@
         integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../js/modernizr-2.6.2.min.js"></script>
+    <script src="../js/auth.js"></script>
     <script src="../js/loginUser.js"></script>
     <script src="../js/class.js"></script>
     <script src="../services/callApi.js"></script>

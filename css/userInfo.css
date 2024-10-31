@@ -1,0 +1,187 @@
+body {
+    background-color: #f8f9fa;
+    margin-top: 20px;
+}
+/* Header */
+.navbar{
+    background-color: #fff;
+    height: 80px;
+    margin: 10px;
+    border-radius: 16px;
+    padding: 0.5rem;
+}
+
+select{
+    width: 125px;
+    background: none;
+    height: 35px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    font-size: 15px;
+    margin: 10px 15px 5px 0px;
+}
+
+#all_gender{
+    width: 110px;
+    margin: 0px 20px 0px 0px;
+    border: 1px solid #aaa;
+    padding: 10px 0px 0px 10px;
+    border-radius: 5px;
+}
+
+.navbar-brand{
+    font-weight: 500;
+    color: #009970;
+    font-size: 24px;
+    transition: 0.3s color;
+}
+
+.login-button, .register-button{
+    background-color: #009970;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: 0.3s #009980;
+}
+
+.login-button:hover{
+    background-color: #00b383;
+}
+
+.register-button{
+    background-color: black;
+    color: white;
+}
+
+.register-button:hover{
+    background-color: #000000c9;
+    color: white;
+}
+
+
+.navbar-toggler{
+    border: none;
+    font-size: 1.25rem;
+}
+
+.navbar-toggler:focus, .btn-close:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.nav-link {
+    color: #666777;
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-link:hover, .nav-link.active{
+    color: #000;
+}
+.ui-w-80 {
+    width : 80px !important;
+    height: auto;
+}
+
+.btn-default {
+    border-color: rgba(24, 28, 33, 0.1);
+    background  : rgba(0, 0, 0, 0);
+    color       : #4E5155;
+}
+
+label.btn {
+    margin-bottom: 0;
+}
+
+.btn-outline-primary {
+    border-color: #26B4FF;
+    background  : transparent;
+    color       : #26B4FF;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.text-light {
+    color: #babbbc !important;
+}
+
+.btn-facebook {
+    border-color: rgba(0, 0, 0, 0);
+    background  : #3B5998;
+    color       : #fff;
+}
+
+.btn-instagram {
+    border-color: rgba(0, 0, 0, 0);
+    background  : #000;
+    color       : #fff;
+}
+
+.card {
+    background-clip: padding-box;
+    box-shadow     : 0 1px 4px rgba(24, 28, 33, 0.012);
+}
+
+.row-bordered {
+    overflow: hidden;
+}
+
+.account-settings-fileinput {
+    position  : absolute;
+    visibility: hidden;
+    width     : 1px;
+    height    : 1px;
+    opacity   : 0;
+}
+
+.account-settings-links .list-group-item.active {
+    font-weight: bold !important;
+}
+
+html:not(.dark-style) .account-settings-links .list-group-item.active {
+    background: transparent !important;
+}
+
+.account-settings-multiselect~.select2-container {
+    width: 100% !important;
+}
+
+.light-style .account-settings-links .list-group-item {
+    padding     : 0.85rem 1.5rem;
+    border-color: rgba(24, 28, 33, 0.03) !important;
+}
+
+.light-style .account-settings-links .list-group-item.active {
+    color: #4e5155 !important;
+}
+
+.material-style .account-settings-links .list-group-item {
+    padding     : 0.85rem 1.5rem;
+    border-color: rgba(24, 28, 33, 0.03) !important;
+}
+
+.material-style .account-settings-links .list-group-item.active {
+    color: #4e5155 !important;
+}
+
+.dark-style .account-settings-links .list-group-item {
+    padding     : 0.85rem 1.5rem;
+    border-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+.dark-style .account-settings-links .list-group-item.active {
+    color: #fff !important;
+}
+
+.light-style .account-settings-links .list-group-item.active {
+    color: #4E5155 !important;
+}
+
+.light-style .account-settings-links .list-group-item {
+    padding     : 0.85rem 1.5rem;
+    border-color: rgba(24, 28, 33, 0.03) !important;
+}

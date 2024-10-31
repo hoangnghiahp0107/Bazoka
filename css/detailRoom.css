@@ -1,5 +1,14 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
 
+:root {
+    --primary-color: #00b383;
+}
+
+.img-card{
+    height: 600px;
+    max-height: 100%;
+}
+
 body {
     background-color: #f8f9fa;
 }
@@ -51,6 +60,9 @@ body {
 
     .price {
         margin-bottom: 1rem;
+    }
+    .img-card{
+        height: 300px;
     }
 }
 
@@ -110,3 +122,52 @@ body {
     }
 }
 
+.room-item {
+    transition: transform 0.3s ease;
+}
+
+.room-item:hover {
+    transform: translateY(-5px);
+}
+
+.card {
+    height: 100%;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+@media (min-width: 768px) {
+    .room-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1rem;
+    }
+}
+
+.btn:focus, .card:focus-within {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+.card {
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #009e74;
+    border-color: #009e74;
+}

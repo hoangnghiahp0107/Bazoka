@@ -17,15 +17,21 @@ class TINHTHANH{
 }
 
 class KHACHSAN{
-    constructor(MA_KS, TEN_KS, MO_TA, HINHANH, MA_VITRI, MA_VITRI_VITRI, MA_TINHTHANH_TINHTHANH, MA_QUOCGIA_QUOCGIum){
+    constructor(MA_KS, TEN_KS, MO_TA, HINHANH, SOSAO, TRANGTHAI_KS, QRTHANHTOAN, MA_VITRI, YEU_CAU_COC, TI_LE_COC, MA_VITRI_VITRI, MA_TINHTHANH_TINHTHANH, MA_QUOCGIA_QUOCGIum, PHONGs){
         this.MA_KS = MA_KS;
         this.TEN_KS = TEN_KS;
         this.MO_TA = MO_TA;
         this.HINHANH = HINHANH;
+        this.SOSAO = SOSAO;
+        this.TRANGTHAI_KS = TRANGTHAI_KS;
+        this.QRTHANHTOAN = QRTHANHTOAN;
         this.MA_VITRI = MA_VITRI;
+        this.YEU_CAU_COC = YEU_CAU_COC;
+        this.TI_LE_COC = TI_LE_COC;
         this.MA_VITRI_VITRI = MA_VITRI_VITRI;
         this.MA_TINHTHANH_TINHTHANH = MA_TINHTHANH_TINHTHANH;
         this.MA_QUOCGIA_QUOCGIum = MA_QUOCGIA_QUOCGIum;
+        this.PHONGs = PHONGs;
     }
 }
 
@@ -75,7 +81,7 @@ class KHACHSAN_TIENNGHI{
 }
 
 class PHONG{
-    constructor(MA_PHONG, TENPHONG, MOTA, GIATIEN, HINHANH, TRANGTHAIPHG, MA_KS, MALOAIPHG, MA_KM){
+    constructor(MA_PHONG, TENPHONG, MOTA, GIATIEN, HINHANH, TRANGTHAIPHG, MA_KS, MALOAIPHG, MA_KM, MA_LOAIPHG_LOAIPHONG){
         this.MA_PHONG = MA_PHONG;
         this.TENPHONG = TENPHONG;
         this.MOTA = MOTA;
@@ -85,5 +91,34 @@ class PHONG{
         this.MA_KS = MA_KS;
         this.MALOAIPHG = MALOAIPHG;
         this.MA_KM = MA_KM;
+        this.MA_LOAIPHG_LOAIPHONG = MA_LOAIPHG_LOAIPHONG;
+    }
+}
+
+class LOAIPHONG{
+    constructor( MA_LOAIPHG,TENLOAIPHG, SLPHONG, PHONG, TRANGTHAI, GIADAGIAM){
+        this.MA_LOAIPHG = MA_LOAIPHG;
+        this.TENLOAIPHG = TENLOAIPHG;
+        this.SLPHONG = SLPHONG;
+        this.PHONG = PHONG;
+        this.TRANGTHAI = TRANGTHAI;
+        this.GIADAGIAM = GIADAGIAM;
+    }
+}
+
+class PHIEUDATPHG{
+    constructor(MA_DP, NGAYDEN, NGAYDI, SLKHACH, TRANGTHAI, NGAYDATPHG, THANHTIEN, MA_MGG, MA_ND, MA_PHONG, ORDERCODE, MA_PHONG_PHONG){
+        this.MA_DP = MA_DP;
+        this.NGAYDEN = NGAYDEN;
+        this.NGAYDI = NGAYDI;
+        this.SLKHACH = SLKHACH;
+        this.TRANGTHAI = TRANGTHAI; 
+        this.NGAYDATPHG = NGAYDATPHG; 
+        this.THANHTIEN = THANHTIEN;
+        this.MA_MGG = MA_MGG;
+        this.MA_ND = MA_ND;
+        this.MA_PHONG = MA_PHONG;
+        this.ORDERCODE = ORDERCODE;
+        this.MA_PHONG_PHONG = MA_PHONG_PHONG;
     }
 }

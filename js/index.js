@@ -51,12 +51,20 @@ async function getProvince() {
 
 function renderCountry(countrys) {
     const html = countrys.reduce((result, country) => {
+        const numberOfGuests = document.getElementById('guests').value;
+        const numberOfRooms = document.getElementById('rooms').value;
+        const checkIn = document.getElementById('arrival').value;
+        const checkOut = document.getElementById('departure').value; 
+        localStorage.setItem('numberOfGuests', numberOfGuests);
+        localStorage.setItem('numberOfRooms', numberOfRooms);
+        localStorage.setItem('checkIn', checkIn);
+        localStorage.setItem('checkOut', checkOut);
         const duongDanHinh = country.HINHANH;
         return (
             result +
             ` 
                 <div class="col">
-                    <a href="/layouts/room.html?countryID=${country.MA_QUOCGIA}" data-new-id="${country.MA_QUOCGIA}">
+                    <a href="/layouts/room.html?name=${encodeURIComponent(country.TEN_QUOCGIA)}&numberOfGuests=${encodeURIComponent(numberOfGuests)}&numberOfRooms=${encodeURIComponent(numberOfRooms)}&checkIn=${encodeURIComponent(checkIn)}&checkOut=${encodeURIComponent(checkOut)}" class="country-link" data-name="${country.TEN_QUOCGIA}">
                         <div class="card text-white">
                         <img src="/img/${duongDanHinh}" loading="lazy" class="card-img" alt="...">
                         <div class="card-img-overlay">
@@ -70,16 +78,34 @@ function renderCountry(countrys) {
         );
     }, "");
     document.getElementById("country").innerHTML = html;
+    document.querySelectorAll('.country-link').forEach(link => {
+        link.addEventListener('click', (event) => {
+            // Lưu trữ thông tin vào localStorage
+            localStorage.setItem('name', event.currentTarget.dataset.name);        
+            localStorage.setItem('numberOfGuests', numberOfGuests);
+            localStorage.setItem('numberOfRooms', numberOfRooms);
+            localStorage.setItem('checkIn', checkIn);
+            localStorage.setItem('checkOut', checkOut);    
+        });
+    });
 }
 
 function renderProvince(provinces) {
     const html = provinces.reduce((result, province) => {
+        const numberOfGuests = document.getElementById('guests').value;
+        const numberOfRooms = document.getElementById('rooms').value;
+        const checkIn = document.getElementById('arrival').value;
+        const checkOut = document.getElementById('departure').value; 
+        localStorage.setItem('numberOfGuests', numberOfGuests);
+        localStorage.setItem('numberOfRooms', numberOfRooms);
+        localStorage.setItem('checkIn', checkIn);
+        localStorage.setItem('checkOut', checkOut);
         const duongDanHinh = province.HINHANH;
         return (
             result +
             ` 
                 <div class="col">
-                    <a href="/layouts/room.html?localID=${province.MA_TINHTHANH}" data-new-id="${province.MA_TINHTHANH}">
+                    <a href="/layouts/room.html?name=${encodeURIComponent(province.TEN_TINHTHANH)}&numberOfGuests=${encodeURIComponent(numberOfGuests)}&numberOfRooms=${encodeURIComponent(numberOfRooms)}&checkIn=${encodeURIComponent(checkIn)}&checkOut=${encodeURIComponent(checkOut)}" class="province-link" data-name="${province.TEN_TINHTHANH}">
                         <div class="card text-white">
                             <img src="/img/${duongDanHinh}" loading="lazy" class="card-province object-fit-cover" alt="...">
                             <div class="card-img-overlay d-flex justify-content-end align-items-lg-start flex-column">
@@ -91,6 +117,13 @@ function renderProvince(provinces) {
                   </div>
           `
         );
+        
     }, "");
     document.getElementById("province").innerHTML = html;
+    document.querySelectorAll('.province-link').forEach(link => {
+        link.addEventListener('click', (event) => {
+            // Lưu trữ thông tin vào localStorage
+            localStorage.setItem('name', event.currentTarget.dataset.name);
+        });
+    });
 }

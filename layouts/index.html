@@ -25,53 +25,55 @@
     <body>
         <header>
             <nav id="navbar" class="navbar navbar-expand-lg fixed-top">
-                <div class="container">
-                  <a class="navbar-brand me-auto" href="index.html"><img src="/img/logo.png" alt="" width="80" height="70">Bazoka</a>         
-                  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                    <div class="offcanvas-header">
-                      <h5 class="offcanvas-title" id="offcanvasNavbarLabel"><img src="/img/logo.png" alt="" width="80" height="60">Bazoka</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        <li class="nav-item">
-                          <a class="nav-link mx-lg-2 active" aria-current="page" href="#">Trang chủ</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link mx-lg-2" href="#">Liên hệ dịch vụ khách hàng</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                          <a class="nav-link mx-lg-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Hỗ trợ
-                          </a>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Trợ giúp</a></li>
-                            <li><a class="dropdown-item" href="#">Liên hệ chúng tôi</a></li>
-                          </ul>
-                        </li>
-                        <li id="info-user" class="nav-item dropdown">
-                          <a class="nav-link mx-lg-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="/img/germany.jpg" alt="" width="25" height="25" style="border-radius: 50px;">
-                            Hoàng Nghĩa
-                          </a>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2"></i>Chỉnh sửa hồ sơ</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-hotel me-2"></i>Đặt chỗ của tôi</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-money-bill me-2"></i>Danh sách giao dịch</a></li>
-                            <li><a id="logout-link" class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>Đăng xuất</a></li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </div>
+              <div class="container">
+                <a class="navbar-brand me-auto" href="index.html"><img src="/img/logo.png" alt="" width="80" height="70">Bazoka</a>         
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                  <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel"><img src="/img/logo.png" alt="" width="80" height="60">Bazoka</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                   </div>
-                  <a id="login-button" class="login-button me-2" href="#">Đăng nhập</a>
-                  <a id="register-button" class="register-button" href="#">Đăng ký</a>
-                  <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
+                  <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                      <li class="nav-item">
+                        <a class="nav-link mx-lg-2 active" aria-current="page" href="#">Trang chủ</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link mx-lg-2" href="#">Liên hệ dịch vụ khách hàng</a>
+                      </li>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link mx-lg-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Hỗ trợ
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Trợ giúp</a></li>
+                          <li><a class="dropdown-item" href="#">Liên hệ chúng tôi</a></li>
+                        </ul>
+                      </li>
+                      <li id="info-user" class="nav-item dropdown" style="display: none;">
+                          <a class="nav-link mx-lg-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img id="avarta" src="/img/germany.jpg" alt="" width="25" height="25" style="border-radius: 50px;">
+                            <span id="userName"></span>
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="userInfo.html"><i class="fa-solid fa-user me-2 icon-comment"></i>Chỉnh sửa hồ sơ</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-hotel me-2 icon-comment"></i>Đặt chỗ của tôi</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-money-bill me-2 icon-comment"></i>Danh sách giao dịch</a></li>
+                            <li><a id="logout-link" class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket me-2 icon-comment"></i>Đăng xuất</a></li>
+                          </ul>
+                      </li>
+                      <li class="nav-item mt-2">
+                          <a id="loginButton" class="mx-lg-2 login-button" href="loginUser.html">Đăng nhập</a>
+                          <a id="registerButton" class="mx-lg-2 login-button register-button" href="loginUser.html">Đăng ký</a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+                <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              </div>
             </nav>    
-            <section class="bg-section">
+            <section class="bg-section pt-5">
                 <div class="container d-flex align-items-center justify-content-center fs-1 text-white flex-column">
                     <h1>Từ Đông Nam Á Đến Thế Giới, Trong Tầm Tay Bạn</h1>
                     <ul class="nav justify-content-start">
@@ -85,7 +87,7 @@
                     <div class="search-box">
                       <div class="row-search">
                         <img class="me-2" src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/3/3209d15f1ca7489d70345b1c6ef5832e.svg" alt="">
-                        <input type="text" id="input-box" placeholder="Thành phố, khách sạn, điểm đến" autocomplete="off">
+                        <input type="text" id="input-box" placeholder="Thành phố, khách sạn, điểm đến" autocomplete="off" required>
                       </div>
                       <div class="result-box text-black"></div>
                     </div>
@@ -108,7 +110,7 @@
                     </div>
                     </div>
                     <div style="width: 600px; max-width: 100%;">
-                      <button class="btn btn-primary w-100">Tìm kiếm</button>
+                      <button class="btn btn-primary w-100" id="search-button">Tìm kiếm</button>
                     </div>
             </section>  
         </header>
@@ -331,7 +333,7 @@
           document.addEventListener('scroll', function() {
           var backToTopButton = document.querySelector('.cd-top');
           if (window.scrollY > 100) { // Thay đổi 100 thành giá trị bạn muốn
-              backToTopButton.classList.add('cd-top--is-visible');
+              backToTopButton.classList.add(  'cd-top--is-visible');
           } else {
               backToTopButton.classList.remove('cd-top--is-visible');
           }
@@ -349,10 +351,37 @@
         // Gán giá trị cho các input date
         document.getElementById('arrival').value = today;
         document.getElementById('departure').value = tomorrowDate;
+
+        // Thiết lập thuộc tính min cho các input date
+        document.getElementById('arrival').setAttribute('min', today);
+        document.getElementById('departure').setAttribute('min', tomorrowDate);
+      </script>
+      <script>
+        document.getElementById('search-button').addEventListener('click', function() {
+            const name = document.getElementById('input-box').value;
+            const numberOfGuests = document.getElementById('guests').value;
+            const numberOfRooms = document.getElementById('rooms').value;
+            const checkIn = document.getElementById('arrival').value; 
+            const checkOut = document.getElementById('departure').value; 
+            localStorage.setItem('name', name);
+            localStorage.setItem('numberOfGuests', numberOfGuests);
+            localStorage.setItem('numberOfRooms', numberOfRooms);
+            localStorage.setItem('checkIn', checkIn);
+            localStorage.setItem('checkOut', checkOut);
+            if (!name) {
+                event.preventDefault(); // Ngăn không cho gửi biểu mẫu
+                alert('Vui lòng nhập nơi bạn muốn!');
+                return; // Dừng thực hiện hàm nếu không có dữ liệu
+            }
+            const newUrl = `/layouts/room.html?name=${encodeURIComponent(name)}&numberOfGuests=${encodeURIComponent(numberOfGuests)}&numberOfRooms=${encodeURIComponent(numberOfRooms)}&checkIn=${encodeURIComponent(checkIn)}&checkOut=${encodeURIComponent(checkOut)}`;
+            
+            window.location.href = newUrl; // Chuyển hướng đến URL mới
+        });
       </script>
       <script src="/js/modernizr-2.6.2.min.js"></script>
       <script src="/js/class.js"></script>
       <script src="/services/callApi.js"></script>
+      <script src="/js/succesLogin.js"></script>
       <script src="/js/index.js"></script>
     </body>
 </html>

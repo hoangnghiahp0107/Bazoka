@@ -1,0 +1,54 @@
+:root {
+    --primary-color: #00b383;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
+.discount-card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.discount-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.copy-btn {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .card-img-top {
+        height: 150px;
+    }
+}
+
+.card-title {
+    color: #00b383;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #009e74;
+    border-color: #009e74;
+}

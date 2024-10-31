@@ -50,11 +50,25 @@
                             <li><a class="dropdown-item" href="#">Liên hệ chúng tôi</a></li>
                           </ul>
                         </li>
+                        <li id="info-user" class="nav-item dropdown" style="display: none;">
+                            <a class="nav-link mx-lg-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <img id="avarta" src="/img/germany.jpg" alt="" width="25" height="25" style="border-radius: 50px;">
+                              <span id="userName"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2 icon-comment"></i>Chỉnh sửa hồ sơ</a></li>
+                              <li><a class="dropdown-item" href="#"><i class="fa-solid fa-hotel me-2 icon-comment"></i>Đặt chỗ của tôi</a></li>
+                              <li><a class="dropdown-item" href="#"><i class="fa-solid fa-money-bill me-2 icon-comment"></i>Danh sách giao dịch</a></li>
+                              <li><a id="logout-link" class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket me-2 icon-comment"></i>Đăng xuất</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item mt-2">
+                            <a id="loginButton" class="mx-lg-2 login-button" href="loginUser.html">Đăng nhập</a>
+                            <a id="registerButton" class="mx-lg-2 login-button register-button" href="loginUser.html">Đăng ký</a>
+                        </li>
                       </ul>
                     </div>
                   </div>
-                  <a class="login-button me-2" href="#">Đăng nhập</a>
-                  <a class="register-button" href="#">Đăng ký</a>
                   <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
@@ -63,6 +77,60 @@
         </header>
    
         <main class="mt-3">
+            <div class="container mt-5">
+                <form id="searchForm" class="search-bar p-3 rounded-3 shadow">
+                    <div class="row g-0">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group position-relative">
+                                <label for="location" class="visually-hidden">Địa điểm</label>
+                                <input type="text" class="form-control border-0 rounded-0" id="location" placeholder="Địa điểm" aria-label="Chọn địa điểm" required>
+                                <i class="bi bi-geo-alt position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group position-relative">
+                                <label for="checkIn" class="visually-hidden">Ngày nhận phòng</label>
+                                <input type="date" class="form-control border-0 rounded-0" id="checkIn" required aria-label="Chọn ngày nhận phòng">
+                                <i class="bi bi-calendar position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="form-group position-relative">
+                                <label for="checkOut" class="visually-hidden">Ngày trả phòng</label>
+                                <input type="date" class="form-control border-0 rounded-0" id="checkOut" required aria-label="Chọn ngày trả phòng">
+                                <i class="bi bi-calendar position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-6">
+                            <div class="search-field" id="guests-rooms-field">
+                                <label for="guests-rooms" class="form-label visually-hidden">Khách và Phòng</label>
+                                <input type="text" class="form-control rounded-0 border-0" id="guests-rooms" placeholder="Khách và Phòng" readonly>
+                            </div>
+                            <div class="dropdown-menu p-3" id="guests-rooms-dropdown">
+                                <div class="mb-3">
+                                    <label for="guests" class="form-label">Khách</label>
+                                    <div class="input-group">
+                                        <button type="button" class="btn btn-outline-secondary" id="decrease-guests">-</button>
+                                        <input type="number" class="form-control text-center" id="guests" value="1" min="1" max="10">
+                                        <button type="button" class="btn btn-outline-secondary" id="increase-guests">+</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="rooms" class="form-label">Phòng</label>
+                                    <div class="input-group">
+                                        <button type="button" class="btn btn-outline-secondary" id="decrease-rooms">-</button>
+                                        <input type="number" class="form-control text-center" id="rooms" value="1" min="1" max="5">
+                                        <button type="button" class="btn btn-outline-secondary" id="increase-rooms">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-12">
+                            <button type="submit" class="btn btn-primary w-100 h-100 rounded-0"><i class="bi bi-search"></i> Tìm</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-3">
@@ -73,32 +141,32 @@
                                     <i class="fa-solid fa-chevron-down"></i>
                                 </span>
                             </div>
-                            <div class="list-items">
+                            <div class="list-items star-item" data-stars="1">
                                 <li class="item">
                                     <span class="checkbox">
                                         <i class="fa-solid fa-check check-icon"></i>
                                     </span>
                                     <span class="item-text">1 sao</span>
                                 </li>
-                                <li class="item">
+                                <li class="item star-item" data-stars="2">
                                     <span class="checkbox">
                                         <i class="fa-solid fa-check check-icon"></i>
                                     </span>
                                     <span class="item-text">2 sao</span>
                                 </li>
-                                <li class="item">
+                                <li class="item star-item" data-stars="3">
                                     <span class="checkbox">
                                         <i class="fa-solid fa-check check-icon"></i>
                                     </span>
                                     <span class="item-text">3 sao</span>
                                 </li>
-                                <li class="item">
+                                <li class="item star-item" data-stars="4">
                                     <span class="checkbox">
                                         <i class="fa-solid fa-check check-icon"></i>
                                     </span>
                                     <span class="item-text">4 sao</span>
                                 </li>
-                                <li class="item">
+                                <li class="item star-item" data-stars="5">
                                     <span class="checkbox">
                                         <i class="fa-solid fa-check check-icon"></i>
                                     </span>
@@ -290,12 +358,75 @@
             priceDisplay.textContent = formatPrice(this.value);
         });
       </script>
+      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              flatpickr("#dates", {
+                  mode: "range",
+                  minDate: "today",
+                  dateFormat: "Y-m-d",
+                  ariaDateFormat: "F j, Y",
+              });
+              
+              const guestsRoomsField = document.getElementById('guests-rooms-field');
+              const guestsRoomsDropdown = document.getElementById('guests-rooms-dropdown');
+              const guestsInput = document.getElementById('guests');
+              const roomsInput = document.getElementById('rooms');
+              
+              if (localStorage.getItem('numberOfGuests')) {
+                guestsInput.value = localStorage.getItem('numberOfGuests');
+              }
+              if (localStorage.getItem('numberOfRooms')) {
+                roomsInput.value = localStorage.getItem('numberOfRooms');
+              }
+              guestsRoomsField.addEventListener('click', function() {
+                  guestsRoomsDropdown.classList.toggle('show');
+              });
+  
+              document.getElementById('decrease-guests').addEventListener('click', () => updateValue(guestsInput, -1));
+              document.getElementById('increase-guests').addEventListener('click', () => updateValue(guestsInput, 1));
+              document.getElementById('decrease-rooms').addEventListener('click', () => updateValue(roomsInput, -1));
+              document.getElementById('increase-rooms').addEventListener('click', () => updateValue(roomsInput, 1));
+  
+              function updateValue(input, change) {
+                  let value = parseInt(input.value) + change;
+                  value = Math.max(input.min, Math.min(input.max, value));
+                  input.value = value;
+                  updateGuestsRoomsField();
+              }
+  
+              function updateGuestsRoomsField() {
+                  document.getElementById('guests-rooms').value = `${guestsInput.value} Khách, ${roomsInput.value} Phòng`;
+              }
+  
+              updateGuestsRoomsField();
+  
+          });
+      </script>
+      <script>
+        // Lấy ngày hôm nay
+        const today = new Date().toISOString().split('T')[0];
+        
+        // Lấy ngày mai
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const tomorrowDate = tomorrow.toISOString().split('T')[0];
+    
+        // Gán giá trị cho các input date
+        document.getElementById('checkIn').value = today;
+        document.getElementById('checkOut').value = tomorrowDate;
+        
+        // Thiết lập thuộc tính min cho các input date
+        document.getElementById('checkIn').setAttribute('min', today);
+        document.getElementById('checkOut').setAttribute('min', tomorrowDate);
+      </script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
       integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script src="/js/modernizr-2.6.2.min.js"></script>
       <script src="/js/class.js"></script>
       <script src="/services/callApi.js"></script>
+      <script src="/js/succesLogin.js"></script>
       <script src="/js/room.js"></script>
     </body>
 </html>
