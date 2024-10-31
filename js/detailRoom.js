@@ -1,13 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     const roomID = urlParams.get('roomID');
+    const checkIn = urlParams.get('checkIn');
+    const checkOut = urlParams.get('checkOut');
     if (roomID) {
         getRoomID(roomID);
         getRateID(roomID);
         getConvenient(roomID);
-        getDataRoom(roomID);
     }
-})
+    if( roomID && checkIn && checkOut){
+        getDataRoomDay(roomID, checkOut, checkIn)
+    }
+    localStorage.setItem('MA_KS', roomID);
+
+});
+
 
 function getElement(selector) {
     return document.querySelector(selector);
@@ -22,9 +29,16 @@ async function getRoomID(roomID){
             room.TEN_KS,
             room.MO_TA,
             room.HINHANH,
+            room.SOSAO,
+            room.TRANGTHAI_KS,
+            room.QRTHANHTOAN,
             room.MA_VITRI,
+            room.YEU_CAU_COC,
+            room.TI_LE_COC,
             room.MA_VITRI_VITRI,
-            room.MA_QUOCGIA_QUOCGIum
+            room.MA_TINHTHANH_TINHTHANH,
+            room.MA_QUOCGIA_QUOCGIum,
+            room.PHONGs
         ))
         renderRoomID(roomObj);
     } catch (error) {
@@ -65,22 +79,18 @@ async function getConvenient(roomID){
     }
 }
 
-async function getDataRoom(roomID){
+async function getDataRoomDay(roomID, NGAYDEN, NGAYDI){
     try {
-        const response = await apiGetDataRoom(roomID);
+        const response = await apiGetDataRoomDay(roomID, NGAYDEN, NGAYDI);
         const rooms = response.data;
-        const roomObj = rooms.map((room) => new PHONG(
-            room.MA_PHONG,
-            room.TENPHONG,
-            room.MOTA,
-            room.GIATIEN,
-            room.HINHANH,
-            room.TRANGTHAIPHG,
-            room.MA_KS,
-            room.MA_KM,
-            room.MA_LOAIPHG
+        const roomObj = rooms.map((room) => new LOAIPHONG(
+            room.MA_LOAIPHG,
+            room.TENLOAIPHG,
+            room.SLPHONG,
+            room.PHONG,
+            room.TRANGTHAI,
+            room.GIADAGIAM
         )) 
-        console.log(roomObj)
         renderDataRoom(roomObj);
     } catch (error) {
         console.log("Lỗi từ máy chủ", error);
@@ -94,9 +104,9 @@ function renderRoomID(rooms){
             result +
             `
                 <div class="container p-0">
-                    <h2 class="mt-3"><b>${room.TEN_KS}</b></h2>
+                    <h2 class="mt-3"><b id="name-hotel">${room.TEN_KS}</b></h2>
                     <p><i class="fas fa-location-dot me-2" style="color: #00b383;"></i>${room.MA_VITRI_VITRI.TENVITRI}, ${room.MA_VITRI_VITRI.MA_TINHTHANH_TINHTHANH.TEN_TINHTHANH}, ${room.MA_VITRI_VITRI.MA_TINHTHANH_TINHTHANH.MA_QUOCGIA_QUOCGIum.TEN_QUOCGIA}</p>
-                    <img src="/img/${duongDanHinh}" alt="..." class="img-fluid w-100">
+                    <img src="/img/${duongDanHinh}" alt="..." class="img-fluid w-100 img-card">
                     <div class="container mt-5">
                         <div class="row">
                             <div class="col-lg-8">
@@ -137,7 +147,7 @@ function renderRoomID(rooms){
                                             <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#roomAccordion">
                                                 <div class="accordion-body">
                                                     <p>Experience ultimate luxury in our spacious Executive Suite, featuring a separate living area and panoramic ocean views.</p>
-                                                    <p><strong>Price:</strong> $550 per night</p>
+                                                    <p id="priceRoom"><strong>Price:</strong> $550 per night</p>
                                                     <p><strong>Availability:</strong> <span class="badge bg-warning text-dark">Limited</span></p>
                                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookingModal">Đặt ngay</button>
                                                 </div>
@@ -209,31 +219,61 @@ function renderRateID(rates) {
     document.getElementById("rates").innerHTML = html;
 }
 
-function renderDataRoom(rooms){
-    const html = rooms.reduce((result, room) =>{
+function renderDataRoom(rooms) {
+    const html = rooms.reduce((result, room) => {
+        const duongDanHinh = room.PHONG.HINHANH;
+        const formattedGiaGoc = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(room.PHONG.GIATIEN);
+        const formattedGiaDaGiam = room.GIADAGIAM !== null ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(room.GIADAGIAM) : null;
+
+        // Chọn giá để hiển thị
+        const giaHienThi = formattedGiaDaGiam || formattedGiaGoc;
+
         return (
             result +
             `
-                <div class="accordion-item">
-                    <h3 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            ${room.TENPHONG}
-                        </button>
-                    </h3>
-                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#roomAccordion">
-                        <div class="accordion-body">
-                            <p>${room.MOTA}</p>
-                            <p><strong>Giá:</strong> ${room.GIATIEN} night</p>
-                            <p><strong>Trạng thái:</strong> <span class="badge bg-success">${room.TRANGTHAIPHG}</span></p>
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookingModal">Đặt ngay</button>
+                <div class="my-5">
+                    <div class="room-list">
+                        <div class="room-item mb-4">
+                            <div class="card shadow">
+                                <img src="/img/${duongDanHinh}" class="card-img-top" alt="">
+                                <div class="card-body">
+                                    <h2 class="card-title" id="typeRoom">${room.TENLOAIPHG}</h2>
+                                    <p class="card-text">${room.PHONG.MOTA}.</p>                                    <ul class="list-group list-group-flush mb-3">
+                                        <li class="list-group-item text-danger ps-0"><b>Giá: <span id="priceRoom">${giaHienThi}</span>/đêm</b></li>
+                                        <li class="list-group-item ps-0">Trạng thái: 
+                                            <span class="badge ${room.TRANGTHAI === 'Hết phòng' ? 'bg-danger' : 'bg-success'}">
+                                                ${room.TRANGTHAI === 'Hết phòng' ? room.TRANGTHAI : `${room.SLPHONG}x ${room.TRANGTHAI}`}
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary choose-room-btn" 
+                                            ${room.TRANGTHAI === 'Hết phòng' ? 'disabled' : ''} 
+                                            data-room-type="${room.MA_LOAIPHG}" 
+                                            data-bs-toggle="modal" data-bs-target="#bookingModal">
+                                        Chọn phòng
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             `
         );
     }, "");
+
     document.getElementById("roomAccordion").innerHTML = html;
+
+    // Thêm sự kiện click cho nút "Chọn phòng"
+    document.querySelectorAll('.choose-room-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const roomType = this.getAttribute('data-room-type');
+            localStorage.setItem('MA_LOAIPHG', roomType);
+        });
+    });
 }
+
+
+
 
 function renderConvenient(convenients) {
     const convenientMap = {
@@ -255,4 +295,3 @@ function renderConvenient(convenients) {
 
     document.getElementById("convenients").innerHTML = html;
 }
-

@@ -1,445 +1,324 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+    <link rel="icon" href="/img/logo.png"/>
+    <title>Bazoka - Nền tảng du lịch hàng đầu thế giới</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="/css/DatPhong.css">
     <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous"
-        />
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+    crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/DatPhong.css">
 </head>
 <body>
-    <header>
-        <nav id="navbar" class="navbar navbar-expand-lg sticky-top">
+    <header class="sticky-top">
+        <nav id="navbar" class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand me-auto" href="index.html">
-                    <img src="/img/logo.png" alt="" width="80" height="70">Bazoka
-                </a>
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
-                            <img src="/img/logo.png" alt="" width="80" height="60">Bazoka
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                            <li class="nav-item">
-                                <a class="nav-link mx-lg-2 active" aria-current="page" href="#">Trang chủ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="#">Liên hệ dịch vụ khách hàng</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link mx-lg-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Hỗ trợ
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Trợ giúp</a></li>
-                                    <li><a class="dropdown-item" href="#">Liên hệ chúng tôi</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
+              <a class="navbar-brand me-auto" href="index.html"><img src="/img/logo.png" alt="" width="80" height="70">Bazoka</a>         
+              <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="offcanvasNavbarLabel"><img src="/img/logo.png" alt="" width="80" height="60">Bazoka</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
-                <a class="login-button me-2" href="#">Đăng nhập</a>
-                <a class="register-button" href="#">Đăng ký</a>
-                <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                      <a class="nav-link mx-lg-2 active" aria-current="page" href="#">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mx-lg-2" href="#">Liên hệ dịch vụ khách hàng</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link mx-lg-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Hỗ trợ
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Trợ giúp</a></li>
+                        <li><a class="dropdown-item" href="#">Liên hệ chúng tôi</a></li>
+                      </ul>
+                    </li>
+                    <li id="info-user" class="nav-item dropdown" style="display: none;">
+                        <a class="nav-link mx-lg-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <img id="avarta" src="/img/germany.jpg" alt="" width="25" height="25" style="border-radius: 50px;">
+                          <span id="userName"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2 icon-comment"></i>Chỉnh sửa hồ sơ</a></li>
+                          <li><a class="dropdown-item" href="#"><i class="fa-solid fa-hotel me-2 icon-comment"></i>Đặt chỗ của tôi</a></li>
+                          <li><a class="dropdown-item" href="#"><i class="fa-solid fa-money-bill me-2 icon-comment"></i>Danh sách giao dịch</a></li>
+                          <li><a id="logout-link" class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket me-2 icon-comment"></i>Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item mt-2">
+                        <a id="loginButton" class="mx-lg-2 login-button" href="loginUser.html">Đăng nhập</a>
+                        <a id="registerButton" class="mx-lg-2 login-button register-button" href="loginUser.html">Đăng ký</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
             </div>
         </nav>    
     </header>
 
-    <div class="container my-4">
-        <h2>Đặt phòng của bạn</h2>
-        <p>Hãy đảm bảo tất cả thông tin chi tiết trên trang này đã chính xác trước khi tiến hành thanh toán.</p>
-        <!-- Member Info -->
-        <div class="row mb-4">
-            <div class="col-md-8 d-flex align-items-center">
-                <div class="user-avatar me-3">
-                    <img src="/img/earth-day.png" alt="image_ava" class="img-fluid rounded-circle">
+    <main>
+        <div class="container-a my-4">
+            <h2>Đặt phòng của bạn</h2>
+            <p>Hãy đảm bảo tất cả thông tin chi tiết trên trang này đã chính xác trước khi tiến hành thanh toán.</p>
+            <!-- Member Info -->
+            <div class="row mb-4">
+                <div class="col-md-8 d-flex align-items-center">
+                    <div class="user-avatar me-3">
+                        <img id="avatar" alt="image_ava" class="img-fluid rounded-circle">
+                    </div>
+                    <div>
+                        <p><span id="name1"></span> thân mến! Hãy tận hưởng những đặc quyền này với tư cách là diễn viên hài của Bazooka.</p>
+                    </div>
                 </div>
-                <div>
-                    <p>Thái Hiếu Minh thân mến! Hãy tận hưởng những đặc quyền này với tư cách là diễn viên hài của Bazooka.</p>
+                <div class="col-md-4 d-flex gap-3">
+                    <div class="benefit-item text-center p-3 border rounded">
+                        <img src="https://img.icons8.com/ios/50/000000/customer-support.png" alt="Dịch vụ khách hàng 24/7" class="img-fluid mb-2">
+                        <p>Dịch vụ khách hàng 24/7</p>
+                        <span>Hãy liên hệ chúng tôi bất cứ lúc nào bạn cần.</span>
+                    </div>
+                    <div class="benefit-item text-center p-3 border rounded">
+                        <img src="https://img.icons8.com/ios/50/000000/coins.png" alt="Tích xu" class="img-fluid mb-2">
+                        <p>Tích xu</p>
+                        <span>Tích được lượng xu nhiều hơn.</span>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4 d-flex gap-3">
-                <div class="benefit-item text-center p-3 border rounded">
-                    <img src="https://img.icons8.com/ios/50/000000/customer-support.png" alt="Dịch vụ khách hàng 24/7" class="img-fluid mb-2">
-                    <p>Dịch vụ khách hàng 24/7</p>
-                    <span>Hãy liên hệ chúng tôi bất cứ lúc nào bạn cần.</span>
-                </div>
-                <div class="benefit-item text-center p-3 border rounded">
-                    <img src="https://img.icons8.com/ios/50/000000/coins.png" alt="Tích xu" class="img-fluid mb-2">
-                    <p>Tích xu</p>
-                    <span>Tích được lượng xu nhiều hơn.</span>
-                </div>
-            </div>
-        </div>
-
-         <!-- Content Section -->
-         <div class="row">
-            <!-- sidebar bên trái chi tiết khách sạn -->
-            <div class="col-md-4">
-                <div class="room-summary mb-4 p-3 border rounded">
-                    <h4>Grand K Hotel Suites Hanoi</h4>
-                    <img src="/img/image_hotel.jpg" alt="Hotel Image">
-                    <p><b>Nhận phòng:</b> Thứ 2, 14 Tháng 2 2024, 14:00</p>
-                    <p><b>Trả phòng:</b> Thứ 5, 17 Tháng 2 2024, 12:00</p>
-                    <p><b>Phòng:</b> 1x Deluxe</p>
-                    <p><b>Tổng giá:</b> 2,445,135 VND</p>
-                </div>
-                <div class="policy mb-4 p-3 border rounded">
-                    <h4>Chính sách hủy và đổi lịch</h4>
-                    <p>Miễn phí hủy phòng trước 29 Tháng 9 2024</p>
-                </div>
-                <!-- Chính sách lưu trú -->
-                <div class="stay-policy mb-4 p-3 border rounded">
-                    <h3>Chính sách lưu trú</h3>
-                    <div class="policy-item">
-                        <h4>Tiền cọc</h4>
-                        <p>Ban phải đóng tiền cọc VND 1,000,000 khi nhận phòng. Có sổ lưu trú chấp nhận tiền mặt, thẻ ghi nợ hoặc thẻ tín dụng.</p>
-                    </div>
-                    <div class="policy-item">
-                        <h4>Chính sách về độ tuổi tối thiểu</h4>
-                        <p>Độ tuổi tối thiểu để nhận phòng là 18 tuổi. Khách nhỏ tuổi phải có người lớn đi cùng khi nhận phòng.</p>
-                    </div>
-                    <a href="#" class="view-details">Xem chi tiết</a>
-                </div>
-
-            </div>
-            <!-- side bar bên phải thông tin -->
-            <div class="col-md-8">
-                <!-- Form liên hệ -->
-                <div class="contact-info mb-4 p-3 border rounded">
-                    <h3>Thông tin liên hệ (đối với E-voucher)</h3>
-                    <form>
-                        <label for="name">Họ tên</label>
-                        <input type="text" id="name" placeholder="Nhập họ tên của bạn">
-                        
-                        <label for="id">Hộ chiếu/CMND/CCCD</label>
-                        <input type="text" id="id" placeholder="Số hộ chiếu hoặc CMND/CCCD">
-                        
-                        <label for="email">E-mail</label>
-                        <input type="email" id="email" placeholder="thaihieuminhtop1@gmail.com">
-                        
-                        <label for="phone">Số điện thoại</label>
-                        <div class="phone-group">
-                            <select>
-                                <option value="+84">+84</option>
-                                <option value="+1">+1</option>
-                                <!-- Các tùy chọn quốc gia khác -->
-                            </select>
-                            <input type="text" placeholder="Số điện thoại">
-                        </div>
-                        
-                        <label>
-                            <input type="radio" name="stay-option" id="stay-self" checked> Tôi là khách lưu trú
-                        </label>
-                        <label>
-                            <input type="radio" name="stay-option" id="stay-other"> Tôi đang đặt cho người khác
-                        </label>
-                        
-                        <div id="guest-name-container" style="display: none;"> <!-- Ẩn theo mặc định -->
-                            <label for="guest-name">Tên đầy đủ của khách</label>
-                            <input type="text" id="guest-name" placeholder="Nguyen Ban A">
-                        </div>
-                        
-                    </form>
-                </div>
-
-                <!-- Yêu cầu phòng -->
-                <div class="room-preferences mb-4 p-3 border rounded">
-                    <h3>Bạn yêu cầu nào không?</h3>
-                    <form>
-                        <label><input type="checkbox"> Phòng không hút thuốc</label>
-                        <label><input type="checkbox"> Phòng liền thông</label>
-                        <label><input type="checkbox"> Tầng lầu</label>
-                        <label><input type="checkbox"> Loại giường</label>
-                        <label><input type="checkbox"> Giờ nhận phòng</label>
-                        <label>
-                            <input type="checkbox" id="other-checkbox"> Khác
-                        </label>
-                    
-                        <!-- Textbox hiện ra khi chọn "Khác" -->
-                        <div id="other-text-container" style="display: none; margin-top: 10px;">
-                            <input type="text" id="other-text" placeholder="Nhập yêu cầu khác">
-                        </div>
-                    </form>                    
-                </div>
-
-                <!-- Tiện ích bổ sung -->
-                <div class="additional-services mb-4 p-3 border rounded">
-                    <h3>Tiện ích bổ sung cho kỳ nghỉ của bạn</h3>
-                    <label><input type="checkbox" > Bảo hiểm Du lịch Chubb - Hotel Protect</label>
-                    <p>Bảo vệ kỳ nghỉ của bạn với Quỹ khẩn cấp rủi ro hủy, mất, hoặc phá hủy đặt phòng khách sạn, và hơn thế nữa.</p>
-                </div>
-
-                <!-- Tiện ích bổ sung cho kỳ nghỉ -->
-                <div class="additional-benefits mb-4 p-3 border rounded">
-                    <h3>Tiện ích bổ sung cho kỳ nghỉ của bạn</h3>
-                    <label><input type="checkbox" > Bảo hiểm Du lịch Chubb - Hotel Protect</label>
-                    <p>Bảo vệ kỳ nghỉ của bạn với Quỹ khách khẩn rủi ro hủy, mất, đặt phòng khách sạn, và hơn thế nữa.</p>
-                    <ul>
-                        <li>Bảo hiểm lên đến tối đa VND 850,000/phòng/đêm cho Quyền lợi Hủy hoặc Gián đoạn Đặt phòng khách sạn.</li>
-                        <li>Bảo hiểm lên đến VND 210,000,000 cho Quyền lợi Tai nạn cá nhân.</li>
-                        <li>Bảo hiểm lên đến VND 3,000,000 cho Quyền lợi Mất hoặc hư hại hành lý, quần áo và vật dụng cá nhân.</li>
-                    </ul>
-                    <div class="price">VND 61,128</div>
-                </div>
-
-                <!-- Chi tiết giá -->
-                <div class="price-details mb-4 p-3 border rounded">
-                    <h3>Chi tiết giá</h3>
-                    <div class="price-row">
-                        <span>Giá phòng</span>
-                        <span>2,156,204 VND</span>
-                    </div>
-                    <div class="price-row">
-                        <span>Thuế và phí</span>
-                        <span>288,931 VND</span>
-                    </div>
-                    <div class="price-row">
-                        <span>Bảo hiểm Du lịch Chubb - Hotel Protect</span>
-                        <span>61,128 VND</span>
-                    </div>
-                    <div class="total-price">
-                        <span>Tổng giá</span>
-                        <span>2,506,263 VND</span>
-                    </div>
-                     <!-- Nút tiếp tục thanh toán -->
-                <button id="btnDatPhong" class="continue-btn">Tiếp tục thanh toán</button>
-                <!-- Thông báo sau khi đặt phòng thành công -->
-                <div id="thongBaoDatPhong" class="alert alert-success" style="display: none; margin-top: 20px;">
-                    Đặt phòng thành công! Cảm ơn bạn đã đặt phòng tại khách sạn của chúng tôi.
-                </div>
-                </div>
-
-            </div>
-
-            
-        </div>
-    </div>
     
+             <!-- Content Section -->
+             <div class="row">
+                <!-- sidebar bên trái chi tiết khách sạn -->
+                <div class="col-md-4">
+                    <div class="room-summary mb-4 p-3 border rounded">
+                        <h4 id="nameHotel">Grand K Hotel Suites Hanoi</h4>
+                        <img src="/img/image_hotel.jpg" alt="Hotel Image">
+                        <p id="checkInDate"><b>Nhận phòng:</b></p>
+                        <p id="checkOutDate"><b>Trả phòng:</b></p>
+                        <p id="typeRoom"><b>Phòng:</b></p>
+                        <p id="sumPrice1"><b>Tổng giá:</b></p>
+                    </div>
+                    <div class="policy mb-4 p-3 border rounded">
+                        <h4>Chính sách hủy và đổi lịch</h4>
+                        <p>Bạn được miễn phí hủy phòng <span id="cancelDate"></span></p>
+                    </div>
+                    <!-- Chính sách lưu trú -->
+                    <div class="stay-policy mb-4 p-3 border rounded">
+                        <h3>Chính sách lưu trú</h3>
+                        <div class="policy-item">
+                            <h4>Tiền cọc</h4>
+                            <p>Ban phải đóng tiền cọc <span id="coc"></span> khi nhận phòng. Có sổ lưu trú chấp nhận tiền mặt, thẻ ghi nợ hoặc thẻ tín dụng.</p>
+                        </div>
+                        <div class="policy-item">
+                            <h4>Chính sách về độ tuổi tối thiểu</h4>
+                            <p>Độ tuổi tối thiểu để nhận phòng là 18 tuổi. Khách nhỏ tuổi phải có người lớn đi cùng khi nhận phòng.</p>
+                        </div>
+                        <a href="#" class="view-details">Xem chi tiết</a>
+                    </div>
+    
+                </div>
+                <!-- side bar bên phải thông tin -->
+                <div class="col-md-8">
+                    <!-- Form liên hệ -->
+                    <div class="contact-info mb-4 p-3 border rounded">
+                        <h3>Thông tin liên hệ (đối với E-voucher)</h3>
+                        <form>
+                            <label for="name">Họ tên</label>
+                            <input type="text" class="input-type" id="name" placeholder="Nhập họ tên của bạn">
+                            
+                            <!-- <label for="id">Hộ chiếu/CMND/CCCD</label>
+                            <input type="text" class="input-type" id="id" placeholder="Số hộ chiếu hoặc CMND/CCCD"> -->
+                            
+                            <label for="email">E-mail</label>
+                            <input type="email" class="input-type" id="email" placeholder="Nhập email của bạn">
+                            
+                            <label for="phone">Số điện thoại</label>
+                            <div class="phone-group">
+                                <select>
+                                    <option value="+84">+84</option>
+                                    <option value="+1">+1</option>
+                                    <!-- Các tùy chọn quốc gia khác -->
+                                </select>
+                                <input type="text" class="input-type" placeholder="Số điện thoại" id="SDT">
+                            </div>
+                            
+                            <!-- <label>
+                                <input class="input-radio" type="radio" name="stay-option" id="stay-self" checked> Tôi là khách lưu trú
+                            </label> -->
+                            <!-- <label>
+                                <input class="input-radio" type="radio" name="stay-option" id="stay-other"> Tôi đang đặt cho người khác
+                            </label>
+                            <div id="guest-name-container" style="display: none;">
+                                <label for="guest-name">Tên đầy đủ của khách</label>
+                                <input type="text" class="input-type" id="guest-name" placeholder="Nguyen Ban A">
+                            </div> -->
+                        </form>
+                    </div>
+                    <!-- Chi tiết giá -->
+                    <div class="price-details mb-4 p-3 border rounded">
+                        <h3>Chi tiết giá</h3>
+                        <div class="price-row">
+                            <span>Giá phòng</span>
+                            <span id="priceRoom">2,156,204 VND</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Thuế và phí</span>
+                            <span id="taxRoom">288,931 VND</span>
+                        </div>
+                        <!-- <div class="price-row">
+                            <span>Sử dụng mã giảm giá</span>
+                            <span>61,128 VND</span>
+                        </div> -->
+                        <div class="total-price">
+                            <span>Tổng giá</span>
+                            <span id="sumPrice">2,506,263 VND</span>
+                        </div>
+                         <!-- Nút tiếp tục thanh toán -->
+                        <div id="coc-true">
+                            <button id="btnDatPhongPay" class="continue-btn">Tiếp tục thanh toán</button>
+                        </div>
+                        <div id="coc-false">
+                            <button id="btnDatPhong" class="continue-btn" onclick="DatPhong()">Đặt ngay</button>
+                        </div>
+                    </div>
+                </div>
+    
+                
+            </div>
+        </div>
+    </main>
+    <footer class="mt-5">
+        <section class="w3l-footer-29-main">
+            <div class="footer-29">
+                <div class="container py-lg-4">
+                    <div class="row footer-top-29">
+                        <div class=" footer-list-29 footer-1 pr-lg-5 mt-3">
+                            <div class="footer-logo mb-3">
+                                <a href="#" class="navbar-brand"><img class="logo-bzk" src="/img/logo.png" alt="" width="150" height="150">Bazoka</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-5 col-6 mt-sm-0 mt-3 main-social-footer-29">
+                            <h5>Kết nối với Bazoka nhiều hơn tại đây</h5>
+                            <a href="#" class="facebook" target="_blank">
+                                <span class="fa-brands fa-facebook-f"></span>
+                            </a>
+                            <a href="#" class="twitter">
+                                <span class="fa-brands fa-twitter"></span>
+                            </a>
+                            <a href="#" class="instagram">
+                                <span class="fa-brands fa-instagram"></span>
+                            </a>
+                            <a href="#" class="likedin">
+                                <span class="fa-brands fa-linkedin-in"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="w3l-copyright">
+            <div class="container">
+                <div class="row bottom-copies">
+                    <p class="col-lg-4 copy-footer-29">Bản quyền © 2024 thuộc về
+                        <a href="#" target="_blank">Bazoka</a>
+                    </p>
+                    <div class="col-lg-8 footer-list-29">
+                        <ul class="d-flex text-lg-right">
+                            <li>
+                                <a href="#"><i class="fa-solid fa-phone mx-2"></i>KH Cá nhân: 1800 588 822 (trong nước) - 84 24 3944 6699 (nước ngoài)</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa-solid fa-phone mx-2"></i>KH Doanh nghiệp: 1800 6556 (trong nước) - 84 24 7303 6556 (nước ngoài)</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
     <script>
-            document.addEventListener('DOMContentLoaded', function() {
-            const staySelf = document.getElementById('stay-self');
-            const stayOther = document.getElementById('stay-other');
-            const guestNameContainer = document.getElementById('guest-name-container');
+        //     document.addEventListener('DOMContentLoaded', function() {
+        //     const staySelf = document.getElementById('stay-self');
+        //     const stayOther = document.getElementById('stay-other');
+        //     const guestNameContainer = document.getElementById('guest-name-container');
 
-            // Hàm để hiển thị hoặc ẩn trường nhập tên khách
-            function toggleGuestName() {
-                if (stayOther.checked) {
-                    guestNameContainer.style.display = 'block';  // Hiển thị khi chọn "Tôi đang đặt cho người khác"
+        //     function toggleGuestName() {
+        //         if (stayOther.checked) {
+        //             guestNameContainer.style.display = 'block';  
+        //         } else {
+        //             guestNameContainer.style.display = 'none';   
+        //         }
+        //     }
+
+        //     // Gắn sự kiện 'click' cho các radio buttons
+        //     staySelf.addEventListener('click', toggleGuestName);
+        //     stayOther.addEventListener('click', toggleGuestName);
+        // });
+        //     document.addEventListener('DOMContentLoaded', function() {
+        //     const otherCheckbox = document.getElementById('other-checkbox');
+        //     const otherTextContainer = document.getElementById('other-text-container');
+
+        //     // Hàm hiển thị hoặc ẩn textbox dựa trên checkbox "Khác"
+        //     otherCheckbox.addEventListener('change', function() {
+        //         if (otherCheckbox.checked) {
+        //             otherTextContainer.style.display = 'block';  // Hiển thị khi được chọn
+        //         } else {
+        //             otherTextContainer.style.display = 'none';   // Ẩn khi không được chọn
+        //         }
+        //     });
+        // });
+        document.addEventListener("DOMContentLoaded", function() {
+            // Lấy giá trị từ localStorage
+            const yeuCauCoc = localStorage.getItem("YEU_CAU_COC");
+
+            // Kiểm tra và hiển thị phần tử phù hợp
+            if (yeuCauCoc === "true") {
+                document.getElementById("coc-true").style.display = "block";
+                document.getElementById("coc-false").style.display = "none";
+            } else {
+                document.getElementById("coc-true").style.display = "none";
+                document.getElementById("coc-false").style.display = "block";
+            }
+        });
+
+
+    </script>
+         <script>
+            window.addEventListener('scroll', function() {
+                var navbar = document.getElementById('navbar');
+                var scrollPosition = window.scrollY;
+                if (scrollPosition > 0) {
+                    navbar.classList.add('dragged');
                 } else {
-                    guestNameContainer.style.display = 'none';   // Ẩn khi chọn "Tôi là khách lưu trú"
-                }
-            }
-
-            // Gắn sự kiện 'click' cho các radio buttons
-            staySelf.addEventListener('click', toggleGuestName);
-            stayOther.addEventListener('click', toggleGuestName);
-        });
-            document.addEventListener('DOMContentLoaded', function() {
-            const otherCheckbox = document.getElementById('other-checkbox');
-            const otherTextContainer = document.getElementById('other-text-container');
-
-            // Hàm hiển thị hoặc ẩn textbox dựa trên checkbox "Khác"
-            otherCheckbox.addEventListener('change', function() {
-                if (otherCheckbox.checked) {
-                    otherTextContainer.style.display = 'block';  // Hiển thị khi được chọn
-                } else {
-                    otherTextContainer.style.display = 'none';   // Ẩn khi không được chọn
+                    navbar.classList.remove('dragged');
                 }
             });
-        });
-
-
-        function selectItemTrackEvent() {
-            document.querySelectorAll('.plp-product').forEach((productCard)=>{
-                productCard.addEventListener('click', trackEvent);
+        </script>
+        <script>
+            document.getElementById('btnDatPhongPay').addEventListener('click', function() {
+                window.location.href = 'ThanhToan.html';
             });
-        
-            function trackEvent(e){
-                let product = e.srcElement.closest('.plp-product')
-        
-                dataLayer.push({
-                    ecommerce: null
-                });
-                // Clear the previous ecommerce
-                dataLayer.push({
-                            event: "select_item",
-                            ecommerce: {
-                                items: [
-                                    {
-                                        item_id: product.dataset.itemId,
-                                        item_name: product.dataset.name,
-                                        currency: Shopify.currency.active,
-                                        discount: parseFloat(product.dataset.discount),
-                                        percent_discount: product.dataset.percent,
-                                        index: 0,
-                                        item_brand: product.dataset.itemBrand,
-                                        item_category: product.dataset.category,
-                                        item_category2: product.dataset.category2,
-                                        item_category3: product.dataset.category3,
-                                        item_availability: product.dataset.available,
-                                        item_list_name: "plp",
-                                        price: parseFloat(product.dataset.price),
-                                        quantity: 1
-                                    }
-                                ]
-                            }
-                        }
-                    )
-            }
-        }
-        function trackEventSTL(e){
-                let product = e.srcElement.closest('.stl-product')
-                dataLayer.push({
-                    ecommerce: null
-                });
-                // Clear the previous ecommerce
-                dataLayer.push({
-                      event: "select_item",
-                      ecommerce: {
-                          items: [
-                              {
-                                  item_id: product.dataset.id,
-                                  item_name: product.dataset.name,
-                                  currency: Shopify.currency.active,
-                                  discount: parseFloat(product.dataset.discount),
-                                  percent_discount: product.dataset.percent,
-                                  index: 0,
-                                  item_brand: product.dataset.itembrand,
-                                  item_category: product.dataset.category,
-                                  item_category2: product.dataset.category2,
-                                  item_category3: product.dataset.category3,
-                                  item_availability: product.dataset.available,
-                                  item_list_name: "shopLook" + (parseInt(document.querySelector(".shopthelook-wrp .slick-current.slick-active").dataset.slickIndex) + 1),
-                                  price: parseFloat(product.dataset.price),
-                                  quantity: 1
-                              }
-                          ]
-                      }
-                  }
-                )
-            }
-        const getObjItemList = (stl) =>{
-          let obj = [];
-            stl.querySelectorAll(".contaner-list-products .stl-product").forEach((product, index) =>{
-              var prd = 
-                {
-                  'item_id': product.dataset.id,
-                  'item_name': product.dataset.title,
-                  'currency': Shopify.currency.active,
-                  'discount': parseFloat(product.dataset.discount),
-                  'percent_discount': product.dataset.percent,
-                  'index': index,
-                  'item_brand': product.dataset.itembrand,
-                  'item_category': product.dataset.category,
-                  'item_category2': product.dataset.category2,
-                  'item_category3': product.dataset.category3,
-                  'item_availability': product.dataset.available,
-                  'item_list_name': "shopLook" + (parseInt(stl.dataset.slickIndex) + 1),
-                  'price': parseFloat(product.dataset.price),
-                  'quantity': 1
-                };
-      
-              obj.push(prd);
-            })
-      
-            return obj;
-          }
-      
-        function viewStl(){
-          const stl = document.querySelector('#stl1');
-          
-          
-          const isInViewport = (el) => {
-            const rect = el?.getBoundingClientRect();
-            return (
-                rect?.top >= 0 && rect?.top < window.innerHeight
-            );
-          }
-      
-          const handleScroll = () =>{
-            if(isInViewport(stl)){
-              window.removeEventListener("scroll", handleScroll);
-              console.log("stl in view");
-              window.dataLayer.push({
-                'event': 'view_item_list',
-                'ecommerce': {
-                  'items': getObjItemList(stl)
-                }
-              });
-            }
-          }
-      
-          window.addEventListener("scroll" , handleScroll, false)
-      
-        }
-        
-        window.addEventListener("DOMContentLoaded", (event) => {
-            selectItemTrackEvent();
-            viewStl();
-        });document.querySelector('.drawer')?.addEventListener("update-cart", ()=>{
-          let prodAdded = JSON.parse(document.querySelector("product-form script").innerText);
-          prodAdded["currency"] = Shopify.currency.active;
-          prodAdded["item_variant"] = document.querySelector(".prod-variant-custom-select")?.innerText;
-          prodAdded["price"] = parseFloat(prodAdded["price"]);
-          prodAdded["discount"] = parseFloat(prodAdded["discount"]);
-          prodAdded["quantity"] = parseFloat(prodAdded["quantity"]);
-          dataLayer.push({
-            event: "add_to_cart",
-            ecommerce: {
-                'items': [
-                  prodAdded
-                ]
-            }
-          })
-        });
-        
-        document.addEventListener("click", (e)=>{
-          if(e.target.matches("cart-remove-button, cart-remove-button *")){
-            let prodRemoved = JSON.parse(document.querySelector("cart-remove-button script").innerText);
-            prodRemoved["currency"] = Shopify.currency.active;
-            prodRemoved["price"] = parseFloat(prodRemoved["price"]);
-            prodRemoved["discount"] = parseFloat(prodRemoved["discount"]);
-            prodRemoved["quantity"] = parseFloat(prodRemoved["quantity"]);
-            dataLayer.push({
-              event: "remove_from_cart",
-              ecommerce: {
-                  'items': [
-                    prodRemoved
-                  ]
-              }
-            })
-          }
-      
-          if(e.target.matches(".shopthelook-wrp .stl-product-image, .shopthelook-wrp .stl-product-image *") || e.target.matches(".shopthelook-wrp .stl-product-text, .shopthelook-wrp .stl-product-text *")){ // Added select_item trigger
-            trackEventSTL(e)
-            localStorage.setItem("stl", "shopLook" + (parseInt(e.target.closest(".stl-slide-wrp").dataset.slickIndex) + 1));
-            window.dataLayer.push({
-              'event': 'gaEvent',
-              'category': 'clickLook',
-              'action': "look" + e.target.closest(".stl-product").dataset.count,
-              'label': e.target.closest(".stl-product").dataset.title
-            });
-          }
-          if(e.target.matches(".slider-product-container .slick-slide, .slider-product-container .slick-slide *")){
-            localStorage.setItem("must_have", "mustHave");
-            window.dataLayer.push({
-              'event': 'gaEvent',
-              'category': 'clickMustHave',
-              'action': "itemClicked",
-              'label': e.target.closest(".slick-slide").dataset.title
-            });
-          }
-        });</script>
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
+        integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="/js/class.js"></script>
+        <script src="/services/callApi.js"></script>
+        <script src="/js/succesLogin.js"></script>
+        <script src="/js/DatPhong.js"></script>
 </body>
 </html>

@@ -4,6 +4,26 @@
     box-sizing: border-box;
 }
 
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #009e74;
+    border-color: #009e74;
+}
+
+:root {
+    --primary-color: #00b383;
+}
+
+.icon-comment{
+    padding: 10px;
+}
+
 /* Header */
 .navbar{
     background-color: #fff;
@@ -11,6 +31,10 @@
     margin: 10px;
     border-radius: 16px;
     padding: 0.5rem;
+}
+
+.dropdown-item.active, .dropdown-item:active{
+    background-color: #00b383;
 }
 
 .navbar-brand{
@@ -390,4 +414,9 @@ input{
 
 .hidden {
     display: none;
+}
+
+.btn:disabled{
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
 }

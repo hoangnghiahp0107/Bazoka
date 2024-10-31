@@ -1,16 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     const localStorageToken = localStorage.getItem('localStorageToken');
     if (!localStorageToken) {
-        window.location.href = "/layout/loginAdmin.html";
+        window.location.href = "/layouts/loginAdmin.html";
         return; 
     }
 
-    const decodedToken = localStorageToken ? JSON.parse(atob(localStorageToken.split('.')[1])) : null;
+    const base64Url = localStorageToken.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const decodedToken = JSON.parse(atob(base64));
     const userID = decodedToken && decodedToken.data && decodedToken.data.MA_ND;
     const userRole = decodedToken && decodedToken.data && decodedToken.data.CHUCVU;
 
     if (userRole !== "Admin") {
-        window.location.href = "/layout/index.html";
+        window.location.href = "/layouts/index.html";
         return;
     }
 
@@ -44,17 +46,16 @@ async function getUsers(){
         const users = await apiGetUsers();
         const userObj =  users.map((user) => new NGUOIDUNG(
             user.MA_ND,
-            user.HOTEN_ND,
+            user.HOTEN,
             user.EMAIL,
             user.MATKHAU,
-            user.SDT_ND,
+            user.SDT,
             user.NGAYSINH,
             user.GIOITINH,
             user.CHUCVU,
             user.NGAYDANGKY,
             user.ANHDAIDIEN
         ));
-        console.log(users)
         renderUsers(userObj);
     } catch (error) {
         console.log("Lỗi từ máy chủ", error);
@@ -73,9 +74,9 @@ function renderUsers(users) {
             `
                 <tr>
                     <td>${user.MA_ND}</td>
-                    <td>${user.HOTEN_ND}</td>
+                    <td>${user.HOTEN}</td>
                     <td>${user.EMAIL}</td>
-                    <td>${user.SDT_ND}</td>
+                    <td>${user.SDT}</td>
                     <td>${user.NGAYSINH}</td>
                     <td>${user.GIOITINH}</td>
                     <td>${user.CHUCVU}</td>
@@ -178,9 +179,9 @@ function renderUsersByName(users, searchParam) {
             `
                 <tr>
                     <td>${user.MA_ND}</td>
-                    <td>${user.HOTEN_ND}</td>
+                    <td>${user.HOTEN}</td>
                     <td>${user.EMAIL}</td>
-                    <td>${user.SDT_ND}</td>
+                    <td>${user.SDT}</td>
                     <td>${user.NGAYSINH}</td>
                     <td>${user.GIOITINH}</td>
                     <td>${user.CHUCVU}</td>
@@ -238,3 +239,15 @@ document.getElementById("logoutButton").addEventListener("click", function() {
 });
 
 
+async function selectUser(userID) {
+    try {
+        const response = await apiGetUserID(userID);
+
+        localStorage.setItem('selectedAccount', JSON.stringify(response));
+
+        window.location.href = "adminUpdateUser.html";
+        
+    } catch (error) {
+        console.log(error);
+    }
+}

@@ -4,6 +4,38 @@
     box-sizing: border-box;
 }
 
+:root {
+    --primary-color: #00b383;
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+.dropdown-menu.show {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-menu {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-menu {
+    width: 300px;
+    border-color: #ced4da;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
 body {
     background-color: #f8f9fa;
 }
@@ -263,4 +295,103 @@ body {
     .container-room{
         max-width: 280px;
     }
+}
+
+.search-bar {
+    background-color: #ffffff;
+    transition: box-shadow 0.3s ease;
+}
+
+.search-bar:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.form-select,
+.form-control {
+    border-color: #ced4da;
+    height: 50px;
+}
+
+.form-select:focus,
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(0, 179, 131, 0.25);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #009e74;
+    border-color: #009e74;
+}
+
+.bi {
+    color: #00b383;
+}
+
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+    .search-bar .row > div {
+        margin-bottom: 1rem;
+    }
+
+    .search-bar .row > div:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.is-invalid ~ .invalid-feedback {
+    display: block;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+}
+
+.form-control:focus-visible {
+    outline: 2px solid #00b383;
+    outline-offset: 1px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.form-control:focus + i {
+    animation: pulse 0.5s ease-in-out;
 }

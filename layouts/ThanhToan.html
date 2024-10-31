@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" href="/img/logo.png"/>
+    <title>Bazoka - Nền tảng du lịch hàng đầu thế giới</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thanh toán</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/ThanhToan.css">
      <!-- Thêm liên kết Font Awesome -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
      <link
@@ -13,165 +14,239 @@
             rel="stylesheet"
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
-        />
-    <link rel="icon" href="/img/logo.png"/>
-    </head>
+    />
+    
+    <link rel="stylesheet" href="/css/ThanhToan.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <header>
-        <nav id="navbar" class="navbar navbar-expand-lg sticky-top">
+    <header class="sticky-top">
+        <nav id="navbar" class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand me-auto" href="index.html">
-                    <img src="/img/logo.png" alt="" width="80" height="70">Bazoka
-                </a>
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
-                            <img src="/img/logo.png" alt="" width="80" height="60">Bazoka
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              <a class="navbar-brand me-auto" href="index.html"><img src="/img/logo.png" alt="" width="80" height="70">Bazoka</a>         
+              <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="offcanvasNavbarLabel"><img src="/img/logo.png" alt="" width="80" height="60">Bazoka</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                      <a class="nav-link mx-lg-2 active" aria-current="page" href="#">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mx-lg-2" href="#">Liên hệ dịch vụ khách hàng</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link mx-lg-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Hỗ trợ
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Trợ giúp</a></li>
+                        <li><a class="dropdown-item" href="#">Liên hệ chúng tôi</a></li>
+                      </ul>
+                    </li>
+                    <li id="info-user" class="nav-item dropdown" style="display: none;">
+                        <a class="nav-link mx-lg-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <img id="avarta" src="/img/germany.jpg" alt="" width="25" height="25" style="border-radius: 50px;">
+                          <span id="userName"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2 icon-comment"></i>Chỉnh sửa hồ sơ</a></li>
+                          <li><a class="dropdown-item" href="#"><i class="fa-solid fa-hotel me-2 icon-comment"></i>Đặt chỗ của tôi</a></li>
+                          <li><a class="dropdown-item" href="#"><i class="fa-solid fa-money-bill me-2 icon-comment"></i>Danh sách giao dịch</a></li>
+                          <li><a id="logout-link" class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket me-2 icon-comment"></i>Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item mt-2">
+                        <a id="loginButton" class="mx-lg-2 login-button" href="loginUser.html">Đăng nhập</a>
+                        <a id="registerButton" class="mx-lg-2 login-button register-button" href="loginUser.html">Đăng ký</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+        </nav>    
+    </header> 
+    <main>
+        <div class="container mt-4">
+            <!-- Heading -->
+            <div class="header">
+                Đừng lo lắng, giá vẫn giữ nguyên. Hoàn tất thanh toán của bạn bằng <span class="timer">00:45:00</span> <i class="fas fa-clock timer-icon"></i>
+            </div>
+        
+            <div class="row">
+                <!-- Payment Options -->
+                <div class="col-lg-8">
+                    <div class="payment-option active">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="vietQR" checked>
+                            <label class="form-check-label" for="vietQR">
+                                VietQR
+                                <span class="badge bg-success ms-2">Ưu đãi giảm giá</span>
+                            </label>
+                            <!-- <div class="mt-2">
+                                <p class="small text-muted">Đảm bảo bạn có ví điện tử hoặc ứng dụng ngân hàng di động hỗ trợ thanh toán bằng VietQR...</p>
+                            </div> -->
+                        </div>
                     </div>
-                    <div class="offcanvas-body">
-                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                            <li class="nav-item">
-                                <a class="nav-link mx-lg-2 active" aria-current="page" href="#">Trang chủ</a>
+        
+                    <!-- Other Payment Methods -->
+                    <div class="payment-option">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="atm">
+                            <label class="form-check-label" for="atm">
+                                ATM Cards/Mobile Banking
+                            </label>
+                        </div>
+                    </div>
+        
+                    <div class="payment-option">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="eWallet">
+                            <label class="form-check-label" for="eWallet">
+                                Ví điện tử khác
+                            </label>
+                        </div>
+                    </div>
+        
+                    <div class="payment-option">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard">
+                            <label class="form-check-label" for="creditCard">
+                                Thẻ thanh toán
+                            </label>
+                        </div>
+                    </div>
+        <!-- 
+                    <div class="payment-option">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="inStore">
+                            <label class="form-check-label" for="inStore">
+                                Tại cửa hàng
+                            </label>
+                        </div>
+                    </div> -->
+        
+                    <div class="payment-option disabled-option">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" disabled>
+                            <label class="form-check-label" for="bankTransfer">
+                                Chuyển khoản ngân hàng
+                            </label>
+                            <span class="text-muted small">(Chỉ có vào 08:00 - 20:00)</span>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Summary Box -->
+                <div class="col-lg-4">
+                    <div class="summary-box">
+                        <h5>Tóm tắt khách sạn</h5>
+                        <p><strong id="nameHotel">Premier Pearl Hotel Vung Tau</strong></p>
+                        <ul class="list-unstyled">
+                            <li id="checkIn">Nhận phòng: 11/09/2024</li>
+                            <li id="checkOut">Trả phòng: 12/09/2024</li>
+                            <li id="typeRoom">1 Classic Twin, No View</li>
+                            <li id="coc">Cọc trước: 100.000 VND</li>
+                        </ul>
+                        <hr>
+                    </div>
+        
+                    <div class="special-request">
+                        <p><strong>Yêu cầu đặc biệt (nếu có):</strong> Không hoàn tiền, không đổi lịch</p>
+                    </div>
+        
+                    <!-- Contact Details -->
+                    <div class="contact-details mt-3">
+                        <h5>Chi tiết người liên lạc:</h5>
+                        <p><span id="name"></span><span id="SDT"></span><span id="email"></span></p>
+                    </div>
+                    
+                    <!-- Thêm thông điệp mới dưới chi tiết người liên lạc -->
+                    <div class="holiday-message mt-3">
+                        <p>Sự lựa chọn tuyệt vời cho kỳ nghỉ của bạn</p>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Discount Code and Total -->
+            <div class="discount-code text-end">
+                <button class="btn btn-link">Thêm mã giảm giá</button>
+            </div>
+        
+            <!-- Total Price -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <p class="total-price mb-0" id="sumPrice">Tổng giá tiền: 1.645.100 VND</p>
+                <button class="pay-button" onclick="createPayment()">Pay & Show QR Code</button>
+            </div>
+        </div>
+    </main>
+    <footer class="mt-5">
+        <section class="w3l-footer-29-main">
+            <div class="footer-29">
+                <div class="container py-lg-4">
+                    <div class="row footer-top-29">
+                        <div class=" footer-list-29 footer-1 pr-lg-5 mt-3">
+                            <div class="footer-logo mb-3">
+                                <a href="#" class="navbar-brand"><img class="logo-bzk" src="/img/logo.png" alt="" width="150" height="150">Bazoka</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-5 col-6 mt-sm-0 mt-3 main-social-footer-29">
+                            <h5>Kết nối với Bazoka nhiều hơn tại đây</h5>
+                            <a href="#" class="facebook" target="_blank">
+                                <span class="fa-brands fa-facebook-f"></span>
+                            </a>
+                            <a href="#" class="twitter">
+                                <span class="fa-brands fa-twitter"></span>
+                            </a>
+                            <a href="#" class="instagram">
+                                <span class="fa-brands fa-instagram"></span>
+                            </a>
+                            <a href="#" class="likedin">
+                                <span class="fa-brands fa-linkedin-in"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="w3l-copyright">
+            <div class="container">
+                <div class="row bottom-copies">
+                    <p class="col-lg-4 copy-footer-29">Bản quyền © 2024 thuộc về
+                        <a href="#" target="_blank">Bazoka</a>
+                    </p>
+                    <div class="col-lg-8 footer-list-29">
+                        <ul class="d-flex text-lg-right">
+                            <li>
+                                <a href="#"><i class="fa-solid fa-phone mx-2"></i>KH Cá nhân: 1800 588 822 (trong nước) - 84 24 3944 6699 (nước ngoài)</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="#">Liên hệ dịch vụ khách hàng</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link mx-lg-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Hỗ trợ
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Trợ giúp</a></li>
-                                    <li><a class="dropdown-item" href="#">Liên hệ chúng tôi</a></li>
-                                </ul>
+                            <li>
+                                <a href="#"><i class="fa-solid fa-phone mx-2"></i>KH Doanh nghiệp: 1800 6556 (trong nước) - 84 24 7303 6556 (nước ngoài)</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <a class="login-button me-2" href="#">Đăng nhập</a>
-                <a class="register-button" href="#">Đăng ký</a>
-                <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
             </div>
-        </nav>    
-    </header>    
-<div class="container mt-4">
-    <!-- Heading -->
-    <div class="header">
-        Đừng lo lắng, giá vẫn giữ nguyên. Hoàn tất thanh toán của bạn bằng <span class="timer">00:45:00</span> <i class="fas fa-clock timer-icon"></i>
-    </div>
-
-    <div class="row">
-        <!-- Payment Options -->
-        <div class="col-lg-8">
-            <div class="payment-option active">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="vietQR" checked>
-                    <label class="form-check-label" for="vietQR">
-                        VietQR
-                        <span class="badge bg-success ms-2">Ưu đãi giảm giá</span>
-                    </label>
-                    <!-- <div class="mt-2">
-                        <p class="small text-muted">Đảm bảo bạn có ví điện tử hoặc ứng dụng ngân hàng di động hỗ trợ thanh toán bằng VietQR...</p>
-                    </div> -->
-                </div>
-            </div>
-
-            <!-- Other Payment Methods -->
-            <div class="payment-option">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="atm">
-                    <label class="form-check-label" for="atm">
-                        ATM Cards/Mobile Banking
-                    </label>
-                </div>
-            </div>
-
-            <div class="payment-option">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="eWallet">
-                    <label class="form-check-label" for="eWallet">
-                        Ví điện tử khác
-                    </label>
-                </div>
-            </div>
-
-            <div class="payment-option">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard">
-                    <label class="form-check-label" for="creditCard">
-                        Thẻ thanh toán
-                    </label>
-                </div>
-            </div>
-<!-- 
-            <div class="payment-option">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="inStore">
-                    <label class="form-check-label" for="inStore">
-                        Tại cửa hàng
-                    </label>
-                </div>
-            </div> -->
-
-            <div class="payment-option disabled-option">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" disabled>
-                    <label class="form-check-label" for="bankTransfer">
-                        Chuyển khoản ngân hàng
-                    </label>
-                    <span class="text-muted small">(Chỉ có vào 08:00 - 20:00)</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Summary Box -->
-        <div class="col-lg-4">
-            <div class="summary-box">
-                <h5>Tóm tắt khách sạn</h5>
-                <p><strong>Premier Pearl Hotel Vung Tau</strong></p>
-                <ul class="list-unstyled">
-                    <li>Nhận phòng: 11/09/2024</li>
-                    <li>Trả phòng: 12/09/2024</li>
-                    <li>1 Classic Twin, No View</li>
-                </ul>
-                <hr>
-            </div>
-
-            <div class="special-request">
-                <p><strong>Yêu cầu đặc biệt (nếu có):</strong> Không hoàn tiền, không đổi lịch</p>
-            </div>
-
-            <!-- Contact Details -->
-            <div class="contact-details mt-3">
-                <h5>Chi tiết người liên lạc:</h5>
-                <p>Minh Thái, +84055624388, thaihieuminhtop1@gmail.com</p>
-            </div>
-            
-            <!-- Thêm thông điệp mới dưới chi tiết người liên lạc -->
-            <div class="holiday-message mt-3">
-                <p>Sự lựa chọn tuyệt vời cho kỳ nghỉ của bạn</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Discount Code and Total -->
-    <div class="discount-code text-end">
-        <button class="btn btn-link">Thêm mã giảm giá</button>
-    </div>
-
-    <!-- Total Price -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <p class="total-price mb-0">Tổng giá tiền: 1.645.100 VND</p>
-        <button class="pay-button">Pay & Show QR Code</button>
-    </div>
-</div>
+        </section>
+    </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    window.addEventListener('scroll', function() {
+        var navbar = document.getElementById('navbar');
+        var scrollPosition = window.scrollY;
+        if (scrollPosition > 0) {
+            navbar.classList.add('dragged');
+        } else {
+            navbar.classList.remove('dragged');
+        }
+    });
+</script>
 <script>
     function startCountdown(durationInSeconds) {
         let timerElement = document.querySelector('.timer');
@@ -207,6 +282,12 @@
     // Start the countdown with 45 minutes
     startCountdown(45 * 60);
 </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
+        integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/services/callApi.js"></script>
+<script src="/js/succesLogin.js"></script>
+<script src="/js/ThanhToan.js"></script>
+   
 </body>
 </html>

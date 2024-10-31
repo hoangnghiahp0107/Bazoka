@@ -142,6 +142,11 @@ section video{
     text-decoration: underline;
 }
 
+.btn:hover {
+    background-color: #162938;
+    color: white;
+}
+
 #user{
     margin-top: 100px;
     display: flex;

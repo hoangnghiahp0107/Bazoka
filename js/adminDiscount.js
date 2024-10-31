@@ -1,16 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     const localStorageToken = localStorage.getItem('localStorageToken');
     if (!localStorageToken) {
-        window.location.href = "/layout/loginAdmin.html";
+        window.location.href = "/layouts/loginAdmin.html";
         return; 
     }
 
-    const decodedToken = localStorageToken ? JSON.parse(atob(localStorageToken.split('.')[1])) : null;
+    const base64Url = localStorageToken.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const decodedToken = JSON.parse(atob(base64));
     const userID = decodedToken && decodedToken.data && decodedToken.data.MA_ND;
     const userRole = decodedToken && decodedToken.data && decodedToken.data.CHUCVU;
 
     if (userRole !== "Admin") {
-        window.location.href = "/layout/index.html";
+        window.location.href = "/layouts/index.html";
         return;
     }
 
@@ -67,8 +69,8 @@ function renderDiscounts(discounts) {
             result +
             `
                 <tr>
+                    <td>${index + 1}</td>
                     <td>${discount.MA_MGG}</td>
-                    <td>${discount.MA_GIAMGIA}</td>
                     <td>${discount.PHANTRAM}</td>
                     <td>${discount.NGAYBATDAU}</td>
                     <td>${discount.NGAYKETTHUC}</td>       
@@ -168,8 +170,8 @@ function renderDiscountByName(discounts, searchParam) {
             result +
             `
                 <tr>
+                    <td>${index + 1}</td>
                     <td>${discount.MA_MGG}</td>
-                    <td>${discount.MA_GIAMGIA}</td>
                     <td>${discount.PHANTRAM}</td>
                     <td>${discount.NGAYBATDAU}</td>
                     <td>${discount.NGAYKETTHUC}</td>       
@@ -224,3 +226,25 @@ function logout() {
 document.getElementById("logoutButton").addEventListener("click", function() {
     logout();
 });
+
+async function deleteDiscount(discountID) {
+    const willDelete = await Swal.fire({
+      title: "Bạn có muốn xóa tài khoản?",
+      text: "Nhấn OK để xác nhận xóa tài khoản.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      cancelButtonText: "Hủy",
+    });
+  
+    if (willDelete.isConfirmed) {
+      try {
+        await apiDeleteDiscount(discountID);
+        Swal.fire('Xóa mã giảm giá thành công', '', 'success').then(() => {
+          window.location.reload();
+        });
+      } catch (error) {
+        Swal.fire('Xóa mã giảm giá thất bại', '', 'error');
+      }
+    }
+  }

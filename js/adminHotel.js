@@ -1,16 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     const localStorageToken = localStorage.getItem('localStorageToken');
     if (!localStorageToken) {
-        window.location.href = "/layout/loginAdmin.html";
+        window.location.href = "/layouts/loginAdmin.html";
         return; 
     }
 
-    const decodedToken = localStorageToken ? JSON.parse(atob(localStorageToken.split('.')[1])) : null;
+    const base64Url = localStorageToken.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const decodedToken = JSON.parse(atob(base64));
     const userID = decodedToken && decodedToken.data && decodedToken.data.MA_ND;
     const userRole = decodedToken && decodedToken.data && decodedToken.data.CHUCVU;
 
     if (userRole !== "Admin") {
-        window.location.href = "/layout/index.html";
+        window.location.href = "/layouts/index.html";
         return;
     }
 
@@ -48,8 +50,16 @@ async function getHotel(){
             hotel.TEN_KS,
             hotel.MO_TA,
             hotel.HINHANH,
+            hotel.SOSAO,
+            hotel.TRANGTHAI_KS,
+            hotel.QRTHANHTOAN,
             hotel.MA_VITRI,
-            hotel.MA_VITRI_VITRI
+            hotel.YEU_CAU_COC,
+            hotel.TI_LE_COC,
+            hotel.MA_VITRI_VITRI,
+            hotel.MA_TINHTHANH_TINHTHANH,
+            hotel.MA_QUOCGIA_QUOCGIum,
+            hotel.PHONGs
         ));
         renderHotels(hotelObj);
     } catch (error) {
@@ -68,11 +78,18 @@ function renderHotels(hotels) {
             result +
             `
                 <tr>
-                    <td>${hotel.MA_KS}</td>
+                    <td>${(currentPage - 1) * itemsPerPage + index + 1}</td>
                     <td>${hotel.TEN_KS}</td>
                     <td>${hotel.MO_TA}</td>
                     <td class="d-flex justify-content-center"><img width="50" height="50" src="/img/${duongDanHinh}"><img/></td>
-                    <td>${hotel.MA_VITRI_VITRI.TENVITRI}</td>
+                    <td>${hotel.MA_VITRI_VITRI.TENVITRI}, ${hotel.MA_VITRI_VITRI.MA_TINHTHANH_TINHTHANH.TEN_TINHTHANH}, ${hotel.MA_VITRI_VITRI.MA_TINHTHANH_TINHTHANH.MA_QUOCGIA_QUOCGIum.TEN_QUOCGIA}</td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            ${hotel.TRANGTHAI_KS === "Hoạt động" 
+                                ? '<span style="color: #64f317;">●</span>' 
+                                : '<span style="color: red;">●</span>'}
+                        </div>
+                    </td>
                     <td>
                         <div class="d-flex justify-content-center align-items-center">
                             <button class="btn btn-outline-success mx-2" onclick="selectHotel('${hotel.MA_KS}');">
@@ -140,8 +157,16 @@ async function getSearchHotelByName(searchParam) {
                 hotel.TEN_KS,
                 hotel.MO_TA,
                 hotel.HINHANH,
+                hotel.SOSAO,
+                hotel.TRANGTHAI_KS,
+                hotel.QRTHANHTOAN,
                 hotel.MA_VITRI,
-                hotel.MA_VITRI_VITRI
+                hotel.YEU_CAU_COC,
+                hotel.TI_LE_COC,
+                hotel.MA_VITRI_VITRI,
+                hotel.MA_TINHTHANH_TINHTHANH,
+                hotel.MA_QUOCGIA_QUOCGIum,
+                hotel.PHONGs
             ));
             renderHotelsByName(hotels, searchParam);
         } else {
@@ -153,6 +178,7 @@ async function getSearchHotelByName(searchParam) {
         console.log("Lỗi từ máy chủ", error);
     }
 }
+
 
 
 function renderHotelsByName(hotels, searchParam) {
