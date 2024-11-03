@@ -8,45 +8,81 @@ document.addEventListener('DOMContentLoaded', () => {
     const base64Url = localStorageToken.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const decodedToken = JSON.parse(atob(base64));
-    const userRole = decodedToken && decodedToken.data && decodedToken.data.CHUCVU;
-    if (userRole !== "Customer") {
-        window.location.href = "/layouts/index.html";
-        return;
-    }
 
-    // Xuất dữ liệu vào các phần tử HTML
-    const hoTen = decodedToken.data.HOTEN ? decodeURIComponent(escape(decodedToken.data.HOTEN)) : '';
-    const email = decodedToken.data.EMAIL || '';
-    const phone = decodedToken.data.SDT || '';
-    const gender = decodedToken.data.GIOITINH || '';
-    const dob = new Date(decodedToken.data.NGAYSINH || '');
-    const anhDaiDien = decodedToken?.data?.ANHDAIDIEN ? decodeURIComponent(escape(decodedToken.data.ANHDAIDIEN)) : '';
-    const avatarElement = document.getElementById('avarta1');
-    avatarElement.src = `/img/${anhDaiDien}`; // Đường dẫn hoàn chỉnh
+    
 
-    document.getElementById("hoTen").value = hoTen || '';
-    document.getElementById("email").value = email || '';
-    document.getElementById("phone").value = phone || '';
-
-    const genderSelect = document.getElementById("gender");
-
-    if (gender === "Nam" || gender === "Nữ") {
-        genderSelect.value = gender; // Gán giá trị cho select nếu hợp lệ
-    } else {
-        genderSelect.selectedIndex = 0; // Chọn tùy chọn mặc định nếu không có giới tính hợp lệ
-    }
-
-    // Cập nhật giá trị cho ngày, tháng, năm
-    document.getElementById("day").value = dob.getDate() || '';
-    document.getElementById("month").value = String(dob.getMonth() + 1).padStart(2, '0') || ''; // Đảm bảo tháng có định dạng 2 chữ số
-    document.getElementById("year").value = dob.getFullYear() || '';
-
-    const userID = Number(decodedToken.data.MA_ND);
+    const userID = decodedToken && decodedToken.data && decodedToken.data.MA_ND;
+    getUserIDChung(userID)
     document.getElementById("updateInfoButton").addEventListener("click", function() {
         updateUser(userID);
     });
     getBookingUser();
 });
+
+async function getUserIDChung(userID) {
+    try {
+        
+        const user = await apiGetUserID(userID);
+        renderInfoUserChung(user);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
+function renderInfoUserChung(user) {
+    // Cập nhật tên người dùng
+    const HOTEN = document.getElementById("hoTen");
+    if (HOTEN) {
+        HOTEN.value = user && user.HOTEN !== undefined ? user.HOTEN : ''; 
+    }
+
+    // Cập nhật email
+    const emailInput = document.getElementById("email");
+    if (emailInput) {
+        emailInput.value = user && user.EMAIL !== undefined ? user.EMAIL : '';
+    }
+
+    // Cập nhật số điện thoại
+    const phoneInput = document.getElementById("phone");
+    if (phoneInput) {
+        phoneInput.value = user && user.PHONE !== undefined ? user.PHONE : '';
+    }
+
+    // Cập nhật giới tính
+    const genderSelect = document.getElementById("gender");
+    if (genderSelect) {
+        const gender = user && user.GENDER !== undefined ? user.GENDER : '';
+        if (gender === "Nam" || gender === "Nữ") {
+            genderSelect.value = gender;
+        } else {
+            genderSelect.selectedIndex = 0; // Chọn tùy chọn mặc định
+        }
+    }
+
+    // Cập nhật ngày, tháng, năm sinh
+    const dob = user && user.NGAYSINH ? new Date(user.NGAYSINH) : new Date();
+    const dayInput = document.getElementById("day");
+    const monthInput = document.getElementById("month");
+    const yearInput = document.getElementById("year");
+
+    if (dayInput) {
+        dayInput.value = dob.getDate() || '';
+    }
+    if (monthInput) {
+        monthInput.value = String(dob.getMonth() + 1).padStart(2, '0') || '';
+    }
+    if (yearInput) {
+        yearInput.value = dob.getFullYear() || '';
+    }
+    
+    const avatarElement = document.getElementById("avarta1");
+    if (avatarElement) {
+        const ANHDAIDIEN = user && user.ANHDAIDIEN !== undefined ? user.ANHDAIDIEN : 'noimg.png';
+        avatarElement.src = `/img/${ANHDAIDIEN}`; 
+    } else {
+        console.error("Avatar element not found.");
+    }
+}
 
 async function updateUser(userID) {
     const email = document.getElementById("email").value.trim();
@@ -134,7 +170,9 @@ function renderBookingUser(bookings) {
                         <input type="text" class="form-control mt-2" value="Giá tiền: ${giaTienVND} VND" readonly>
                         <input type="text" class="form-control mt-2" value="Trạng thái: ${booking.TRANGTHAI}" readonly> 
                         <input type="text" class="form-control mt-2" value="Ngày đặt: ${booking.NGAYDATPHG}" readonly>
-                        ${!isCancelled ? `<a href="#" class="btn btn-danger mt-2" onclick="cancelBooking('${booking.MA_DP}')">Hủy đặt phòng</a>` : ''}
+                        ${!isCancelled ? `<a href="#" class="btn btn-danger mt-2 me-2" onclick="cancelBooking('${booking.MA_DP}')">Hủy đặt phòng</a>` : ''}
+                        <button class="btn btn-outline-success mt-2">Cập nhật trạng thái</button>
+
                     </div>
                 </div>
             </div>

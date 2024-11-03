@@ -13,13 +13,37 @@ document.addEventListener('DOMContentLoaded', function() {
         const base64Url = localStorageToken.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
         const decodedToken = JSON.parse(atob(base64));
-        const userName = decodedToken?.data?.HOTEN ? decodeURIComponent(escape(decodedToken.data.HOTEN)) : '';
-        const anhDaiDien = decodedToken?.data?.ANHDAIDIEN ? decodeURIComponent(escape(decodedToken.data.ANHDAIDIEN)) : '';
-        document.getElementById('userName').textContent = userName;
-        const avatarElement = document.getElementById('avarta');
-        avatarElement.src = `/img/${anhDaiDien}`; // Đường dẫn hoàn chỉnh
+        const userID = decodedToken && decodedToken.data && decodedToken.data.MA_ND;
+        getUserID(userID); 
     }
 });
+
+async function getUserID(userID) {
+    try {
+        
+        const user = await apiGetUserID(userID);
+        renderInfoUser(user);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
+function renderInfoUser(user) {
+    const HOTEN = document.getElementById("userName");
+    if (HOTEN) {
+        HOTEN.textContent = user && user.HOTEN !== undefined ? user.HOTEN : '0'; 
+    }
+
+    const avatarElement = document.getElementById("avarta");
+    if (avatarElement) {
+        const ANHDAIDIEN = user && user.ANHDAIDIEN !== undefined ? user.ANHDAIDIEN : 'noimg.png';
+        avatarElement.src = `/img/${ANHDAIDIEN}`; 
+    } else {
+        console.error("Avatar element not found.");
+    }
+}
+
+
 
 function logout() {
     localStorage.removeItem('localStorageToken');

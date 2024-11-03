@@ -74,6 +74,7 @@ function renderHotels(hotels) {
     const currentHotels = hotels.slice(startIndex, endIndex);
     const html = currentHotels.reduce((result, hotel, index) => {
         const duongDanHinh = hotel.HINHANH;
+        const hinhQR = hotel.QRTHANHTOAN;
         return (
             result +
             `
@@ -83,6 +84,7 @@ function renderHotels(hotels) {
                     <td>${hotel.MO_TA}</td>
                     <td class="d-flex justify-content-center"><img width="50" height="50" src="/img/${duongDanHinh}"><img/></td>
                     <td>${hotel.MA_VITRI_VITRI.TENVITRI}, ${hotel.MA_VITRI_VITRI.MA_TINHTHANH_TINHTHANH.TEN_TINHTHANH}, ${hotel.MA_VITRI_VITRI.MA_TINHTHANH_TINHTHANH.MA_QUOCGIA_QUOCGIum.TEN_QUOCGIA}</td>
+                    <td class="d-flex justify-content-center"><img width="50" height="50" src="/img/${hinhQR}"><img/></td>                    
                     <td>
                         <div class="d-flex justify-content-center">
                             ${hotel.TRANGTHAI_KS === "Hoạt động" 
@@ -190,6 +192,7 @@ function renderHotelsByName(hotels, searchParam) {
   
     const html = currentHotels.reduce((result, hotel, index) => {
       const duongDanHinh = hotel.HINHANH;
+      const HINHQR = hotel.QRTHANHTOAN;
       if (hotel.TEN_KS.toLowerCase().includes(searchParam.toLowerCase())) {
         return (
             result +
@@ -200,6 +203,7 @@ function renderHotelsByName(hotels, searchParam) {
                     <td>${hotel.MO_TA}</td>
                     <td class="d-flex justify-content-center"><img width="50" height="50" src="/img/${duongDanHinh}"><img/></td>
                     <td>${hotel.MA_VITRI_VITRI.TENVITRI}</td>
+                    <td class="d-flex justify-content-center"><img width="50" height="50" src="/img/${HINHQR}"><img/></td>                                       
                     <td>
                         <div class="d-flex justify-content-center align-items-center">
                             <button class="btn btn-outline-success mx-2" onclick="selectHotel('${hotel.MA_KS}');">
@@ -250,3 +254,129 @@ function logout() {
 document.getElementById("logoutButton").addEventListener("click", function() {
     logout();
 });
+
+async function deleteHotel(hotelID) {
+    const willDeactivate = await Swal.fire({
+      title: "Bạn có muốn ngừng hoạt động khách sạn?",
+      text: "Nhấn OK để xác nhận ngừng hoạt động khách sạn.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      cancelButtonText: "Hủy",
+    });
+  
+    if (willDeactivate.isConfirmed) {
+      try {
+        await apiDeleteHotel(hotelID);
+        Swal.fire('Ngưng hoạt động khách sạn thành công', '', 'success').then(() => {
+          window.location.reload();
+        });
+      } catch (error) {
+        Swal.fire('Ngưng hoạt động khách sạn thất bại', '', 'error');
+      }
+    }
+}
+
+async function createHotel() {
+    const TEN_KS = document.getElementById("TEN_KS").value;
+    const MO_TA = document.getElementById("MO_TA").value;
+    const SOSAO = document.getElementById("SOSAO").value;
+    const MA_VITRI = document.getElementById("MA_VITRI").value;
+    const YEU_CAU_COC = document.getElementById("YEU_CAU_COC").value;
+    const TI_LE_COC = document.getElementById("TI_LE_COC").value;
+    const HINHANH = document.getElementById("HINHANH").files[0];
+    const QRTHANHTOAN = document.getElementById("QRTHANHTOAN").files[0];
+
+    try {
+        const formData = new FormData();
+        formData.append('TEN_KS', TEN_KS);
+        formData.append('MO_TA', MO_TA);
+        formData.append('SOSAO', SOSAO);
+        formData.append('MA_VITRI', MA_VITRI);
+        formData.append('YEU_CAU_COC', YEU_CAU_COC);
+        formData.append('TI_LE_COC', TI_LE_COC);
+        if (HINHANH) formData.append('HINHANH', HINHANH);
+        if (QRTHANHTOAN) formData.append('QRTHANHTOAN', QRTHANHTOAN);
+
+        const response = await apiCreateHotel(formData);
+
+        switch (response) {
+            case "Người dùng không được xác thực":
+                Swal.fire({
+                    title: 'Xác thực thất bại',
+                    text: 'Vui lòng đăng nhập để tạo khách sạn.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    allowEscapeKey: true,
+                    allowEnterKey: true
+                });
+                break;
+
+            case "Không có quyền truy cập chức năng này":
+                Swal.fire({
+                    title: 'Quyền truy cập bị từ chối',
+                    text: 'Bạn không có quyền để thực hiện hành động này.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    allowEscapeKey: true,
+                    allowEnterKey: true
+                });
+                break;
+
+            case "Bạn đã tạo khách sạn thành công!":
+                Swal.fire({
+                    title: 'Tạo khách sạn thành công',
+                    text: 'Khách sạn của bạn đã được tạo thành công.',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    allowEscapeKey: true,
+                    allowEnterKey: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "../layout/fb_adminQLND.html"; // Redirect after user confirms
+                    }
+                });
+                break;
+
+            default:
+                Swal.fire({
+                    title: 'Lỗi không xác định',
+                    text: 'Vui lòng thử lại sau.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false,
+                    allowEscapeKey: true,
+                    allowEnterKey: true
+                });
+                break;
+        }
+    } catch (error) {
+        console.error(error);
+        Swal.fire({
+            title: 'Đã có lỗi xảy ra',
+            text: 'Không thể hoàn thành yêu cầu của bạn. Vui lòng thử lại sau.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+            allowOutsideClick: false,
+            allowEscapeKey: true,
+            allowEnterKey: true
+        });
+    }
+}
+
+async function selectHotel(hotelID) {
+    try {
+        const response = await apiSelectHotel(hotelID);
+
+        localStorage.setItem('selectedHotel', JSON.stringify(response));
+
+        window.location.href = "adminUpdateHotel.html";
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+

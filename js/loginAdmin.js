@@ -31,7 +31,7 @@ async function SignIn() {
         const token = response.data;
         localStorage.setItem("localStorageToken", token);
           Swal.fire('Đăng nhập thành công', '', 'success').then(() => {
-          window.location.href = "../layouts/adminHotel.html";
+          window.location.href = "../layouts/adminThongKe.html";
         });
       } else if (response.status === 400) {
         Swal.fire('Tài khoản hoặc mật khẩu không đúng', '', 'error');

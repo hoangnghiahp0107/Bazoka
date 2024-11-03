@@ -51,8 +51,39 @@
       <i class="fa-solid fa-bars icon-menu mx-2"></i>
     </nav>
     <main>
-        
-    </main>
+      <table class="table">
+          <thead>
+              <th>
+                  <h3 class="text-start">Quản lý đặt phòng</h3>
+              </th>
+              <th class="d-flex justify-content-end" style="margin-right: 30px;">
+                <div class="search-bar">
+                  <form class="search d-flex justify-content-center align-items-center">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" placeholder="Tìm kiếm đặt phòng" name="search"/>
+                  </form>
+                </div>
+              </th>
+          </thead>
+      </table>
+      <table class="table table-bordered">
+          <thead>
+              <th>ID</th>
+              <th>Tài khoản</th>
+              <th>Tên phòng</th>
+              <th>Tên khách sạn</th>
+              <th>Ngày đến</th>
+              <th>Ngày đi</th>
+              <th>Trạng thái</th>
+              <th>Ngày đặt phòng</th>
+              <th>Mã giảm giá</th>
+              <th>Thành tiền</th>
+              <th>Đã cọc</th>
+              <th></th>
+          </thead>
+          <tbody id="user"></tbody>
+      </table>
+  </main>
   </div>
   <div id="pagination" class="d-flex justify-content-center mt-3"></div>
   <div id="loading-spinner" class="hidden spinner-overlay">

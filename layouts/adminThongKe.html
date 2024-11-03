@@ -59,7 +59,7 @@
                     <div class="card bg-primary text-white h-100">
                         <div class="card-body">Tổng số người dùng</div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <h2>1200</h2>
+                            <h2 id="nguoiDungCount">1200</h2>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                     <div class="card bg-warning text-white h-100">
                         <div class="card-body">Tổng số khách sạn</div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <h2>300</h2>
+                            <h2 id="khachSanCount">300</h2>
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                     <div class="card bg-success text-white h-100">
                         <div class="card-body">Tổng số đánh giá</div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <h2>5000</h2>
+                            <h2 id="danhGiaCount">5000</h2>
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                     <div class="card bg-danger text-white h-100">
                         <div class="card-body">Tổng số đặt phòng</div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <h2>1500</h2>
+                            <h2 id="phieuDatPhgCount">1500</h2>
                         </div>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
   <script src="/js/class.js"></script>
   <script src="/services/callApi.js"></script>
-
+  <script src="/js/adminThongKe.js"></script>
 <script>
     // Biểu đồ số lượng đặt phòng theo tháng
     const bookingCtx = document.getElementById('bookingChart').getContext('2d');

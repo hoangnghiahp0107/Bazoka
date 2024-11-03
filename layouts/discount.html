@@ -38,11 +38,25 @@
                         <li><a class="dropdown-item" href="#">Liên hệ chúng tôi</a></li>
                       </ul>
                     </li>
+                    <li id="info-user" class="nav-item dropdown" style="display: none;">
+                        <a class="nav-link mx-lg-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <img id="avarta" src="/img/germany.jpg" alt="" width="25" height="25" style="border-radius: 50px;">
+                          <span id="userName"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="userInfo.html#account-general"><i class="fa-solid fa-user me-2 icon-comment"></i>Chỉnh sửa hồ sơ</a></li>
+                            <li><a class="dropdown-item" href="userInfo.html#account-my-bookings"><i class="fa-solid fa-hotel me-2 icon-comment"></i>Đặt chỗ của tôi</a></li>
+                            <li><a class="dropdown-item" href="discount.html"><i class="fa-solid fa-percent me-2 icon-comment"></i>Mã giảm giá</a></li>
+                            <li><a id="logout-link" class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket me-2 icon-comment"></i>Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item mt-2">
+                        <a id="loginButton" class="mx-lg-2 login-button" href="loginUser.html">Đăng nhập</a>
+                        <a id="registerButton" class="mx-lg-2 login-button register-button" href="loginUser.html">Đăng ký</a>
+                    </li>
                   </ul>
                 </div>
               </div>
-              <a class="login-button me-2" href="#">Đăng nhập</a>
-              <a class="register-button" href="#">Đăng ký</a>
               <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -146,5 +160,6 @@
     <script src="/js/class.js"></script>
     <script src="/services/callApi.js"></script>
     <script src="/js/discount.js"></script>
+    <script src="/js/succesLogin.js"></script>
 </body>
 </html>

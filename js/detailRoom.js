@@ -86,6 +86,9 @@ async function getDataRoomDay(roomID, NGAYDEN, NGAYDI){
         const roomObj = rooms.map((room) => new LOAIPHONG(
             room.MA_LOAIPHG,
             room.TENLOAIPHG,
+            room.SLKHACH,
+            room.SLGIUONGDON,
+            room.SLGIUONGDOI,
             room.SLPHONG,
             room.PHONG,
             room.TRANGTHAI,
@@ -228,6 +231,12 @@ function renderDataRoom(rooms) {
         // Chọn giá để hiển thị
         const giaHienThi = formattedGiaDaGiam || formattedGiaGoc;
 
+        // Tạo chuỗi thông tin về khách và giường
+        const guestInfo = [];
+        if (room.SLKHACH > 0) guestInfo.push(`${room.SLKHACH} Khách`);
+        if (room.SLGIUONGDON > 0) guestInfo.push(`${room.SLGIUONGDON} Giường đơn`);
+        if (room.SLGIUONGDOI > 0) guestInfo.push(`${room.SLGIUONGDOI} Giường đôi`);
+
         return (
             result +
             `
@@ -238,7 +247,10 @@ function renderDataRoom(rooms) {
                                 <img src="/img/${duongDanHinh}" class="card-img-top" alt="">
                                 <div class="card-body">
                                     <h2 class="card-title" id="typeRoom">${room.TENLOAIPHG}</h2>
-                                    <p class="card-text">${room.PHONG.MOTA}.</p>                                    <ul class="list-group list-group-flush mb-3">
+                                    <p class="card-text">${room.PHONG.MOTA}.</p>
+                                    <p class="card-text fs-6"><b>${guestInfo.join(', ')}</b></p>
+                                                                    
+                                    <ul class="list-group list-group-flush mb-3">
                                         <li class="list-group-item text-danger ps-0"><b>Giá: <span id="priceRoom">${giaHienThi}</span>/đêm</b></li>
                                         <li class="list-group-item ps-0">Trạng thái: 
                                             <span class="badge ${room.TRANGTHAI === 'Hết phòng' ? 'bg-danger' : 'bg-success'}">
@@ -271,9 +283,6 @@ function renderDataRoom(rooms) {
         });
     });
 }
-
-
-
 
 function renderConvenient(convenients) {
     const convenientMap = {

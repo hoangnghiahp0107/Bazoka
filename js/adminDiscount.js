@@ -247,4 +247,115 @@ async function deleteDiscount(discountID) {
         Swal.fire('Xóa mã giảm giá thất bại', '', 'error');
       }
     }
-  }
+}
+
+async function createDiscount() {
+    // Lấy dữ liệu từ các trường nhập liệu
+    const MA_MGG = document.getElementById("MA_MGG").value;
+    const PHANTRAM = document.getElementById("PHANTRAM").value;
+    const NGAYBATDAU = document.getElementById("NGAYBATDAU").value;
+    const NGAYKETTHUC = document.getElementById("NGAYKETTHUC").value;
+    const DIEU_KIEN = document.getElementById("DIEU_KIEN").value;
+
+    // Kiểm tra tính hợp lệ của dữ liệu
+    if (!MA_MGG || !PHANTRAM || !NGAYBATDAU || !NGAYKETTHUC || !DIEU_KIEN) {
+        Swal.fire({
+            title: 'Thông báo',
+            text: 'Vui lòng điền đầy đủ thông tin.',
+            icon: 'warning',
+            confirmButtonText: 'OK',
+            allowOutsideClick: false,
+            allowEscapeKey: true,
+            allowEnterKey: true
+        });
+        return;
+    }
+
+    // Kiểm tra PHANTRAM phải nhỏ hơn 100
+    if (parseFloat(PHANTRAM) >= 100) {
+        Swal.fire({
+            title: 'Lỗi',
+            text: 'Phần trăm giảm giá phải nhỏ hơn 100.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+            allowOutsideClick: false,
+            allowEscapeKey: true,
+            allowEnterKey: true
+        });
+        return;
+    }
+
+    // Tạo đối tượng dữ liệu để gửi
+    const discountData = {
+        MA_MGG,
+        PHANTRAM: parseFloat(PHANTRAM),
+        NGAYBATDAU,
+        NGAYKETTHUC,
+        DIEU_KIEN,
+    };
+
+    try {
+        // Gọi API để tạo mã giảm giá
+        const response = await apiCreateDiscount(discountData);
+
+        // Xử lý phản hồi từ server
+        if (response === "Mã giảm giá đã tồn tại.") {
+            Swal.fire({
+                title: 'Lỗi',
+                text: response,
+                icon: 'error',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false,
+                allowEscapeKey: true,
+                allowEnterKey: true
+            });
+        } else if (response) {
+            Swal.fire({
+                title: 'Thông báo',
+                text: response,
+                icon: 'success',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false,
+                allowEscapeKey: true,
+                allowEnterKey: true
+            }).then(() => {
+                location.reload();
+            });
+        } else {
+            Swal.fire({
+                title: 'Lỗi không xác định',
+                text: 'Vui lòng thử lại sau.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false,
+                allowEscapeKey: true,
+                allowEnterKey: true
+            });
+        }
+    } catch (error) {
+        console.error("Error creating discount:", error);
+        Swal.fire({
+            title: 'Đã có lỗi xảy ra',
+            text: 'Không thể hoàn thành yêu cầu của bạn. Vui lòng thử lại sau.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+            allowOutsideClick: false,
+            allowEscapeKey: true,
+            allowEnterKey: true
+        });
+    }
+}
+
+
+async function selectDiscount(discountID) {
+    try {
+        const response = await apiSelectDiscount(discountID);
+
+        localStorage.setItem('selectedDiscount', JSON.stringify(response));
+
+        window.location.href = "adminUpdateDiscount.html";
+        
+    } catch (error) {
+        console.log(error);
+    }
+}

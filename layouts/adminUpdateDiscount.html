@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/img/logo.png"/>
+  <title>Bazoka - Nền tảng du lịch hàng đầu thế giới</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
+
+</head>
+<body>
+    <div class="sidebar active">
+        <a href="index.html" class="logo">
+          <img width="50" height="50" src="/img/logo.png" alt="">
+          <div class="logo-name"><span>Bazo</span>ka</div>
+        </a>
+        <ul class="side-menu">
+          <li><a href="adminThongKe.html"><i class="fa-solid fa-chart-line"></i>Thống kê</a></li>
+        </ul>
+        <ul class="side-menu">
+          <li><a href="adminHotel.html"><i class="fa-solid fa-hotel"></i>Quản lý khách sạn</a></li>
+        </ul>
+        <ul class="side-menu">
+          <li><a href="adminUser.html"><i class="fa-solid fa-user"></i>Quản lý người dùng</a></li>
+        </ul>
+        <ul class="side-menu">
+            <li><a href="adminBooking.html"><i class="fa-solid fa-money-bill-wave"></i>Quản lý đặt phòng</a></li>
+        </ul>
+        <ul class="side-menu">
+            <li><a href="adminDiscount.html"><i class="fa-solid fa-percent"></i>Quản lý mã giảm giá</a></li>
+        </ul>
+        <ul class="side-menu">
+          <li>
+            <a href="#" class="logout" id="logoutButton">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              Đăng xuất
+            </a>
+          </li>
+        </ul>
+      </div>
+  <div class="content">
+    <nav>
+      <i class="fa-solid fa-bars icon-menu mx-2"></i>
+    </nav>
+    <main>
+        <table class="table">
+            <thead>
+                <th>
+                    <h3 class="text-start">Quản lý khuyến mãi</h3>
+                </th>
+                <th class="d-flex justify-content-end" style="margin-right: 30px;">
+                    <div class="search-bar"> <i class="fa-solid fa-magnifying-glass"></i>
+                      <input type="search" placeholder="Tìm kiếm khuyến mãi" name="search"/>
+                    </div>
+                </th>
+            </thead>
+        </table>
+        <div class="info-ND">
+            <div class="modal-body">
+                <form id="updateForm" enctype="multipart/form-data" class="form-group">
+                  <div class="input-group">
+                    <input type="number" name="PHANTRAM" id="PHANTRAM" class="form-control input-sm" placeholder="Phần trăm khuyến mãi" max="100">
+                  </div>
+                  <br>
+                  <h5>Ngày bắt đầu</h5>
+                  <div class="input-group">
+                    <input class="form-control" type="date" id="NGAYBATDAU" name="NGAYBATDAU">
+                  </div>
+                  <br>
+                  <h5>Ngày kết thúc</h5>
+                  <div class="input-group">
+                    <input class="form-control" type="date" id="NGAYKETTHUC" name="NGAYKETTHUC">
+                  </div>
+                  <br>
+                  <div class="input-group">
+                    <input type="text" name="DIEU_KIEN" id="DIEU_KIEN" class="form-control input-sm" placeholder="Điều kiện">
+                  </div>
+                  <br>
+                  <div class="modal-content-popup"></div>
+                </form>
+                <div class="modal-footer">
+                  <button id="updateButton" type="button" class="btn btn-info">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+  </div>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
+    integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/class.js"></script>
+  <script src="../services/callApi.js"></script>
+  <script src="../js/adminUpdateDiscount.js"></script>
+</body>
+</html>
