@@ -16,18 +16,13 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 async function SignUp() {
-  const taiKhoan = document.getElementById("tai_khoan").value;
+  const email = document.getElementById("email").value;
+  const phone = document.getElementById("phone").value;
   const hoTen = document.getElementById("ho_ten").value;
+  const birth = document.getElementById("birth").value;
+  const gioiTinh = document.getElementById("gioi_tinh").value;
   const matKhau = document.getElementById("mat_khau").value;
   const nhapLaiMK = document.getElementById("nhap_lai_mk").value;
-
-  // Email validation function
-  function isEmail(value) {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailPattern.test(value);
-  }
-
-  const isTaiKhoanEmail = isEmail(taiKhoan);
 
   // Check if passwords match
   if (matKhau !== nhapLaiMK) {
@@ -36,7 +31,7 @@ async function SignUp() {
   }
 
   // Check if fields are empty
-  if (!taiKhoan || !hoTen || !matKhau || !nhapLaiMK) {
+  if (!email || !phone || !hoTen || !matKhau || !nhapLaiMK || !birth   ) {
       Swal.fire('Vui lòng điền đầy đủ thông tin', '', 'error');
       return;
   }
@@ -44,10 +39,12 @@ async function SignUp() {
   try {
       // Send the sign-up request
       const response = await apiSignUp({
-          SDT: isTaiKhoanEmail ? null : taiKhoan,
-          EMAIL: isTaiKhoanEmail ? taiKhoan : null,
+          EMAIL: email,
+          SDT:phone,
           HOTEN: hoTen,
           MATKHAU: matKhau,
+          NGAYSINH: birth,
+          GIOITINH: gioiTinh
       });
 
       if (response.status === 200) {

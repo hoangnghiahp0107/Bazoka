@@ -100,6 +100,29 @@ function renderUsers(users) {
     renderPagination(totalPages);
 }
 
+async function deleteUser(userID) {
+    const willDelete = await Swal.fire({
+        title: "Bạn có muốn xóa người dùng này?",
+        text: "Nhấn OK để xác nhận xóa người dùng.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "OK",
+        cancelButtonText: "Hủy",
+    });
+
+    if (willDelete.isConfirmed) {
+        try {
+            await apiDeleteUser(userID);
+            Swal.fire('Xóa người dùng thành công', '', 'success').then(() => {
+                window.location.reload();
+            });
+        } catch (error) {
+            Swal.fire('Không thể xóa người dùng', 'Người dùng này đang có đặt phòng!', 'error');
+        }
+    }
+}
+
+
 let currentPage = 1;
 const itemsPerPage = 10; 
 
