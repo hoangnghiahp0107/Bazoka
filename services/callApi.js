@@ -199,6 +199,23 @@ async function apiDeleteDiscount(discountID){
   }
 }
 
+async function apiDeleteRate(rateID){
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "DELETE",
+      url: `${URL}/api/rate/delete-rate/${rateID}`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
 async function apiDeleteUser(userID){
   try {
     const localStorageToken = localStorage.getItem("localStorageToken");
@@ -442,6 +459,26 @@ async function apiCreateHotel(formData){
     throw error;
   }
 }
+
+async function apiCreateRate(formData) {
+  try {
+      const localStorageToken = localStorage.getItem("localStorageToken");
+      const response = await axios({
+          method: "POST",
+          url: `${URL}/api/rate/create-rate`,
+          headers: {
+              token: localStorageToken,
+          },
+          data: formData
+      });
+      return response; // Return the entire response object
+  } catch (error) {
+      console.error("Error creating rate:", error);
+      throw error; // Rethrow the error for handling in the calling function
+  }
+}
+
+
 
 async function apiCreateDiscount(discountData) {
   try {

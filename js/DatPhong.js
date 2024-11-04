@@ -88,6 +88,48 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Không tìm thấy thông tin đặt phòng trong localStorage');
     }
 });
+let discountApplied = false; // Biến để theo dõi trạng thái giảm giá
+
+async function applyDiscount() {
+    try {
+        if (discountApplied) {
+            // Nếu đã áp dụng giảm giá, không thực hiện gì cả
+            return;
+        }
+        
+        const discountID = document.getElementById('MA_MGG').value;
+        const response = await apiSelectDiscount(discountID);
+        localStorage.setItem('selectedDiscount', JSON.stringify(response));
+
+        const discountData = JSON.parse(localStorage.getItem('selectedDiscount'));
+        const totalPriceElement = document.getElementById('sumPrice');
+        let totalPrice = parseFloat(totalPriceElement.innerText.replace(/[,. VND]/g, '').trim()) || 0;
+        const discountPercentage = discountData?.PHANTRAM || 0; // Giả sử response chứa trường 'PHANTRAM'
+        
+        const discountAmount = (discountPercentage / 100) * totalPrice;
+        const newTotalPrice = totalPrice - discountAmount; // Tính toán tổng giá mới
+
+        // Cập nhật giao diện
+        totalPriceElement.innerHTML = `${newTotalPrice.toLocaleString('vi-VN')} VND`;
+        document.getElementById('applyDiscount').innerHTML = `${discountAmount.toLocaleString('vi-VN')} VND`;
+        document.getElementById('sumPrice1').innerHTML = `<b>Tổng giá: </b> ${newTotalPrice.toLocaleString('vi-VN')} VND`;
+
+        // Tính toán lại giá cọc dựa trên tổng giá mới
+        const tiLeCoc = parseFloat(localStorage.getItem('TI_LE_COC')) || 0;
+        let deposit = newTotalPrice * tiLeCoc / 100; // Cọc 30% hoặc theo tỉ lệ đã lưu
+        localStorage.setItem('COC', deposit.toString());
+
+        localStorage.setItem('sumPrice', newTotalPrice.toString());
+        
+        // Cập nhật giao diện cho giá cọc
+        document.getElementById('coc').innerHTML = `${deposit.toLocaleString('vi-VN')} VND`;
+
+        // Đánh dấu là đã áp dụng giảm giá
+        discountApplied = true;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 async function DatPhong() {
@@ -97,13 +139,15 @@ async function DatPhong() {
     const MA_KS = localStorage.getItem('MA_KS');
     const LOAIPHONG = localStorage.getItem('MA_LOAIPHG');
     const SLKHACH = localStorage.getItem('numberOfGuests');
-    
+    const MA_MGG = document.getElementById('MA_MGG').value;
+
     // Get the sumPrice value from the displayed element
     const sumPriceElement = document.getElementById('sumPrice');
     const sumPrice = parseFloat(sumPriceElement.innerText.replace(/[,. ₫]/g, '')) || 0;
 
     try {
         const response = await apiBookingRoom({
+            MA_MGG: MA_MGG,
             NGAYDEN: NGAYDEN,
             NGAYDI: NGAYDI,
             SLKHACH: SLKHACH,
@@ -140,7 +184,4 @@ async function DatPhong() {
         });
     }
 }
-
-
-
 
