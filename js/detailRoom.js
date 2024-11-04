@@ -180,20 +180,40 @@ function renderRoomID(rooms){
                                         <div class="mb-3">
                                             <textarea class="form-control" id="reviewText" rows="3" required></textarea>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                                        <button type="button" class="btn btn-primary" onclick="createRate()">Gửi đánh giá</button>
                                     </form>
                                 </section>
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
+                
             `
         );
     }, "");
     document.getElementById("detailsRoom").innerHTML = html;
+    // Xử lý sự kiện cho đánh giá
+    const stars = document.querySelectorAll('#ratingStars i');
+    let selectedRating = 0;
+    stars.forEach((star, index) => {
+        star.addEventListener('click', () => {
+            selectedRating = index + 1;
+            stars.forEach((s, i) => {
+                s.classList.toggle('fas', i < selectedRating); // Thêm class fas cho các sao đã chọn
+                s.classList.toggle('far', i >= selectedRating); // Thay đổi class cho các sao chưa chọn
+            });
+            document.getElementById('ratingStars').setAttribute('data-selected', selectedRating);
+        });
+    }); 
 }
 
 function renderRateID(rates) {
+    const localStorageToken = localStorage.getItem('localStorageToken');
+    const base64Url = localStorageToken.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const decodedToken = JSON.parse(atob(base64));
+    const userID = decodedToken && decodedToken.data && decodedToken.data.MA_ND;
+
     const html = rates.reduce((result, rate) => {
         const solidStars = rate.SO_SAO; 
         const outlineStars = 5 - solidStars; 
@@ -202,25 +222,44 @@ function renderRateID(rates) {
             '<i class="fas fa-star text-warning"></i> '.repeat(solidStars) +
             '<i class="far fa-star text-warning"></i> '.repeat(outlineStars);
 
+        // Kiểm tra điều kiện
+        const showDropdown = rate.MA_ND === userID ? `
+            <div>
+                <div class="dropdown">
+                    <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item text-danger" onclick="deleteRate(${rate.MA_DG})">Xóa</a></li>
+                    </ul>
+                </div>
+            </div>` : '';
+
         return (
             result +
             `
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">${rate.MA_ND_NGUOIDUNG.HOTEN}</h5>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <h5 class="card-title">${rate.MA_ND_NGUOIDUNG.HOTEN}</h5>
+                            </div>
+                            ${showDropdown}
+                        </div>
                         <div class="mb-2">
                             ${starsHTML}
-                        </div>
+                        </div>                        
                         <p class="card-text">${rate.BINH_LUAN}</p>
                         <footer class="blockquote-footer">${rate.NGAY_DG}</footer>
-
                     </div>
                 </div>
             `
         );
     }, "");
+
     document.getElementById("rates").innerHTML = html;
 }
+
 
 function renderDataRoom(rooms) {
     const html = rooms.reduce((result, room) => {
@@ -303,4 +342,117 @@ function renderConvenient(convenients) {
     }, "");
 
     document.getElementById("convenients").innerHTML = html;
+}
+
+async function createRate() {
+    const rating = document.getElementById('ratingStars').getAttribute('data-selected');
+    const comment = document.getElementById('reviewText').value;
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomID = urlParams.get('roomID');
+    const rateData = {
+        MA_KS: roomID,
+        SO_SAO: rating,
+        BINH_LUAN: comment
+    };
+    
+    const token = localStorage.getItem('localStorageToken');
+    if (!token) {
+        Swal.fire({
+            title: 'Thông báo',
+            text: 'Vui lòng đăng nhập để đánh giá.',
+            icon: 'info',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = 'loginUser.html';
+        });
+        return;
+    }
+
+    if (!rating || rating === "0") {
+        Swal.fire({
+            title: 'Lỗi',
+            text: 'Vui lòng chọn số sao trước khi gửi đánh giá!',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+    
+    if (!comment) {
+        Swal.fire({
+            title: 'Lỗi',
+            text: 'Vui lòng nhập bình luận trước khi gửi đánh giá!',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+    
+    try {
+        const response = await apiCreateRate(rateData);
+        
+        if (response.status === 201) {
+            Swal.fire({
+                title: 'Thành công!',
+                text: 'Đánh giá của bạn đã được gửi thành công.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                location.reload(); // Reload trang sau khi đánh giá thành công
+            });
+        } else if (response.status === 403) {
+            Swal.fire({
+                title: 'Lỗi',
+                text: response.data || 'Người dùng đã đánh giá khách sạn này rồi.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        } else if (response.status === 400) {
+            Swal.fire({
+                title: 'Lỗi',
+                text: 'Thông tin không đầy đủ.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        } else {
+            Swal.fire({
+                title: 'Lỗi',
+                text: response.data.message || 'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    } catch (error) {
+        const status = error.response ? error.response.status : 500; 
+        const message = error.response ? error.response.data : 'Đã có lỗi xảy ra. Vui lòng kiểm tra kết nối và thử lại.';
+        
+        Swal.fire({
+            title: 'Lỗi',
+            text: message,
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    }
+}
+
+async function deleteRate(rateID) {
+    const willDelete = await Swal.fire({
+        title: "Bạn có muốn xóa đánh giá này?",
+        text: "Nhấn OK để xác nhận xóa đánh giá.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "OK",
+        cancelButtonText: "Hủy",
+    });
+
+    if (willDelete.isConfirmed) {
+        try {
+            await apiDeleteRate(rateID);
+            Swal.fire('Xóa đánh giá thành công', '', 'success').then(() => {
+                window.location.reload();
+            });
+        } catch (error) {
+            Swal.fire('Không thể xóa đánh giá', error.message || 'Đã xảy ra lỗi. Vui lòng thử lại.', 'error');
+        }
+    }
 }

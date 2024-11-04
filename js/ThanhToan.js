@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkOut = localStorage.getItem('checkOut');
     const rooms = localStorage.getItem('numberOfRooms');
     const coc = localStorage.getItem('COC');
-    
+    const sumPrice = localStorage.getItem('sumPrice');
+
     if (bookData) {
         const infoBooking = JSON.parse(bookData);
         const formatDate = (dateString) => {
@@ -51,21 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             document.getElementById('coc').innerHTML = '<b>Cọc trước:</b> 0 VND'; // hoặc thông báo khác
         }
-        // Tính số đêm ở
-        const checkInDate = new Date(checkIn);
-        const checkOutDate = new Date(checkOut);
-        const numberOfNights = Math.ceil((checkOutDate - checkInDate) / (1000 * 3600 * 24));
-
-        // Lấy giá phòng và tính tổng giá
-        const priceRoom = parseFloat(infoBooking.priceRoom.replace(/[,. ₫]/g, '')) || 0;
-        const totalPrice = priceRoom * numberOfNights * rooms;
-
-        // Tính thuế phòng 10%
-        const taxRoom = totalPrice * 0.10;
-        const sumPrice = totalPrice + taxRoom; // Cập nhật để tính giá sau thuế
-        // Cập nhật tổng giá, thuế và giá sau thuế
-        document.getElementById('sumPrice').innerHTML = `<p>Tổng giá tiền: ${sumPrice.toLocaleString('vi-VN')} VND </p>`;
-        localStorage.setItem('sumPrice', sumPrice); 
+        if (sumPrice) {
+            const sumPriceValue = parseFloat(sumPrice);
+            document.getElementById('sumPrice').innerHTML = `<p>Tổng giá tiền: ${sumPriceValue.toLocaleString('vi-VN')} VND </p>`;
+        } else {
+            document.getElementById('sumPrice').innerHTML = '<p>Tổng giá tiền: 0 VND</p>'; // hoặc thông báo khác
+        }        
     } else {
         console.log('Không tìm thấy thông tin đặt phòng trong localStorage');
     }
@@ -74,22 +66,24 @@ document.addEventListener('DOMContentLoaded', () => {
 async function createPayment() {
     const checkIn = localStorage.getItem("checkIn");
     const checkOut = localStorage.getItem("checkOut");
-    const slKhach = localStorage.getItem("numberOfGuests");
     const MA_KS = localStorage.getItem("MA_KS");
     const numberOfRooms = localStorage.getItem("numberOfRooms");
+    const SLPHONG = parseFloat(numberOfRooms);    
     const LOAIPHONG = localStorage.getItem("MA_LOAIPHG");
-    const thanhTienStr = localStorage.getItem("COC");
+    const thanhTienStr = localStorage.getItem("sumPrice");
     const thanhTien = parseFloat(thanhTienStr);    
+    const cocStr = localStorage.getItem("COC");
+    const coc = parseFloat(cocStr);    
     try {
         await apiBookingRoomPay({
             NGAYDEN: checkIn,
             NGAYDI: checkOut,
-            SLKHACH: slKhach,
             THANHTIEN: thanhTien,
             MA_MGG: null, // Thêm nếu có
             MA_KS: MA_KS, // Thêm nếu có
-            numberOfRooms: numberOfRooms, // Số lượng phòng
+            numberOfRooms: SLPHONG, // Số lượng phòng
             LOAIPHONG: LOAIPHONG, // Thêm nếu có
+            DACOC: coc
         });
     } catch (error) {
         console.error("Đã có lỗi trong quá trình xử lý:", error.response ? error.response.data : error.message);

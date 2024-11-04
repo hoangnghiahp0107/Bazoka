@@ -167,6 +167,13 @@
                             </div> -->
                         </form>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nhập mã giảm giá của bạn:</label>
+                        <div class="d-flex align-items-center">
+                            <input id="MA_MGG" type="text" class="form-control" placeholder="Mã giảm giá" maxlength="20">
+                        <a class="btn btn-outline-primary ms-2 mb-3" onclick="applyDiscount()">Áp dụng</a> <!-- Nút áp dụng với hàm JavaScript -->
+                        </div>
+                    </div>
                     <!-- Chi tiết giá -->
                     <div class="price-details mb-4 p-3 border rounded">
                         <h3>Chi tiết giá</h3>
@@ -178,10 +185,10 @@
                             <span>Thuế và phí</span>
                             <span id="taxRoom">288,931 VND</span>
                         </div>
-                        <!-- <div class="price-row">
+                        <div class="price-row">
                             <span>Sử dụng mã giảm giá</span>
-                            <span>61,128 VND</span>
-                        </div> -->
+                            <span id="applyDiscount">0 VND</span>
+                        </div>
                         <div class="total-price">
                             <span>Tổng giá</span>
                             <span id="sumPrice">2,506,263 VND</span>
@@ -310,6 +317,7 @@
         <script>
             document.getElementById('btnDatPhongPay').addEventListener('click', function() {
                 window.location.href = 'ThanhToan.html';
+
             });
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"

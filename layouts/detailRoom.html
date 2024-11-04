@@ -202,7 +202,7 @@
 
         </section>
     </footer>
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
      <script>
         window.addEventListener('scroll', function() {
@@ -226,6 +226,25 @@
         function bookRoom(event) {
             event.preventDefault(); // Ngăn chặn gửi form mặc định
 
+            // Kiểm tra xem localStorage có chứa token không
+            const token = localStorage.getItem('localStorageToken');
+
+            if (!token) {
+                // Hiển thị thông báo yêu cầu đăng nhập
+                Swal.fire({
+                    title: 'Bạn cần đăng nhập!',
+                    text: 'Vui lòng đăng nhập để tiếp tục.',
+                    icon: 'warning',
+                    confirmButtonText: 'Đăng nhập',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Chuyển hướng đến trang đăng nhập
+                        window.location.href = "loginUser.html";
+                    }
+                });
+                return; // Ngừng thực hiện hàm nếu không có token
+            }
+
             const numberOfRooms = document.getElementById('rooms').value;
 
             if (numberOfRooms) {
@@ -246,7 +265,6 @@
 
                 // Lưu thông tin vào localStorage
                 localStorage.setItem('selectedBookRoom', JSON.stringify(dataBookRoom));
-                localStorage.setItem('numberOfRooms', numberOfRooms);
 
                 // Chuyển hướng đến trang Đặt phòng
                 window.location.href = "DatPhong.html";
@@ -254,6 +272,7 @@
                 console.error('Số lượng phòng không hợp lệ');
             }
         }
+
     </script>
 </body>
 </html>

@@ -45,13 +45,13 @@ function renderInfoUserChung(user) {
     // Cập nhật số điện thoại
     const phoneInput = document.getElementById("phone");
     if (phoneInput) {
-        phoneInput.value = user && user.PHONE !== undefined ? user.PHONE : '';
+        phoneInput.value = user && user.SDT !== undefined ? user.SDT : '';
     }
 
     // Cập nhật giới tính
     const genderSelect = document.getElementById("gender");
     if (genderSelect) {
-        const gender = user && user.GENDER !== undefined ? user.GENDER : '';
+        const gender = user && user.GIOITINH !== undefined ? user.GIOITINH : '';
         if (gender === "Nam" || gender === "Nữ") {
             genderSelect.value = gender;
         } else {
@@ -171,8 +171,6 @@ function renderBookingUser(bookings) {
                         <input type="text" class="form-control mt-2" value="Trạng thái: ${booking.TRANGTHAI}" readonly> 
                         <input type="text" class="form-control mt-2" value="Ngày đặt: ${booking.NGAYDATPHG}" readonly>
                         ${!isCancelled ? `<a href="#" class="btn btn-danger mt-2 me-2" onclick="cancelBooking('${booking.MA_DP}')">Hủy đặt phòng</a>` : ''}
-                        <button class="btn btn-outline-success mt-2">Cập nhật trạng thái</button>
-
                     </div>
                 </div>
             </div>
