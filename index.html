@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>  
-        <link rel="icon" href="/img/logo.png"/>
+        <link rel="icon" href="img/logo.png"/>
         <title>Bazoka - Nền tảng du lịch hàng đầu thế giới</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
@@ -20,7 +20,7 @@
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
         <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
-        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
         <header>
@@ -373,15 +373,15 @@
                 alert('Vui lòng nhập nơi bạn muốn!');
                 return; // Dừng thực hiện hàm nếu không có dữ liệu
             }
-            const newUrl = `/layouts/room.html?name=${encodeURIComponent(name)}&numberOfGuests=${encodeURIComponent(numberOfGuests)}&numberOfRooms=${encodeURIComponent(numberOfRooms)}&checkIn=${encodeURIComponent(checkIn)}&checkOut=${encodeURIComponent(checkOut)}`;
+            const newUrl = `/room.html?name=${encodeURIComponent(name)}&numberOfGuests=${encodeURIComponent(numberOfGuests)}&numberOfRooms=${encodeURIComponent(numberOfRooms)}&checkIn=${encodeURIComponent(checkIn)}&checkOut=${encodeURIComponent(checkOut)}`;
             
             window.location.href = newUrl; // Chuyển hướng đến URL mới
         });
       </script>
-      <script src="/js/modernizr-2.6.2.min.js"></script>
-      <script src="/js/class.js"></script>
-      <script src="/services/callApi.js"></script>
-      <script src="/js/succesLogin.js"></script>
-      <script src="/js/index.js"></script>
+      <script src="js/modernizr-2.6.2.min.js"></script>
+      <script src="js/class.js"></script>
+      <script src="services/callApi.js"></script>
+      <script src="js/succesLogin.js"></script>
+      <script src="js/index.js"></script>
     </body>
 </html>
