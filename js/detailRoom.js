@@ -209,10 +209,15 @@ function renderRoomID(rooms){
 
 function renderRateID(rates) {
     const localStorageToken = localStorage.getItem('localStorageToken');
-    const base64Url = localStorageToken.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const decodedToken = JSON.parse(atob(base64));
-    const userID = decodedToken && decodedToken.data && decodedToken.data.MA_ND;
+    let userID = null;
+
+    // Kiểm tra nếu có token và giải mã để lấy userID
+    if (localStorageToken) {
+        const base64Url = localStorageToken.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const decodedToken = JSON.parse(atob(base64));
+        userID = decodedToken?.data?.MA_ND;
+    }
 
     const html = rates.reduce((result, rate) => {
         const solidStars = rate.SO_SAO; 
@@ -222,8 +227,8 @@ function renderRateID(rates) {
             '<i class="fas fa-star text-warning"></i> '.repeat(solidStars) +
             '<i class="far fa-star text-warning"></i> '.repeat(outlineStars);
 
-        // Kiểm tra điều kiện
-        const showDropdown = rate.MA_ND === userID ? `
+        // Kiểm tra điều kiện hiển thị dropdown
+        const showDropdown = userID && rate.MA_ND === userID ? `
             <div>
                 <div class="dropdown">
                     <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
