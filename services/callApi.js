@@ -522,3 +522,118 @@ async function apiBookingRoom(booking) {
     throw error;
   }
 }
+
+//api cho partner
+
+async function apiLoginPartner(user) {
+  return await axios({
+    method: "POST",
+    url: `${URL}/api/user/login-partner`,
+    data: user
+  });
+}
+
+async function apiGetRoomIdPartner() {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/room/get-room-partner`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiCreateRoomPartner(formData) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "POST",
+      url: `${URL}/api/room/create-room-partner`,
+      headers: {
+        token: localStorageToken,
+      },
+      data: formData // Dữ liệu phòng sẽ được gửi qua body của yêu cầu
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating room:", error);
+    throw error;
+  }
+}
+async function apiUpdateRoomPartner(roomId, formData) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "PUT", // Hoặc "PATCH" tùy thuộc vào API của bạn
+      url: `${URL}/api/room/update-room-partner/${roomId}`, // Đường dẫn API cho cập nhật phòng
+      headers: {
+        token: localStorageToken,
+      },
+      data: formData // Dữ liệu phòng sẽ được gửi qua body của yêu cầu
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating room:", error);
+    throw error;
+  }
+}
+
+
+async function apiGetBookingRoomIdPartner() {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/booking/get-booking-partner`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiCreateBookingRoomPartner(formData) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "POST",
+      url: `${URL}/api/booking/create-booking-partner`,
+      headers: {
+        token: localStorageToken,
+      },
+      data: formData // Dữ liệu phòng sẽ được gửi qua body của yêu cầu
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating room:", error);
+    throw error;
+  }
+}
+
+async function apiGetReviewHotelPartner() {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/review/hotel`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
