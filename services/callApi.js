@@ -585,7 +585,27 @@ async function apiUpdateRoomPartner(roomId, formData) {
   }
 }
 
+async function apiDeleteRoomPartner(roomID) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "DELETE",
+      url: `${URL}/api/room/delete-room-partner/${roomID}`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting room:", error);
+    throw error;
+  }
+}
 
+
+
+
+//booking partner
 async function apiGetBookingRoomIdPartner() {
   try {
     const localStorageToken = localStorage.getItem("localStorageToken");
@@ -621,6 +641,22 @@ async function apiCreateBookingRoomPartner(formData) {
   }
 }
 
+async function apiDeleteBookingRoomPartner(bookingId) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "DELETE",
+      url: `${URL}/api/booking/delete-booking-partner/${bookingId}`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting room:", error);
+    throw error;
+  }
+}
 async function apiGetReviewHotelPartner() {
   try {
     const localStorageToken = localStorage.getItem("localStorageToken");
@@ -637,3 +673,4 @@ async function apiGetReviewHotelPartner() {
     throw error;
   }
 }
+

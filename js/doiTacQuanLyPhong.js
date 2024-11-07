@@ -16,17 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
         function formatCurrency(value) {
             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
-        function deleteRoom(id) {
-            if (confirm("Bạn có chắc chắn muốn xóa phòng này không?")) {
-                const roomTable = document.getElementById("roomTable").getElementsByTagName("tbody")[0];
-                roomTable.deleteRow(id - 1);
-                alert("Phòng đã bị xóa.");
-                for (let i = 0; i < roomTable.rows.length; i++) {
-                    roomTable.rows[i].cells[0].innerText = i + 1;
-                }
-            }
-        }      
-    
         // Bắt sự kiện chỉnh sửa phòng
         document.getElementById("editRoomForm").addEventListener("submit", async function (e) {
           e.preventDefault();
@@ -134,7 +123,7 @@ function RoomPartner(rooms) {
               <td>
                   <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editRoomModal" 
                           onclick="setEditRoom(1, 'Phòng Deluxe', 'Phòng sang trọng với đầy đủ tiện nghi', '../img/102.jpg', 'Đôi', 1200000, 'Trống', 'Giảm giá mùa xuân')">Chỉnh sửa</button>
-                  <button class="btn btn-danger btn-sm" onclick="deleteRoom(1)">Xóa</button>
+                  <button class="btn btn-danger btn-sm" onclick="deleteRoomPartner(${room.MA_PHONG})">Xóa</button>
               </td>
           </tr>
       `
@@ -318,6 +307,28 @@ async function updateRoomPartner(roomId) {
       });
   }
 }
+async function deleteRoomPartner(roomID) {
+    const willDeactivate = await Swal.fire({
+      title: "Bạn có muốn ngừng hoạt động khách sạn?",
+      text: "Nhấn OK để xác nhận ngừng hoạt động khách sạn.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      cancelButtonText: "Hủy",
+    });
+  
+    if (willDeactivate.isConfirmed) {
+      try {
+        await apiDeleteRoomPartner(roomID);
+        Swal.fire('Xóa phòng thành công', '', 'success').then(() => {
+          window.location.reload();
+        });
+      } catch (error) {
+        Swal.fire('Phòng không thể xóa', '', 'error');
+      }
+    }
+}
+
 //booking partner quan ly don dat phong cua partner
 async function getBookingRoomIdPartner(){
   try {
@@ -365,7 +376,7 @@ const html = bookings.reduce((result, booking, index) => {
             <td>
                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editBookingModal" 
                     onclick="editBooking(${booking.MA_DP}, '${booking.NGAYDEN}', '${booking.NGAYDI}', '${booking.TRANGTHAI}', '${booking.NGAYDATPHG}', ${booking.THANHTIEN}, '${booking.MA_MGG}', '${booking.MA_ND}', '${booking.MA_PHONG}', '${booking.ORDERCODE}', ${booking.DACOC})">Chỉnh sửa</button>
-                <button class="btn btn-danger btn-sm" onclick="deleteBooking(${booking.MA_DP})">Xóa</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteBookingRoomPartner(${booking.MA_DP})">Xóa</button>
             </td>
         </tr>
     `
@@ -465,6 +476,28 @@ async function createBookingRoomPartner() {
   }
 }
 
+async function deleteBookingRoomPartner(bookingId) {
+    const willDeactivate = await Swal.fire({
+      title: "Bạn có muốn xóa đơn đặt phòng này?",
+      text: "Nhấn OK để xác nhận xóa đơn đặt phòng.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      cancelButtonText: "Hủy",
+    });
+  
+    if (willDeactivate.isConfirmed) {
+      try {
+        await apiDeleteBookingRoomPartner(bookingId);
+        Swal.fire('Xóa đơn đặt phòng thành công', '', 'success').then(() => {
+          window.location.reload();
+        });
+      } catch (error) {
+        Swal.fire('Đơn đặt phòng không thể xóa', '', 'error');
+      }
+    }
+}
+
 
 //đánh giá khách sạn theo phòng của partner
 async function getReviewHotelPartner(){
@@ -484,6 +517,7 @@ async function getReviewHotelPartner(){
       console.log("Lỗi từ máy chủ", error);
   }
 }
+
 
 function renderReviewPartner(reviews) {
 const html = reviews.reduce((result, review, index) => {
