@@ -274,3 +274,43 @@ async function selectUser(userID) {
         console.log(error);
     }
 }
+
+async function createUser() {
+    const HOTEN = document.getElementById("HOTEN").value;
+    const SDT = document.getElementById("SDT").value;
+    const EMAIL = document.getElementById("EMAIL").value;
+    const NGAYSINH = document.getElementById("NGAYSINH").value;
+    const GIOITINH = document.getElementById("GIOITINH").value;
+    const MATKHAU = document.getElementById("MATKHAU").value;
+  
+    // Check if fields are empty
+    if (!HOTEN || !SDT || !EMAIL || !MATKHAU || !NGAYSINH) {
+        Swal.fire('Vui lòng điền đầy đủ thông tin', '', 'error');
+        return;
+    }
+  
+    try {
+        // Send the sign-up request
+        const response = await apiSignUp({
+            HOTEN: HOTEN,
+            SDT:SDT,
+            EMAIL: EMAIL,
+            MATKHAU: MATKHAU,
+            NGAYSINH: NGAYSINH,
+            GIOITINH: GIOITINH
+        });
+  
+        if (response.status === 200) {
+            Swal.fire('Đăng ký thành công', '', 'success').then(() => {
+                location.reload();
+            });
+        } else if (response.status === 400) {
+            Swal.fire('Tài khoản hoặc mật khẩu không đúng', '', 'error');
+        } else {
+            Swal.fire('Lỗi không xác định', '', 'error');
+        }
+    } catch (error) {
+        Swal.fire('Lỗi kết nối hoặc tài khoản đã tồn tại', '', 'error');
+        console.error(error);
+    }
+  }

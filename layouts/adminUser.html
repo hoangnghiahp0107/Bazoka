@@ -54,7 +54,10 @@
         <table class="table">
             <thead>
                 <th>
-                    <h3 class="text-start">Quản lý người dùng</h3>
+                    <div class="d-flex">
+                      <h3 class="text-start">Quản lý người dùng</h3>
+                      <button class="btn btn-dark mx-2" type="button" data-toggle="modal" data-target="#myModal"><i class="fa-regular fa-square-plus"></i></button>
+                    </div>
                 </th>
                 <th class="d-flex justify-content-end" style="margin-right: 30px;">
                   <div class="search-bar">
@@ -81,6 +84,56 @@
             </thead>
             <tbody id="user"></tbody>
         </table>
+        <div class="modal fade" id="myModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3>Thêm người dùng</h3>
+              </div>
+              <div class="modal-body">
+                <form id="createHotel" enctype="multipart/form-data" class="form-group">
+                  <div class="input-group">
+                      <input type="text" name="HOTEN" id="HOTEN" class="form-control input-sm" placeholder="Họ tên" required>
+                  </div>
+                  <span class="sp-thongbao text-danger" id="tbHOTEN">&zwj;</span>
+                  <br>
+                  <div class="input-group">
+                      <input type="email" name="EMAIL" id="EMAIL" class="form-control input-sm" placeholder="Email" required>
+                  </div>
+                  <span class="sp-thongbao text-danger" id="tbEMAIL">&zwj;</span>
+                  <br>
+                  <div class="input-group">
+                      <input type="tel" name="SDT" id="SDT" class="form-control input-sm" placeholder="SDT" required>
+                  </div>
+                  <span class="sp-thongbao text-danger" id="tbSDT">&zwj;</span>
+                  <br>
+                  <div class="input-group">
+                    <input type="password" name="MATKHAU" id="MATKHAU" class="form-control input-sm" placeholder="Mật khẩu" required>
+                  </div>
+                  <span class="sp-thongbao text-danger" id="tbMATKHAU">&zwj;</span>
+                  <br>
+                  <div class="input-group">
+                    <input type="date" name="NGAYSINH" id="NGAYSINH" class="form-control input-sm" placeholder="Ngày sinh" required>
+                  </div>
+                  <span class="sp-thongbao text-danger" id="tbNGAYSINH">&zwj;</span>
+                  <br>
+                  <div class="input-box">
+                    <label>Giới tính</label>
+                    <select class="form-control" name="GIOITINH" id="GIOITINH" required>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                  </div>
+                  <span class="sp-thongbao text-danger" id="tbGIOITINH">&zwj;</span>
+                  <div class="modal-content-popup"></div>
+              </form>
+              <div class="modal-footer">
+                  <button id="btnThemUS" type="button" onclick="createUser()" class="btn btn-dark">Tạo người dùng</button>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
     </main>
   </div>
   <div id="pagination" class="d-flex justify-content-center mt-3"></div>

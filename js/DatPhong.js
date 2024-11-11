@@ -41,14 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Xử lý cancelDate
         const cancelDate = new Date(checkIn);
-        if (yeuCauCoc === "true") {
-            // Lùi lại một ngày nếu có cọc
-            cancelDate.setDate(cancelDate.getDate() - 1);
-            document.getElementById('cancelDate').innerHTML = `trước ${formatDate(cancelDate) || ''}`;
-        } else {
-            // Để trống nếu không có cọc
-            document.getElementById('cancelDate').innerHTML = '';
-        }
+
+        // Lùi lại một ngày nếu có cọc
+        const cancel2 = cancelDate.setDate(cancelDate.getDate() - 1);
+        const cancel1 = cancelDate.setDate(cancelDate.getDate() - 3);
+        document.getElementById('cancelDate').innerHTML = `từ ${formatDate(cancel1)} đến ${formatDate(cancel2)}`;
 
         // Cập nhật tên khách sạn
         document.getElementById('nameHotel').innerText = infoBooking.nameHotel || 'Grand K Hotel Suites Hanoi';
@@ -96,12 +93,34 @@ async function applyDiscount() {
             // Nếu đã áp dụng giảm giá, không thực hiện gì cả
             return;
         }
-        
         const discountID = document.getElementById('MA_MGG').value;
         const response = await apiSelectDiscount(discountID);
+
+        // Lưu thông tin giảm giá vào localStorage
         localStorage.setItem('selectedDiscount', JSON.stringify(response));
 
         const discountData = JSON.parse(localStorage.getItem('selectedDiscount'));
+
+        // Kiểm tra ngày áp dụng giảm giá
+        const currentDate = new Date();
+        const startDate = new Date(discountData.NGAYBATDAU); 
+        const endDate = new Date(discountData.NGAYKETTHUC);   
+
+        if (currentDate < startDate) {
+            // Mã giảm giá chưa đến ngày
+            document.getElementById('tbMAGIAMGIA').innerText = `Mã giảm giá chưa đến ngày`;
+            document.getElementById('tbMAGIAMGIA').classList.add('text-danger');
+            return;
+        }
+
+        if (currentDate > endDate) {
+            // Mã giảm giá đã hết hạn
+            document.getElementById('tbMAGIAMGIA').innerText = `Mã giảm giá đã hết hạn`;
+            document.getElementById('tbMAGIAMGIA').classList.add('text-danger');
+            return;
+        }
+
+        // Nếu mã giảm giá hợp lệ, tính toán giảm giá
         const totalPriceElement = document.getElementById('sumPrice');
         let totalPrice = parseFloat(totalPriceElement.innerText.replace(/[,. VND]/g, '').trim()) || 0;
         const discountPercentage = discountData?.PHANTRAM || 0; // Giả sử response chứa trường 'PHANTRAM'
@@ -126,8 +145,11 @@ async function applyDiscount() {
 
         // Đánh dấu là đã áp dụng giảm giá
         discountApplied = true;
+        
     } catch (error) {
         console.log(error);
+        document.getElementById('tbMAGIAMGIA').innerText = "Mã giảm giá không tồn tại";
+        document.getElementById('tbMAGIAMGIA').classList.add('text-danger');
     }
 }
 

@@ -23,20 +23,23 @@
       <div class="logo-name"><span>Bazo</span>ka</div>
     </a>
     <ul class="side-menu">
-      <li><a href="adminThongKe.html"><i class="fa-solid fa-chart-line"></i>Thống kê</a></li>
+      <li><a href="adminThongKePartner.html"><i class="fa-solid fa-chart-line"></i>Thống kê</a></li>
     </ul>
     <ul class="side-menu">
-      <li><a href="adminHotel.html"><i class="fa-solid fa-hotel"></i>Quản lý khách sạn</a></li>
+      <li><a href="adminManageRoom.html"><i class="fa-solid fa-hotel"></i>Quản lý phòng</a></li>
     </ul>
     <ul class="side-menu">
-      <li><a href="adminUser.html"><i class="fa-solid fa-user"></i>Quản lý người dùng</a></li>
+        <li><a href="adminBookingPartner.html"><i class="fa-solid fa-money-bill-wave"></i>Quản lý đặt phòng</a></li>
     </ul>
     <ul class="side-menu">
-        <li><a href="adminBooking.html"><i class="fa-solid fa-money-bill-wave"></i>Quản lý đặt phòng</a></li>
+        <li><a href="adminRatePartner.html"><i class="fa-solid fa-comment"></i>Quản lý đánh giá</a></li>
     </ul>
     <ul class="side-menu">
-        <li><a href="adminDiscount.html"><i class="fa-solid fa-percent"></i>Quản lý mã giảm giá</a></li>
+        <li><a href="adminDiscountPartner.html"><i class="fa-solid fa-percent"></i>Mã khuyến mãi</a></li>
     </ul>
+    <ul class="side-menu">
+      <li><a href="adminSupportCustomer.html"><i class="fa-solid fa-message"></i>Hỗ trợ khách hàng</a></li>
+  </ul>
     <ul class="side-menu">
       <li>
         <a href="#" class="logout" id="logoutButton">
@@ -45,7 +48,7 @@
         </a>
       </li>
     </ul>
-</div>
+  </div>
   <div class="content">
     <nav>
       <i class="fa-solid fa-bars icon-menu mx-2"></i>
@@ -55,66 +58,90 @@
             <thead>
                 <th>
                   <div class="d-flex">
-                    <h3 class="text-start">Quản lý mã giảm giá</h3>
+                    <h3 class="text-start">Quản lý đặt phòng</h3>
                     <button class="btn btn-dark mx-2" type="button" data-toggle="modal" data-target="#myModal"><i class="fa-regular fa-square-plus"></i></button>
                   </div>
                 </th>
                 <th class="d-flex justify-content-end" style="margin-right: 30px;">
-                    <div class="search-bar"> <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Tìm kiếm mã giảm giá"/>
-                    </div>
+                  <div class="search-bar">
+                      <form class="search d-flex justify-content-center align-items-center">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="search" placeholder="Tìm kiếm đặt phòng" name="search"/>
+                      </form>
+                  </div>
                 </th>
             </thead>
         </table>
         <table class="table table-bordered">
             <thead>
                 <th>ID</th>
+                <th>Họ tên</th>
+                <th>SDT</th>
+                <th>Tên phòng</th>
+                <th>Ngày đến</th>
+                <th>Ngày đi</th>
+                <th>Trạng thái</th>
+                <th>Thành tiền</th>
+                <th>Đã nhận</th>
+                <th>Còn lại</th>
+                <th>Ngày đặt phòng</th>
                 <th>Mã giảm giá</th>
-                <th>Phần trăm</th>
-                <th>Ngày bắt đầu</th>
-                <th>Ngày kết thúc</th>
-                <th>Điều kiện</th>
+                <th>Xác nhận</th>
                 <th></th>
             </thead>
-            <tbody id="discount"></tbody>
+            <tbody id="bookings"></tbody>
         </table>
         <div class="modal fade" id="myModal">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h3>Thêm mã giảm giá</h3>
+                <h3>Thêm khách sạn</h3>
               </div>
               <div class="modal-body">
                 <form id="createHotel" enctype="multipart/form-data" class="form-group">
                   <div class="input-group">
-                      <input type="text" name="MA_MGG" id="MA_MGG" class="form-control input-sm" placeholder="Mã giảm giá" required>
+                      <input type="text" name="TEN_KS" id="TEN_KS" class="form-control input-sm" placeholder="Tên khách sạn" required>
                   </div>
-                  <span class="sp-thongbao text-danger" id="tbMA_MGG">&zwj;</span>
+                  <span class="sp-thongbao text-danger" id="tbTEN_KS">&zwj;</span>
                   <br>
                   <div class="input-group">
-                      <input type="number" name="PHANTRAM" id="PHANTRAM" class="form-control input-sm" placeholder="Phần trăm" required min="1" max="100">
+                      <input type="text" name="MO_TA" id="MO_TA" class="form-control input-sm" placeholder="Mô tả" required>
                   </div>
-                  <span class="sp-thongbao text-danger" id="tbPHANTRAM">&zwj;</span>
+                  <span class="sp-thongbao text-danger" id="tbMO_TA">&zwj;</span>
                   <br>
                   <div class="input-group">
-                      <input type="date" name="NGAYBATDAU" id="NGAYBATDAU" class="form-control input-sm" placeholder="Ngày bắt đầu" required>
+                      <input type="number" name="SOSAO" id="SOSAO" class="form-control input-sm" placeholder="Số sao" required>
                   </div>
-                  <span class="sp-thongbao text-danger" id="tbNGAYBATDAU">&zwj;</span>
+                  <span class="sp-thongbao text-danger" id="tbSOSAO">&zwj;</span>
+                  <br>
+                  <h5>QR Thanh toán</h5>
+                  <div class="input-group">
+                      <input type="file" id="QRTHANHTOAN" name="QRTHANHTOAN" accept="image/*" required>
+                  </div>
                   <br>
                   <div class="input-group">
-                      <input type="date" name="NGAYKETTHUC" id="NGAYKETTHUC" class="form-control input-sm" placeholder="Ngày kết thúc" required>
+                      <input type="number" name="MA_VITRI" id="MA_VITRI" class="form-control input-sm" placeholder="Mã vị trí" required>
                   </div>
-                  <span class="sp-thongbao text-danger" id="tbNGAYKETTHUC">&zwj;</span>
+                  <span class="sp-thongbao text-danger" id="tbMA_VITRI">&zwj;</span>
                   <br>
                   <div class="input-group">
-                    <input type="text" name="DIEU_KIEN" id="DIEU_KIEN" class="form-control input-sm" placeholder="Điều kiện" required>
+                      <input type="number" name="YEU_CAU_COC" id="YEU_CAU_COC" class="form-control input-sm" placeholder="Yêu cầu cọc" required>
                   </div>
-                  <span class="sp-thongbao text-danger" id="tbDIEU_KIEN">&zwj;</span>
+                  <span class="sp-thongbao text-danger" id="tbYEU_CAU_COC">&zwj;</span>
                   <br>
+                  <div class="input-group">
+                      <input type="number" name="TI_LE_COC" id="TI_LE_COC" class="form-control input-sm" placeholder="Tỉ lệ cọc" required>
+                  </div>
+                  <span class="sp-thongbao text-danger" id="tbTI_LE_COC">&zwj;</span>
+                  <br>
+                  <h5>Hình ảnh</h5>
+                  <div class="input-group">
+                      <input type="file" id="HINHANH" name="HINHANH" accept="image/*" required>
+                  </div>
                   <div class="modal-content-popup"></div>
               </form>
               <div class="modal-footer">
-                  <button id="btnThemUS" type="button" onclick="createDiscount()" class="btn btn-dark">Tạo mã giảm giá</button>
+                  <button id="btnThemUS" type="button" onclick="createHotel()" class="btn btn-dark">Tạo khách sạn</button>
               </div>
               
               </div>
@@ -127,6 +154,7 @@
   <div id="loading-spinner" class="hidden spinner-overlay">
     <div class="spinner"></div>
   </div>
+
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -145,6 +173,6 @@
   <script src="/js/sidebar.js"></script>
   <script src="/js/class.js"></script>
   <script src="/services/callApi.js"></script>
-  <script src="/js/adminDiscount.js"></script>
+  <script src="/js/adminBookingPartner.js"></script>
 </body>
 </html>

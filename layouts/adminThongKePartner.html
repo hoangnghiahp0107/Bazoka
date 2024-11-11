@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/img/logo.png"/>
+  <title>Bazoka - Nền tảng du lịch hàng đầu thế giới</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
+
+</head>
+<body>
+    <div class="sidebar active">
+        <a href="index.html" class="logo">
+          <img width="50" height="50" src="/img/logo.png" alt="">
+          <div class="logo-name"><span>Bazo</span>ka</div>
+        </a>
+        <ul class="side-menu">
+          <li><a href="adminThongKePartner.html"><i class="fa-solid fa-chart-line"></i>Thống kê</a></li>
+        </ul>
+        <ul class="side-menu">
+          <li><a href="adminManageRoom.html"><i class="fa-solid fa-hotel"></i>Quản lý phòng</a></li>
+        </ul>
+        <ul class="side-menu">
+            <li><a href="adminBookingPartner.html"><i class="fa-solid fa-money-bill-wave"></i>Quản lý đặt phòng</a></li>
+        </ul>
+        <ul class="side-menu">
+            <li><a href="adminRatePartner.html"><i class="fa-solid fa-comment"></i>Quản lý đánh giá</a></li>
+        </ul>
+        <ul class="side-menu">
+            <li><a href="adminDiscountPartner.html"><i class="fa-solid fa-percent"></i>Mã khuyến mãi</a></li>
+        </ul>
+        <ul class="side-menu">
+          <li><a href="adminSupportCustomer.html"><i class="fa-solid fa-message"></i>Hỗ trợ khách hàng</a></li>
+      </ul>
+        <ul class="side-menu">
+          <li>
+            <a href="#" class="logout" id="logoutButton">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              Đăng xuất
+            </a>
+          </li>
+        </ul>
+      </div>
+  <div class="content">
+    <nav>
+      <i class="fa-solid fa-bars icon-menu mx-2"></i>
+    </nav>
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Bảng điều khiển</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Quản lý Khách sạn</li>
+            </ol>
+
+            <!-- Card thông tin khách sạn -->
+            <div class="row">
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-primary text-white mb-4">
+                        <div class="card-body">Quản lý đặt phòng</div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="adminBookingPartner.html">Xem chi tiết</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-warning text-white mb-4">
+                        <div class="card-body">Hỗ trợ khách hàng</div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="adminSupportCustomer.html">Xem chi tiết</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body">Quản lý khuyến mãi</div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="adminDiscountPartner.html">Xem chi tiết</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-danger text-white mb-4">
+                        <div class="card-body">Đánh giá từ khách hàng</div>
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="adminRatePartner.html">Xem chi tiết</a>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Biểu đồ thống kê -->
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-bar me-1"></i>
+                            Biểu đồ doanh thu
+                        </div>
+                        <div class="card-body"><canvas id="revenueChart" width="100%" height="40"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+  </div>
+  <div id="pagination" class="d-flex justify-content-center mt-3"></div>
+  <div id="loading-spinner" class="hidden spinner-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
+    integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+
+    <script>
+        // Biểu đồ doanh thu
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        const revenueChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Tuần 1', 'Tuần 2', 'Tuần 3', 'Tuần 4'],
+                datasets: [{
+                    label: 'Doanh thu',
+                    data: [1200, 1900, 3000, 2500],
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/class.js"></script>
+  <script src="/services/callApi.js"></script>
+  <script src="/js/adminManageRoom.js"></script>
+</body>
+</html>
