@@ -164,8 +164,29 @@
                         <div class="tab-pane fade" id="account-my-bookings">
                             <div class="card-body pb-2">
                                 <h5 class="mb-3">Danh sách phòng đã đặt</h5>
+                                <div class="alert alert-info custom-alert" role="alert">
+                                    <i class="bi bi-info-circle-fill me-2"></i>
+                                    Bạn có thể hủy đặt phòng trước ngày đến 3 ngày.
+                                </div>
+                                
                                 <!-- Phòng đã đặt 1 -->
                                 <div id="bookingUser"></div>
+                                <div class="chat-widget" id="chatWidget">
+                                    <div class="chat-header">
+                                        <h6 class="mb-0">Chat với khách sạn</h6>
+                                        <button type="button" class="btn-close" onclick="toggleChat()"></button>
+                                    </div>
+                                    <div class="chat-body" id="chatBody">
+                                        <div class="chat-messages">
+                                            <div class="message hotel-message">Xin chào! Chúng tôi có thể giúp gì cho bạn?</div>
+                                        </div>
+                                    </div>
+                                    <div class="chat-footer">
+                                        <input type="text" class="form-control" placeholder="Nhập tin nhắn..." id="messageInput">
+                                        <button class="btn btn-primary ms-2" onclick="sendMessage()">Gửi</button>
+                                    </div>
+                                </div>
+                            
                             </div>
                         </div>
                         
@@ -187,6 +208,32 @@
             </div>
         </div>
     </div>
+    <script>
+        function toggleChat() {
+            const chatWidget = document.getElementById('chatWidget');
+            chatWidget.classList.toggle('active');
+        }
+
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+            if (message) {
+                const chatBody = document.getElementById('chatBody');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message user-message';
+                messageDiv.textContent = message;
+                chatBody.querySelector('.chat-messages').appendChild(messageDiv);
+                messageInput.value = '';
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+        }
+
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
     <script>
         window.addEventListener('scroll', function() {
             var navbar = document.getElementById('navbar');

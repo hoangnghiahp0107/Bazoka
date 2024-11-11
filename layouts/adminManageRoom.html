@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/img/logo.png"/>
+  <title>Bazoka - Nền tảng du lịch hàng đầu thế giới</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
+</head>
+<body>
+  <div class="sidebar active">
+    <a href="index.html" class="logo">
+      <img width="50" height="50" src="/img/logo.png" alt="">
+      <div class="logo-name"><span>Bazo</span>ka</div>
+    </a>
+    <ul class="side-menu">
+      <li><a href="adminThongKePartner.html"><i class="fa-solid fa-chart-line"></i>Thống kê</a></li>
+    </ul>
+    <ul class="side-menu">
+      <li><a href="adminManageRoom.html"><i class="fa-solid fa-hotel"></i>Quản lý phòng</a></li>
+    </ul>
+    <ul class="side-menu">
+        <li><a href="adminBookingPartner.html"><i class="fa-solid fa-money-bill-wave"></i>Quản lý đặt phòng</a></li>
+    </ul>
+    <ul class="side-menu">
+        <li><a href="adminRatePartner.html"><i class="fa-solid fa-comment"></i>Quản lý đánh giá</a></li>
+    </ul>
+    <ul class="side-menu">
+        <li><a href="adminDiscountPartner.html"><i class="fa-solid fa-percent"></i>Mã khuyến mãi</a></li>
+    </ul>
+    <ul class="side-menu">
+      <li><a href="adminSupportCustomer.html"><i class="fa-solid fa-message"></i>Hỗ trợ khách hàng</a></li>
+  </ul>
+    <ul class="side-menu">
+      <li>
+        <a href="#" class="logout" id="logoutButton">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Đăng xuất
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="content">
+    <nav>
+      <i class="fa-solid fa-bars icon-menu mx-2"></i>
+    </nav>
+    <main>
+        <table class="table">
+            <thead>
+                <th>
+                  <div class="d-flex">
+                    <h3 class="text-start">Quản lý phòng</h3>
+                    <button class="btn btn-dark mx-2" type="button" data-toggle="modal" data-target="#myModal"><i class="fa-regular fa-square-plus"></i></button>
+                  </div>
+                </th>
+            </thead>
+        </table>
+        <div class="container-fluid mt-3 mb-3">
+          <form id="searchForm" class="p-3 rounded-3 ">
+            <div class="row g-0 align-items-center">
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group position-relative">
+                        <label for="checkIn" class="visually-hidden">Ngày nhận phòng</label>
+                        <input type="date" class="form-control border-0 rounded-0" id="checkIn" required aria-label="Chọn ngày nhận phòng">
+                        <i class="bi bi-calendar position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="form-group position-relative">
+                        <label for="checkOut" class="visually-hidden">Ngày trả phòng</label>
+                        <input type="date" class="form-control border-0 rounded-0" id="checkOut" required aria-label="Chọn ngày trả phòng">
+                        <i class="bi bi-calendar position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                    </div>
+                </div>
+                <div class="col-md-1 col-sm-12 mt-3">
+                    <button type="submit" class="btn btn-primary w-100 h-100 rounded-0"><i class="bi bi-search"></i> Tìm</button>
+                </div>
+            </div>
+        </form>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <th>ID</th>
+                <th>Tên phòng</th>
+                <th>Mô tả</th>
+                <th>Giá tiền</th>
+                <th>Hình ảnh</th>
+                <th>Khuyến mãi</th>
+                <th>Loại phòng</th>
+                <th></th>
+            </thead>
+            <tbody id="rooms"></tbody>
+        </table>
+        <div class="modal fade" id="myModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3>Thêm phòng</h3>
+              </div>
+              <div class="modal-body">
+                <form id="createHotel" enctype="multipart/form-data" class="form-group">
+                  <div class="input-group">
+                      <input type="text" name="TENPHONG" id="TENPHONG" class="form-control input-sm" placeholder="Tên phòng" required>
+                  </div>
+                  <span class="sp-thongbao text-danger" id="tbTENPHONG">&zwj;</span>
+                  <br>
+                  <div class="input-group">
+                      <input type="text" name="MOTA" id="MOTA" class="form-control input-sm" placeholder="Mô tả" required>
+                  </div>
+                  <span class="sp-thongbao text-danger" id="tbMOTA">&zwj;</span>
+                  <br>
+                  <div class="input-group">
+                      <input type="number" name="GIATIEN" id="GIATIEN" class="form-control input-sm" placeholder="Giá tiền" required>
+                  </div>
+                  <span class="sp-thongbao text-danger" id="tbGIATIEN">&zwj;</span>
+                  <br>
+                  <h5>Hình ảnh</h5>
+                  <div class="input-group">
+                      <input type="file" id="HINHANH" name="HINHANH" accept="image/*" required>
+                  </div>
+                  <br>
+                  <div class="input-group">
+                      <input type="text" name="MA_KM" id="MA_KM" class="form-control input-sm" placeholder="Mã khuyến mãi" required>
+                  </div>
+                  <span class="sp-thongbao text-danger" id="tbMA_KM">&zwj;</span>
+                  <br>
+                  <label for="MA_LOAIPHG" class="form-label">Loại phòng</label>
+                    <select class="form-select" id="MA_LOAIPHG" required>
+                        <option disabled>Chọn loại phòng</option>
+                        <option value="1">Đơn</option>
+                        <option value="2">Đôi</option>
+                        <option value="3">Gia đình</option>
+                        <option value="4">Suite</option>
+                    </select>
+                  <span class="sp-thongbao text-danger" id="tbMA_LOAIPHG">&zwj;</span>
+                  <br>
+                  <div class="modal-content-popup"></div>
+              </form>
+              <div class="modal-footer">
+                  <button id="btnThemUS" type="button" onclick="createRoom()" class="btn btn-dark">Tạo phòng</button>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </main>
+  </div>
+  <div id="pagination" class="d-flex justify-content-center mt-3"></div>
+  <div id="loading-spinner" class="hidden spinner-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
+    integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      // Lấy ngày hôm nay
+      const today = new Date().toISOString().split('T')[0];
+      
+      // Lấy ngày mai
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const tomorrowDate = tomorrow.toISOString().split('T')[0];
+  
+      // Gán giá trị cho các input date
+      document.getElementById('checkIn').value = today;
+      document.getElementById('checkOut').value = tomorrowDate;
+      
+      // Thiết lập thuộc tính min cho các input date
+      document.getElementById('checkIn').setAttribute('min', today);
+      document.getElementById('checkOut').setAttribute('min', tomorrowDate);
+    </script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/class.js"></script>
+  <script src="/services/callApi.js"></script>
+  <script src="/js/adminManageRoom.js"></script>
+</body>
+</html>

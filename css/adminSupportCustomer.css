@@ -1,0 +1,36 @@
+.message-bubble .rounded-circle {
+    object-fit: cover;
+}
+
+.chat-messages {
+    max-height: calc(100vh - 240px);
+    overflow-y: auto;
+}
+
+.list-group-item:hover {
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+.list-group-item.active {
+    background-color: rgba(13, 110, 253, 0.2);
+    border-color: rgba(13, 110, 253, 0.2);
+    color: inherit;
+}
+
+.typing-indicator {
+    animation: typing 1s infinite;
+}
+
+@keyframes typing {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+.message-form .btn:focus {
+    box-shadow: none;
+}
+
+.message-bubble .shadow-sm {
+    max-width: 80%;
+}

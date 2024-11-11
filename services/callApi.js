@@ -63,6 +63,19 @@ async function apiSelectHotel(hotelID) {
   }
 }
 
+async function apiSelectRoom(roomID) {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/room/select-room/${roomID}`,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
 async function apiSelectDiscount(discountID) {
   try {
     const response = await axios({
@@ -75,6 +88,33 @@ async function apiSelectDiscount(discountID) {
     throw error;
   }
 }
+
+async function apiSelectDiscountPartner(discountID) {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/discount/select-discount-partner/${discountID}`,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiSelectBooking(bookingID) {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/booking/select-booking/${bookingID}`,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
 
 async function apiUpdateUser(userID, user) {
   try {
@@ -94,12 +134,66 @@ async function apiUpdateUser(userID, user) {
   }
 }
 
+async function apiUpdateDiscountPartner(discountID, discount) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "PUT",
+      url: `${URL}/api/discount/update-discount-partner/${discountID}`,
+      data: discount,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiUpdateBookingPartner(bookingID, formData) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "PUT",
+      url: `${URL}/api/booking/update-booking-partner/${bookingID}`,
+      data: formData,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
 async function apiUpdateDiscount(discountID, formData) {
   try {
     const localStorageToken = localStorage.getItem("localStorageToken");
     const response = await axios({
       method: "PUT",
       url: `${URL}/api/discount/update-discount/${discountID}`,
+      data: formData,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching discount data:", error);
+    throw error;
+  }
+}
+
+async function apiUpdateRoom(roomID, formData) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "PUT",
+      url: `${URL}/api/room/update-room-partner/${roomID}`,
       data: formData,
       headers: {
         token: localStorageToken,
@@ -188,6 +282,40 @@ async function apiDeleteDiscount(discountID){
     const response = await axios({
       method: "DELETE",
       url: `${URL}/api/discount/delete-discount/${discountID}`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiDeleteDiscountPartner(discountID){
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "DELETE",
+      url: `${URL}/api/discount/delete-discount-partner/${discountID}`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiDeleteRoomPartner(roomID){
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "DELETE",
+      url: `${URL}/api/room/delete-room-partner/${roomID}`,
       headers: {
         token: localStorageToken,
       },
@@ -550,6 +678,62 @@ async function apiGetRoomIdPartner() {
   }
 }
 
+async function apiGetRoomDayPartner(NGAYDEN, NGAYDI) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/room/get-data-room-day-partner`,
+      headers: {
+        token: localStorageToken,
+      },
+      params: {
+        NGAYDEN,
+        NGAYDI   
+    }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiGetRoomAllPartner() {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/room/get-room-all-partner`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+
+async function apiGetDiscountPartner() {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/discount/get-discount-partner`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
 async function apiCreateRoomPartner(formData) {
   try {
     const localStorageToken = localStorage.getItem("localStorageToken");
@@ -567,12 +751,13 @@ async function apiCreateRoomPartner(formData) {
     throw error;
   }
 }
-async function apiUpdateRoomPartner(roomId, formData) {
+
+async function apiCreateDiscountPartner(formData) {
   try {
     const localStorageToken = localStorage.getItem("localStorageToken");
     const response = await axios({
-      method: "PUT", // Hoặc "PATCH" tùy thuộc vào API của bạn
-      url: `${URL}/api/room/update-room-partner/${roomId}`, // Đường dẫn API cho cập nhật phòng
+      method: "POST",
+      url: `${URL}/api/discount/create-discount-partner`,
       headers: {
         token: localStorageToken,
       },
@@ -580,11 +765,10 @@ async function apiUpdateRoomPartner(roomId, formData) {
     });
     return response.data;
   } catch (error) {
-    console.error("Error updating room:", error);
+    console.error("Error creating room:", error);
     throw error;
   }
 }
-
 
 async function apiGetBookingRoomIdPartner() {
   try {
@@ -597,6 +781,23 @@ async function apiGetBookingRoomIdPartner() {
       },
     });
     return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiGetBookingAll() {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/booking/get-booking-all`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response;
   } catch (error) {
     console.error("Error fetching user data:", error);
     throw error;
@@ -637,3 +838,56 @@ async function apiGetReviewHotelPartner() {
     throw error;
   }
 }
+
+async function apiGetSupportAll() {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/chat/get-support-all`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiGetSupportCustomer(userID, hotelID) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/chat/get-support-customer/${userID}/${hotelID}`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiChatWithCustomer(userID, formData){
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "POST",
+      url: `${URL}/api/chat/send-support-customer/${userID}`,
+      headers: {
+        token: localStorageToken,
+      },
+      data: formData
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+

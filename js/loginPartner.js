@@ -32,7 +32,7 @@ async function SignIn() {
         const token = response.data;
         localStorage.setItem("localStorageToken", token);
           Swal.fire('Đăng nhập thành công', '', 'success').then(() => {
-          window.location.href = "../layouts/doitac_quanlyphong.html";
+          window.location.href = "../layouts/adminManageRoom.html";
         });
       } else if (response.status === 400) {
         Swal.fire('Tài khoản hoặc mật khẩu không đúng', '', 'error');
@@ -44,3 +44,4 @@ async function SignIn() {
       console.error(error);
     }
   }
+  

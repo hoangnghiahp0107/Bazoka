@@ -133,7 +133,6 @@ async function getBookingUser(){
             booking.MA_DP,
             booking.NGAYDEN,
             booking.NGAYDI,
-            booking.SLKHACH,
             booking.TRANGTHAI,
             booking.NGAYDATPHG,
             booking.THANHTIEN,
@@ -141,7 +140,10 @@ async function getBookingUser(){
             booking.MA_ND,
             booking.MA_PHONG,
             booking.ORDERCODE,
-            booking.MA_PHONG_PHONG
+            booking.MA_PHONG_PHONG,
+            booking.DACOC,
+            booking.MA_ND_NGUOIDUNG,
+            booking.XACNHAN
         ));
         renderBookingUser(bookingObj);
     } catch (error) {
@@ -155,31 +157,69 @@ function renderBookingUser(bookings) {
         const giaTienVND = Math.floor(booking.THANHTIEN).toLocaleString('vi-VN');
 
         const isCancelled = booking.TRANGTHAI === "Đã hủy";
+        const isConfirmed = booking.XACNHAN;  // Kiểm tra xem booking có xác nhận hay không
+        const isBookedOrCheckedIn = booking.TRANGTHAI === "Check-in" || booking.TRANGTHAI === "Check-out"; // Trạng thái "Đặt thành công" hoặc "Check-in"
+        
+        // Xử lý badge xác nhận
+        const confirmationBadge = isConfirmed
+            ? `<span class="badge bg-success">Đã xác nhận</span>`
+            : `<span class="badge bg-warning">Chưa xác nhận</span>`;
+
+        // Ẩn nút Hủy nếu đã hủy hoặc trạng thái là "Đặt thành công" hoặc "Check-in"
+        const cancelButton = isCancelled || isBookedOrCheckedIn
+            ? ''  // Không hiển thị nút hủy nếu trạng thái là "Đặt thành công", "Check-in" hoặc "Đã hủy"
+            : `<button class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#cancelModal" onclick="cancelBooking(${booking.MA_DP})">Hủy đặt phòng</button>`;
 
         return (
             result +
-            `<div class="mb-3">
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src="/img/${duongDanHinh}" alt="" class="img-fluid rounded">
-                    </div>
-                    <div class="col-md-8">
-                        <label class="form-label">${booking.MA_PHONG_PHONG.TENPHONG}</label>
-                        <input type="text" class="form-control" value="Ngày nhận phòng: ${booking.NGAYDEN}" readonly>
-                        <input type="text" class="form-control mt-2" value="Ngày trả phòng: ${booking.NGAYDI}" readonly>
-                        <input type="text" class="form-control mt-2" value="Giá tiền: ${giaTienVND} VND" readonly>
-                        <input type="text" class="form-control mt-2" value="Trạng thái: ${booking.TRANGTHAI}" readonly> 
-                        <input type="text" class="form-control mt-2" value="Ngày đặt: ${booking.NGAYDATPHG}" readonly>
-                        ${!isCancelled ? `<a href="#" class="btn btn-danger mt-2 me-2" onclick="cancelBooking('${booking.MA_DP}')">Hủy đặt phòng</a>` : ''}
+            `
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="card booking-card h-100" tabindex="0">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/img/${duongDanHinh}" class="img-fluid rounded-start h-100" alt="Phòng Deluxe" loading="lazy">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <h5 class="card-title">${booking.MA_PHONG_PHONG.TENPHONG}</h5>
+                                        ${confirmationBadge}  <!-- Thêm badge xác nhận -->
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <p class="mb-2"><strong>Giá phòng:</strong> ${giaTienVND} VND</p>
+                                            <p class="mb-2"><strong>Ngày đặt:</strong> ${new Date(booking.NGAYDATPHG).toLocaleString('vi-VN', { 
+                                                weekday: 'short', 
+                                                year: 'numeric', 
+                                                month: '2-digit', 
+                                                day: '2-digit', 
+                                                hour: '2-digit', 
+                                                minute: '2-digit', 
+                                                second: '2-digit',
+                                                hour12: false 
+                                            })}</p>
+                                            <p class="mb-2"><strong>Ngày nhận phòng:</strong> ${booking.NGAYDEN}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="mb-2"><strong>Ngày trả phòng:</strong> ${booking.NGAYDI}</p>
+                                            <p class="mb-2"><strong>Trạng thái:</strong> ${booking.TRANGTHAI}</p>
+                                            ${cancelButton}  <!-- Hiển thị/ẩn nút hủy -->
+                                            <button class="btn btn-primary mt-3" onclick="toggleChat()">Liên hệ</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <hr/>`
+            <hr/>
+            `
         );
     }, "");
     document.getElementById("bookingUser").innerHTML = html;
 }
-
 
 
 async function cancelBooking(bookingID) {

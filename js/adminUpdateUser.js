@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('email').value = (account.EMAIL && account.EMAIL !== '0') ? account.EMAIL : '';
         document.getElementById('phone').value = (account.SDT && account.SDT !== '0') ? account.SDT : '';
         document.getElementById('hoTen').value = account.HOTEN || '';
-        document.getElementById('matKhau').value = ''
+        document.getElementById('matKhau').value = '';
+        document.getElementById('CHUCVU').value = account.CHUCVU || '';
         if (account.NGAYSINH) {
             const [year, month, day] = account.NGAYSINH.split('-');
             document.getElementById('day').value = parseInt(day, 10) || '';
@@ -35,14 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const genderRadio = document.querySelector(`input[name="gender"][value="${account.GIOITINH}"]`);
             if (genderRadio) {
                 genderRadio.checked = true;
-            }
-        }
-        
-        if (account.CHUCVU !== undefined && account.CHUCVU !== null) {
-            const CHUCVU = account.CHUCVU.toString();
-            const selectChucVu = document.querySelector(`input[name="chucvu"][value="${CHUCVU}"]`);
-            if (selectChucVu) {
-                selectChucVu.checked = true;
             }
         }
 
@@ -66,7 +59,7 @@ async function updateUser(userID) {
     const year = document.getElementById("year").value;
     const gender = document.querySelector('input[name="gender"]:checked').value;
     const anhDaiDien = document.getElementById("anh_dai_dien").files[0];
-    const CHUCVU = document.querySelector('input[name="chucvu"]:checked').value;
+    const CHUCVU = document.getElementById("CHUCVU").value.trim();
     
     const dob = new Date(`${year}-${month}-${day}`);
 
