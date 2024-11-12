@@ -50,6 +50,35 @@ async function apiGetUserID(userID) {
   }
 }
 
+async function apiApplyDiscount(discountID) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/discount/apply-discount/${discountID}`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching discount data:", error);
+
+    // Kiểm tra và trả về thông báo lỗi chi tiết từ API (nếu có)
+    if (error.response) {
+      // Nếu có lỗi từ server (status code != 2xx)
+      throw new Error(error.response.data);
+    } else if (error.request) {
+      // Nếu không nhận được phản hồi từ server
+      throw new Error("Không thể kết nối đến server.");
+    } else {
+      // Lỗi khác
+      throw new Error("Có lỗi xảy ra trong quá trình xử lý mã giảm giá.");
+    }
+  }
+}
+
+
 async function apiSelectHotel(hotelID) {
   try {
     const response = await axios({
@@ -378,6 +407,40 @@ async function apiDeleteHotel(hotelID){
   }
 }
 
+async function apiDenyHoso(hosoID){
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "PUT",
+      url: `${URL}/api/hoso/deny-hoso/${hosoID}`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiAccessHoso(hosoID){
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "PUT",
+      url: `${URL}/api/hoso/access-hoso/${hosoID}`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
 async function apiSearchHotel(name, numberOfGuests = 1, numberOfRooms = 1, NGAYDEN, NGAYDI) {
   try {
       const response = await axios({
@@ -409,6 +472,23 @@ async function apiGetUsers() {
       },
     });
     return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiGetDiscountUser() {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/discount/get-discount-user`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response;
   } catch (error) {
     console.error("Error fetching user data:", error);
     throw error;

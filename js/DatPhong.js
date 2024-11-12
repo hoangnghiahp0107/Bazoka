@@ -89,69 +89,93 @@ let discountApplied = false; // Biến để theo dõi trạng thái giảm giá
 
 async function applyDiscount() {
     try {
-        if (discountApplied) {
-            // Nếu đã áp dụng giảm giá, không thực hiện gì cả
-            return;
-        }
-        const discountID = document.getElementById('MA_MGG').value;
-        const response = await apiSelectDiscount(discountID);
-
-        // Lưu thông tin giảm giá vào localStorage
-        localStorage.setItem('selectedDiscount', JSON.stringify(response));
-
-        const discountData = JSON.parse(localStorage.getItem('selectedDiscount'));
-
-        // Kiểm tra ngày áp dụng giảm giá
-        const currentDate = new Date();
-        const startDate = new Date(discountData.NGAYBATDAU); 
-        const endDate = new Date(discountData.NGAYKETTHUC);   
-
-        if (currentDate < startDate) {
-            // Mã giảm giá chưa đến ngày
-            document.getElementById('tbMAGIAMGIA').innerText = `Mã giảm giá chưa đến ngày`;
-            document.getElementById('tbMAGIAMGIA').classList.add('text-danger');
-            return;
-        }
-
-        if (currentDate > endDate) {
-            // Mã giảm giá đã hết hạn
-            document.getElementById('tbMAGIAMGIA').innerText = `Mã giảm giá đã hết hạn`;
-            document.getElementById('tbMAGIAMGIA').classList.add('text-danger');
-            return;
-        }
-
-        // Nếu mã giảm giá hợp lệ, tính toán giảm giá
-        const totalPriceElement = document.getElementById('sumPrice');
-        let totalPrice = parseFloat(totalPriceElement.innerText.replace(/[,. VND]/g, '').trim()) || 0;
-        const discountPercentage = discountData?.PHANTRAM || 0; // Giả sử response chứa trường 'PHANTRAM'
-        
-        const discountAmount = (discountPercentage / 100) * totalPrice;
-        const newTotalPrice = totalPrice - discountAmount; // Tính toán tổng giá mới
-
-        // Cập nhật giao diện
-        totalPriceElement.innerHTML = `${newTotalPrice.toLocaleString('vi-VN')} VND`;
-        document.getElementById('applyDiscount').innerHTML = `${discountAmount.toLocaleString('vi-VN')} VND`;
-        document.getElementById('sumPrice1').innerHTML = `<b>Tổng giá: </b> ${newTotalPrice.toLocaleString('vi-VN')} VND`;
-
-        // Tính toán lại giá cọc dựa trên tổng giá mới
-        const tiLeCoc = parseFloat(localStorage.getItem('TI_LE_COC')) || 0;
-        let deposit = newTotalPrice * tiLeCoc / 100; // Cọc 30% hoặc theo tỉ lệ đã lưu
-        localStorage.setItem('COC', deposit.toString());
-
-        localStorage.setItem('sumPrice', newTotalPrice.toString());
-        
-        // Cập nhật giao diện cho giá cọc
-        document.getElementById('coc').innerHTML = `${deposit.toLocaleString('vi-VN')} VND`;
-
-        // Đánh dấu là đã áp dụng giảm giá
-        discountApplied = true;
-        
-    } catch (error) {
-        console.log(error);
-        document.getElementById('tbMAGIAMGIA').innerText = "Mã giảm giá không tồn tại";
+      if (discountApplied) {
+        // Nếu đã áp dụng giảm giá, không thực hiện gì cả
+        return;
+      }
+  
+      const discountID = document.getElementById('MA_MGG').value;
+      if (!discountID) {
+        // Nếu không có mã giảm giá, thông báo lỗi
+        document.getElementById('tbMAGIAMGIA').innerText = "Vui lòng nhập mã giảm giá";
         document.getElementById('tbMAGIAMGIA').classList.add('text-danger');
+        return;
+      }
+  
+      const response = await apiApplyDiscount(discountID);
+  
+      // Kiểm tra phản hồi từ API
+      if (!response) {
+        document.getElementById('tbMAGIAMGIA').innerText = "Không thể nhận thông tin mã giảm giá";
+        document.getElementById('tbMAGIAMGIA').classList.add('text-danger');
+        return;
+      }
+  
+      // Kiểm tra xem mã giảm giá đã được sử dụng chưa (trả về lỗi nếu đã dùng)
+      if (response === "Mã giảm giá này đã được sử dụng cho người dùng này.") {
+        document.getElementById('tbMAGIAMGIA').innerText = "Bạn đã sử dụng mã giảm giá này rồi.";
+        document.getElementById('tbMAGIAMGIA').classList.add('text-danger');
+        return;
+      }
+  
+      // Lưu thông tin giảm giá vào localStorage
+      localStorage.setItem('selectedDiscount', JSON.stringify(response));
+  
+      const discountData = JSON.parse(localStorage.getItem('selectedDiscount'));
+  
+      // Kiểm tra ngày áp dụng giảm giá
+      const currentDate = new Date();
+      const startDate = new Date(discountData.NGAYBATDAU);
+      const endDate = new Date(discountData.NGAYKETTHUC);
+  
+      if (currentDate < startDate) {
+        // Mã giảm giá chưa đến ngày
+        document.getElementById('tbMAGIAMGIA').innerText = `Mã giảm giá chưa đến ngày`;
+        document.getElementById('tbMAGIAMGIA').classList.add('text-danger');
+        return;
+      }
+  
+      if (currentDate > endDate) {
+        // Mã giảm giá đã hết hạn
+        document.getElementById('tbMAGIAMGIA').innerText = `Mã giảm giá đã hết hạn`;
+        document.getElementById('tbMAGIAMGIA').classList.add('text-danger');
+        return;
+      }
+  
+      // Nếu mã giảm giá hợp lệ, tính toán giảm giá
+      const totalPriceElement = document.getElementById('sumPrice');
+      let totalPrice = parseFloat(totalPriceElement.innerText.replace(/[,. VND]/g, '').trim()) || 0;
+      const discountPercentage = discountData?.PHANTRAM || 0; // Giả sử response chứa trường 'PHANTRAM'
+      
+      const discountAmount = (discountPercentage / 100) * totalPrice;
+      const newTotalPrice = totalPrice - discountAmount; // Tính toán tổng giá mới
+  
+      // Cập nhật giao diện
+      totalPriceElement.innerHTML = `${newTotalPrice.toLocaleString('vi-VN')} VND`;
+      document.getElementById('applyDiscount').innerHTML = `${discountAmount.toLocaleString('vi-VN')} VND`;
+      document.getElementById('sumPrice1').innerHTML = `<b>Tổng giá: </b> ${newTotalPrice.toLocaleString('vi-VN')} VND`;
+  
+      // Tính toán lại giá cọc dựa trên tổng giá mới
+      const tiLeCoc = parseFloat(localStorage.getItem('TI_LE_COC')) || 0;
+      let deposit = newTotalPrice * tiLeCoc / 100; // Cọc 30% hoặc theo tỉ lệ đã lưu
+      localStorage.setItem('COC', deposit.toString());
+  
+      localStorage.setItem('sumPrice', newTotalPrice.toString());
+      
+      // Cập nhật giao diện cho giá cọc
+      document.getElementById('coc').innerHTML = `${deposit.toLocaleString('vi-VN')} VND`;
+  
+      // Đánh dấu là đã áp dụng giảm giá
+      discountApplied = true;
+      
+    } catch (error) {
+      console.log(error);
+      document.getElementById('tbMAGIAMGIA').innerText = error.message || "Có lỗi xảy ra trong quá trình lấy dữ liệu.";
+      document.getElementById('tbMAGIAMGIA').classList.add('text-danger');
     }
-}
+  }
+  
+
 
 
 async function DatPhong() {
