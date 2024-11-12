@@ -57,10 +57,7 @@
         <table class="table">
             <thead>
                 <th>
-                  <div class="d-flex">
-                    <h3 class="text-start">Quản lý đặt phòng</h3>
-                    <button class="btn btn-dark mx-2" type="button" data-toggle="modal" data-target="#myModal"><i class="fa-regular fa-square-plus"></i></button>
-                  </div>
+                  <h3 class="text-start">Quản lý đặt phòng</h3>
                 </th>
                 <th class="d-flex justify-content-end" style="margin-right: 30px;">
                   <div class="search-bar">
@@ -91,63 +88,6 @@
             </thead>
             <tbody id="bookings"></tbody>
         </table>
-        <div class="modal fade" id="myModal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h3>Thêm khách sạn</h3>
-              </div>
-              <div class="modal-body">
-                <form id="createHotel" enctype="multipart/form-data" class="form-group">
-                  <div class="input-group">
-                      <input type="text" name="TEN_KS" id="TEN_KS" class="form-control input-sm" placeholder="Tên khách sạn" required>
-                  </div>
-                  <span class="sp-thongbao text-danger" id="tbTEN_KS">&zwj;</span>
-                  <br>
-                  <div class="input-group">
-                      <input type="text" name="MO_TA" id="MO_TA" class="form-control input-sm" placeholder="Mô tả" required>
-                  </div>
-                  <span class="sp-thongbao text-danger" id="tbMO_TA">&zwj;</span>
-                  <br>
-                  <div class="input-group">
-                      <input type="number" name="SOSAO" id="SOSAO" class="form-control input-sm" placeholder="Số sao" required>
-                  </div>
-                  <span class="sp-thongbao text-danger" id="tbSOSAO">&zwj;</span>
-                  <br>
-                  <h5>QR Thanh toán</h5>
-                  <div class="input-group">
-                      <input type="file" id="QRTHANHTOAN" name="QRTHANHTOAN" accept="image/*" required>
-                  </div>
-                  <br>
-                  <div class="input-group">
-                      <input type="number" name="MA_VITRI" id="MA_VITRI" class="form-control input-sm" placeholder="Mã vị trí" required>
-                  </div>
-                  <span class="sp-thongbao text-danger" id="tbMA_VITRI">&zwj;</span>
-                  <br>
-                  <div class="input-group">
-                      <input type="number" name="YEU_CAU_COC" id="YEU_CAU_COC" class="form-control input-sm" placeholder="Yêu cầu cọc" required>
-                  </div>
-                  <span class="sp-thongbao text-danger" id="tbYEU_CAU_COC">&zwj;</span>
-                  <br>
-                  <div class="input-group">
-                      <input type="number" name="TI_LE_COC" id="TI_LE_COC" class="form-control input-sm" placeholder="Tỉ lệ cọc" required>
-                  </div>
-                  <span class="sp-thongbao text-danger" id="tbTI_LE_COC">&zwj;</span>
-                  <br>
-                  <h5>Hình ảnh</h5>
-                  <div class="input-group">
-                      <input type="file" id="HINHANH" name="HINHANH" accept="image/*" required>
-                  </div>
-                  <div class="modal-content-popup"></div>
-              </form>
-              <div class="modal-footer">
-                  <button id="btnThemUS" type="button" onclick="createHotel()" class="btn btn-dark">Tạo khách sạn</button>
-              </div>
-              
-              </div>
-            </div>
-          </div>
-        </div>
     </main>
   </div>
   <div id="pagination" class="d-flex justify-content-center mt-3"></div>

@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const decodedToken = JSON.parse(atob(base64));
     const userRole = decodedToken && decodedToken.data && decodedToken.data.CHUCVU;
+    if (!userRole || !userRole.startsWith("Partner")) {
+        // Nếu userRole không phải là Partner thì chuyển hướng đến trang index
+        window.location.href = "/layouts/index.html";
+        return;
+    }
 
     const roomData = localStorage.getItem('selectedRoom');
     if (roomData) {

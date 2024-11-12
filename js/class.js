@@ -151,3 +151,20 @@ class PHIEUDATPHG{
         this.XACNHAN = XACNHAN;
     }
 }
+
+class HOSO {
+    constructor(MA_HS, HOTEN, EMAIL, SDT, TEN_KS, DIACHI, MO_TA, SOSAO, HINHANH, GIAYPHEPKINHDOANH, TRANGTHAI, NGAYDANGKY) {
+        this.MA_HS = MA_HS;
+        this.HOTEN = HOTEN;
+        this.EMAIL = EMAIL;
+        this.SDT = SDT;
+        this.TEN_KS = TEN_KS;
+        this.DIACHI = DIACHI;
+        this.MO_TA = MO_TA;
+        this.SOSAO = SOSAO;
+        this.HINHANH = HINHANH;
+        this.GIAYPHEPKINHDOANH = GIAYPHEPKINHDOANH;
+        this.TRANGTHAI = TRANGTHAI;
+        this.NGAYDANGKY = NGAYDANGKY;
+    }
+}

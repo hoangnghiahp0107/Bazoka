@@ -32,7 +32,7 @@
           <li><a href="adminUser.html"><i class="fa-solid fa-user"></i>Quản lý người dùng</a></li>
         </ul>
         <ul class="side-menu">
-            <li><a href="adminBooking.html"><i class="fa-solid fa-money-bill-wave"></i>Quản lý đặt phòng</a></li>
+            <li><a href="adminQLHS.html"><i class="fa-solid fa-circle-info"></i>Quản lý hồ sơ</a></li>
         </ul>
         <ul class="side-menu">
             <li><a href="adminDiscount.html"><i class="fa-solid fa-percent"></i>Quản lý mã giảm giá</a></li>
@@ -54,13 +54,13 @@
       <table class="table">
           <thead>
               <th>
-                  <h3 class="text-start">Quản lý đặt phòng</h3>
+                  <h3 class="text-start">Quản lý hồ sơ</h3>
               </th>
               <th class="d-flex justify-content-end" style="margin-right: 30px;">
                 <div class="search-bar">
                   <form class="search d-flex justify-content-center align-items-center">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="search" placeholder="Tìm kiếm đặt phòng" name="search"/>
+                    <input type="search" placeholder="Tìm kiếm hồ sơ" name="search"/>
                   </form>
                 </div>
               </th>
@@ -69,19 +69,20 @@
       <table class="table table-bordered">
           <thead>
               <th>ID</th>
-              <th>Tài khoản</th>
-              <th>Tên phòng</th>
+              <th>Họ tên</th>
+              <th>Email</th>
+              <th>SDT</th>
               <th>Tên khách sạn</th>
-              <th>Ngày đến</th>
-              <th>Ngày đi</th>
+              <th>Địa chỉ</th>
+              <th>Mô tả</th>
+              <th>Số sao</th>
+              <th>Hình ảnh</th>
+              <th>Giấy phép kinh doanh</th>
               <th>Trạng thái</th>
-              <th>Ngày đặt phòng</th>
-              <th>Mã giảm giá</th>
-              <th>Thành tiền</th>
-              <th>Đã cọc</th>
+              <th>Ngày đăng ký</th>
               <th></th>
           </thead>
-          <tbody id="bookings"></tbody>
+          <tbody id="hosos"></tbody>
       </table>
   </main>
   </div>
@@ -110,6 +111,6 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
   <script src="/js/class.js"></script>
   <script src="/services/callApi.js"></script>
-  <script src="/js/adminBooking.js"></script>
+  <script src="/js/adminQLHS.js"></script>
 </body>
 </html>

@@ -449,6 +449,23 @@ async function apiGetCountBooking() {
   }
 }
 
+async function apiGetCountBookingPartner() {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/booking/get-count-money-partner`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
 async function apiGetCountRate() {
   try {
     const localStorageToken = localStorage.getItem("localStorageToken");
@@ -572,16 +589,30 @@ async function apiBookingRoomPay(booking) {
 
 async function apiCreateHotel(formData){
   try {
-    const localStorageToken = localStorage.getItem("localStorageToken");
     const response = await axios({
       method: "POST",
       url: `${URL}/api/hotel/create-hotel`,
+      data: formData
+    });
+    return response;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiCreateHoSo(formData){
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "POST",
+      url: `${URL}/api/hoso/create-hoso`,
       headers: {
         token: localStorageToken,
       },
       data: formData
     });
-    return response.data;
+    return response;
   } catch (error) {
     console.error("Error fetching user data:", error);
     throw error;
@@ -661,12 +692,37 @@ async function apiLoginPartner(user) {
   });
 }
 
+async function apiFindHoSo(hoso) {
+  return await axios({
+    method: "POST",
+    url: `${URL}/api/hoso/find-hoso`,
+    data: hoso
+  });
+}
+
 async function apiGetRoomIdPartner() {
   try {
     const localStorageToken = localStorage.getItem("localStorageToken");
     const response = await axios({
       method: "GET",
       url: `${URL}/api/room/get-room-partner`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiGetDataHoSo() {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/hoso/get-data-hoso`,
       headers: {
         token: localStorageToken,
       },
