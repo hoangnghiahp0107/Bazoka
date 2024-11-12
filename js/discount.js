@@ -8,7 +8,7 @@ function getElement(selector) {
 
 async function getDiscount() {
     try {
-        const response = await apiGetDiscount();
+        const response = await apiGetDiscountUser();
         const discounts = response.data; 
         const discountObj = discounts.map((discount) => new MAGIAMGIA(
             discount.MA_MGG,
@@ -35,6 +35,7 @@ function renderDiscounts(discounts) {
                         <div class="card-body">
                             <h5 class="card-title">${discount.MA_MGG}</h5>
                             <p class="card-text">${discount.DIEU_KIEN} giảm ${discount.PHANTRAM}%</p>
+                            <p class="card-text"><small class="text-muted">Ngày bắt đầu: ${discount.NGAYBATDAU}</small></p>
                             <p class="card-text"><small class="text-muted">Ngày hết hạn: ${discount.NGAYKETTHUC}</small></p>
                             <button class="btn btn-primary copy-btn" data-code="${discount.MA_MGG}">Copy Code</button>
                         </div>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spinning Wheel Interface</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="wheel-container text-center">
+            <div class="wheel" role="img" aria-label="Spinning wheel with discount codes">
+                <div class="wheel-inner">
+                    <div class="segment" style="--i:1;" data-discount="10% OFF" data-description="Save 10% on your entire purchase!">
+                        <img src="https://images.unsplash.com/photo-1607083206869-4c7672e72a8a" alt="10% discount offer" class="segment-img">
+                    </div>
+                    <div class="segment" style="--i:2;" data-discount="20% OFF" data-description="Huge 20% discount on selected items!">
+                        <img src="https://images.unsplash.com/photo-1572584642822-6f8de0243c93" alt="20% discount offer" class="segment-img">
+                    </div>
+                    <div class="segment" style="--i:3;" data-discount="30% OFF" data-description="Amazing 30% off on premium products!">
+                        <img src="https://images.unsplash.com/photo-1607083206989-4c7672e72a8b" alt="30% discount offer" class="segment-img">
+                    </div>
+                    <div class="segment" style="--i:4;" data-discount="40% OFF" data-description="Incredible 40% savings today only!">
+                        <img src="https://images.unsplash.com/photo-1572584642802-19d7adb9e5de" alt="40% discount offer" class="segment-img">
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary mt-4 spin-btn" aria-label="Spin the wheel">SPIN</button>
+            <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="resultModalLabel">Congratulations!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <h2 class="discount-text mb-3"></h2>
+                            <img class="result-img img-fluid mb-3" alt="Selected discount">
+                            <p class="discount-description mb-3"></p>
+                            <div class="discount-code p-2 bg-light rounded mb-3">
+                                <span class="code-text fw-bold"></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary copy-code">Copy Code</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="error-message alert alert-danger d-none" role="alert">
+        An error occurred. Please try again.
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const wheel = document.querySelector(".wheel");
+            const spinBtn = document.querySelector(".spin-btn");
+            const resultModal = new bootstrap.Modal(document.getElementById("resultModal"));
+            let isSpinning = false;
+
+            spinBtn.addEventListener("click", () => {
+                if (isSpinning) return;
+                isSpinning = true;
+                spinBtn.disabled = true;
+
+                const segments = document.querySelectorAll(".segment");
+                const randomDegrees = Math.floor(Math.random() * 360);
+                const rotations = 5;
+                const totalDegrees = (rotations * 360) + randomDegrees;
+
+                wheel.style.transition = "transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99)";
+                wheel.style.transform = `rotate(${totalDegrees}deg)`;
+
+                setTimeout(() => {
+                    const selectedSegment = segments[Math.floor(randomDegrees / 90)];
+                    const discount = selectedSegment.dataset.discount;
+                    const description = selectedSegment.dataset.description;
+                    const img = selectedSegment.querySelector("img").src;
+                    const code = generateDiscountCode();
+
+                    document.querySelector(".discount-text").textContent = discount;
+                    document.querySelector(".discount-description").textContent = description;
+                    document.querySelector(".result-img").src = img;
+                    document.querySelector(".code-text").textContent = code;
+
+                    resultModal.show();
+
+                    wheel.style.transition = "none";
+                    wheel.style.transform = `rotate(${randomDegrees}deg)`;
+                    isSpinning = false;
+                    spinBtn.disabled = false;
+                }, 5000);
+            });
+
+            document.querySelector(".copy-code").addEventListener("click", function() {
+                const code = document.querySelector(".code-text").textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    this.textContent = "Copied!";
+                    setTimeout(() => this.textContent = "Copy Code", 2000);
+                });
+            });
+
+            function generateDiscountCode() {
+                const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                let code = "";
+                for(let i = 0; i < 8; i++) {
+                    code += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return code;
+            }
+        });
+    </script>
+</body>
+</html>
