@@ -100,46 +100,46 @@
                                         <form id="hotelRegistrationForm" class="needs-validation" novalidate>
                                             <div class="mb-3">
                                                 <label class="form-label">Họ tên</label>
-                                                <input type="text" class="form-control" required>
+                                                <input type="text" class="form-control" required id="HOTEN">
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Email</label>
-                                                <input type="email" class="form-control" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                                                <input id="EMAIL" type="email" class="form-control" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Số Điện Thoại</label>
-                                                <input type="tel" class="form-control" required pattern="[0-9]{10}">
+                                                <input id="SDT" type="tel" class="form-control" required pattern="[0-9]{10}">
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Tên Khách Sạn</label>
-                                                <input type="text" class="form-control" required>
+                                                <input id="TEN_KS" type="text" class="form-control" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Địa Chỉ Khách Sạn</label>
-                                                <input type="text" class="form-control" required>
+                                                <input id="DIACHI" type="text" class="form-control" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Mô Tả Khách Sạn</label>
-                                                <textarea class="form-control" rows="3" required></textarea>
+                                                <textarea id="MO_TA" class="form-control" rows="3" required></textarea>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Loại Khách Sạn</label>
-                                                <select class="form-select" required>
-                                                    <option value="">Chọn loại khách sạn</option>
-                                                    <option value="luxury">Khách sạn 5 sao</option>
-                                                    <option value="business">Khách sạn 4 sao</option>
-                                                    <option value="budget">Khách sạn 3 sao</option>
-                                                    <option value="resort">Resort</option>
+                                                <select class="form-select" required id="SOSAO">
+                                                    <option value="" disabled>Chọn loại khách sạn</option>
+                                                    <option value="5">Khách sạn 5 sao</option>
+                                                    <option value="4">Khách sạn 4 sao</option>
+                                                    <option value="3">Khách sạn 3 sao</option>
+                                                    <option value="2">Khách sạn 2 sao</option>
+                                                    <option value="1">Khách sạn 1 sao</option>
                                                 </select>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Giấy Phép Kinh Doanh</label>
-                                                <input type="file" class="form-control" accept=".pdf,.doc,.docx" required>
+                                                <input id="GIAYPHEPKINHDOANH" name="GIAYPHEPKINHDOANH" type="file" class="form-control" accept=".pdf,.doc,.docx" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Hình Ảnh Khách Sạn</label>
-                                                <input type="file" class="form-control" accept="image/*" multiple required>
-                                                <div class="form-text">Tối đa 5 hình ảnh (jpg, png)</div>
+                                                <input class="form-control" type="file" id="HINHANH" name="HINHANH" accept="image/*" required>
                                             </div>
                                             <button type="submit" class="btn btn-primary w-100">
                                                 <span class="spinner-border spinner-border-sm d-none" role="status"></span>
@@ -164,11 +164,11 @@
                                         <form id="searchForm" class="row g-3">
                                             <div class="col-md-6">
                                                 <label class="form-label">Email Đăng Ký</label>
-                                                <input type="email" class="form-control" required>
+                                                <input type="email" id="EMAIL1" class="form-control" required>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label">Số Điện Thoại</label>
-                                                <input type="tel" class="form-control" required>
+                                                <input type="tel" id="SDT1" class="form-control" required>
                                             </div>
                                             <div class="col-12">
                                                 <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
@@ -193,17 +193,7 @@
                                                         <th>Trạng Thái</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>#HS001</td>
-                                                        <td>Khách Sạn Mẫu</td>
-                                                        <td>01/01/2024</td>
-                                                        <td>
-                                                            <span class="status-badge pending">
-                                                                <i class="bi bi-clock-history"></i> Chờ xác nhận
-                                                            </span>
-                                                        </td>
-                                                    </tr>
+                                                <tbody id="hoso">
                                                 </tbody>
                                             </table>
                                         </div>
@@ -355,7 +345,8 @@
               backToTopButton.classList.remove('cd-top--is-visible');
           }
       });
-      </script>e4
+      </script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
       integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -363,5 +354,6 @@
       <script src="/js/class.js"></script>
       <script src="/services/callApi.js"></script>
       <script src="/js/succesLogin.js"></script>
+      <script src="/js/connectPartner.js"></script>
     </body>
 </html>

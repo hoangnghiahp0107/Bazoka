@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "/layouts/index.html";
         return;
     }
-
     getData();
     updateChart();
     updateRate();
@@ -67,8 +66,6 @@ async function updateRate() {
         ratingChart.update();
     }
 }
-
-
 
 function renderTotal(total) {
     const nguoiDungCount = document.getElementById("nguoiDungCount");

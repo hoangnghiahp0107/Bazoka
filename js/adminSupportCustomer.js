@@ -1,9 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const localStorageToken = localStorage.getItem('localStorageToken'); 
+    const localStorageToken = localStorage.getItem('localStorageToken');
     if (!localStorageToken) {
         window.location.href = "/layouts/loginAdmin.html";
         return; 
     }
+
+    const base64Url = localStorageToken.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const decodedToken = JSON.parse(atob(base64));
+    const userID = decodedToken && decodedToken.data && decodedToken.data.MA_ND;
+    const userRole = decodedToken && decodedToken.data && decodedToken.data.CHUCVU;
+    if (!userRole || !userRole.startsWith("Partner")) {
+        // Nếu userRole không phải là Partner thì chuyển hướng đến trang index
+        window.location.href = "/layouts/index.html";
+        return;
+    }
+    
     getChatAll();
 });
 
