@@ -699,6 +699,31 @@ async function apiCreateHoSo(formData){
   }
 }
 
+async function apiChatWithHotel(formData) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const hotelID = localStorage.getItem("MA_KS");  // Lấy hotelID từ localStorage
+    if (!hotelID) {
+      throw new Error('Hotel ID (MA_KS) not found in localStorage');
+    }
+
+    const response = await axios({
+      method: "POST",
+      url: `${URL}/api/chat/send-support-hotel/${hotelID}`,
+      headers: {
+        token: localStorageToken,
+      },
+      data: formData
+    });
+
+    return response;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+
 async function apiCreateRate(formData) {
   try {
       const localStorageToken = localStorage.getItem("localStorageToken");
@@ -1009,10 +1034,13 @@ async function apiGetSupportCustomer(userID, hotelID) {
   }
 }
 
-async function apiChatWithCustomer(userID, formData){
+async function apiChatWithCustomer(formData){
   try {
     const localStorageToken = localStorage.getItem("localStorageToken");
-    const response = await axios({
+    const userID = localStorage.getItem("userID"); 
+    if (!userID) {
+      throw new Error('userID (userID) not found in localStorage');
+    }    const response = await axios({
       method: "POST",
       url: `${URL}/api/chat/send-support-customer/${userID}`,
       headers: {
@@ -1020,7 +1048,7 @@ async function apiChatWithCustomer(userID, formData){
       },
       data: formData
     });
-    return response.data;
+    return response;
   } catch (error) {
     console.error("Error fetching user data:", error);
     throw error;

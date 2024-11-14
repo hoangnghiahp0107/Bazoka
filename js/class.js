@@ -73,9 +73,10 @@ class DANHGIA{
     }
 }
 
-class KHACHSAN_TIENNGHI{
-    constructor(MA_TIENNGHI, MA_KS){
+class TIENNGHI{
+    constructor(MA_TIENNGHI, MA_KS, TENTIENNGHI){
         this.MA_TIENNGHI = MA_TIENNGHI;
+        this.TENTIENNGHI = TENTIENNGHI;
         this.MA_KS = MA_KS;
     }
 }

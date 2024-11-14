@@ -172,7 +172,7 @@ function renderBookingUser(bookings) {
 
         return (
             result +
-            `
+            `  
             <div class="row g-4">
                 <div class="col-12">
                     <div class="card booking-card h-100" tabindex="0">
@@ -205,7 +205,7 @@ function renderBookingUser(bookings) {
                                             <p class="mb-2"><strong>Ngày trả phòng:</strong> ${booking.NGAYDI}</p>
                                             <p class="mb-2"><strong>Trạng thái:</strong> ${booking.TRANGTHAI}</p>
                                             ${cancelButton}  <!-- Hiển thị/ẩn nút hủy -->
-                                            <button class="btn btn-primary mt-3" onclick="toggleChat()">Liên hệ</button>
+                                            <button class="btn btn-primary mt-3" onclick="toggleChat(${booking.MA_PHONG_PHONG.MA_KS_KHACHSAN.MA_KS})">Liên hệ</button>
                                         </div>
                                     </div>
                                 </div>
@@ -220,6 +220,7 @@ function renderBookingUser(bookings) {
     }, "");
     document.getElementById("bookingUser").innerHTML = html;
 }
+
 
 
 async function cancelBooking(bookingID) {
