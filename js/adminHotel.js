@@ -84,7 +84,6 @@ function renderHotels(hotels) {
                     <td>${hotel.MO_TA}</td>
                     <td class="d-flex justify-content-center"><img width="50" height="50" src="/img/${duongDanHinh}"><img/></td>
                     <td>${hotel.MA_VITRI_VITRI.TENVITRI}, ${hotel.MA_VITRI_VITRI.MA_TINHTHANH_TINHTHANH.TEN_TINHTHANH}, ${hotel.MA_VITRI_VITRI.MA_TINHTHANH_TINHTHANH.MA_QUOCGIA_QUOCGIum.TEN_QUOCGIA}</td>
-                    <td class="d-flex justify-content-center"><img width="50" height="50" src="/img/${hinhQR}"><img/></td>                    
                     <td>
                         <div class="d-flex justify-content-center">
                             ${hotel.TRANGTHAI_KS === "Hoạt động" 

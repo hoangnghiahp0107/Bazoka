@@ -69,9 +69,11 @@ async function getConvenient(roomID){
     try {
         const response = await apiGetConvenientID(roomID);
         const convenients = response.data;
-        const convenientObj = convenients.map((convenient) => new KHACHSAN_TIENNGHI(
+        const convenientObj = convenients.map((convenient) => new TIENNGHI(
             convenient.MA_TIENNGHI,
-            convenient.MA_KS
+            convenient.TENTIENNGHI,
+            convenient.MA_KS,
+            convenient.ICON
         ))
         renderConvenient(convenientObj)
     } catch (error) {
@@ -328,26 +330,39 @@ function renderDataRoom(rooms) {
     });
 }
 
+
 function renderConvenient(convenients) {
-    const convenientMap = {
-        1: `<li class="list-group-item"><i class="fas fa-wifi me-2"></i> Wifi miễn phí</li>`,
-        2: `<li class="list-group-item"><i class="fas fa-swimming-pool me-2"></i> Bể bơi</li>`,
-        3: `<li class="list-group-item"><i class="fas fa-utensils me-2"></i> Nhà hàng</li>`,
-        4: `<li class="list-group-item"><i class="fas fa-spa me-2"></i> Spa</li>`,
-        5: `<li class="list-group-item"><i class="fas fa-plane me-2"></i> Đưa đón sân bay</li>`,
-        6: `<li class="list-group-item"><i class="fas fa-dumbbell me-2"></i> Phòng Gym</li>`,
-        7: `<li class="list-group-item"><i class="fas fa-car me-2"></i> Miễn phí đỗ xe</li>`,
-        8: `<li class="list-group-item"><i class="fas fa-glass-cheers me-2"></i> Bar</li>`,
-        9: `<li class="list-group-item"><i class="fas fa-hands-wash me-2"></i></i> Dịch vụ giặt ủi</li>`,
-        10: `<li class="list-group-item"><i class="fas fa-wine-glass me-2"></i> Đồ uống miễn phí</li>`
-    };
-
-    const html = convenients.reduce((result, convenient) => {
-        return result + (convenientMap[convenient.MA_TIENNGHI] || "");
+    const html = convenients.reduce((result, convenient) => {    
+        return (
+            result +
+            ` 
+                <li class="list-group-item">${convenient.ICON} ${convenient.TENTIENNGHI}</li>
+            `
+        );
     }, "");
-
     document.getElementById("convenients").innerHTML = html;
 }
+
+// function renderConvenient(convenients) {
+//     const convenientMap = {
+//         1: `<li class="list-group-item"><i class="fas fa-wifi me-2"></i> Wifi miễn phí</li>`,
+//         2: `<li class="list-group-item"><i class="fas fa-swimming-pool me-2"></i> Bể bơi</li>`,
+//         3: `<li class="list-group-item"><i class="fas fa-utensils me-2"></i> Nhà hàng</li>`,
+//         4: `<li class="list-group-item"><i class="fas fa-spa me-2"></i> Tivi</li>`,
+//         5: `<li class="list-group-item"><i class="fas fa-plane me-2"></i> Đưa đón sân bay</li>`,
+//         6: `<li class="list-group-item"><i class="fas fa-dumbbell me-2"></i> Phòng Gym</li>`,
+//         7: `<li class="list-group-item"><i class="fas fa-car me-2"></i> Miễn phí đỗ xe</li>`,
+//         8: `<li class="list-group-item"><i class="fas fa-glass-cheers me-2"></i> Bar</li>`,
+//         9: `<li class="list-group-item"><i class="fas fa-hands-wash me-2"></i></i> Dịch vụ giặt ủi</li>`,
+//         10: `<li class="list-group-item"><i class="fas fa-wine-glass me-2"></i> Đồ uống miễn phí</li>`
+//     };
+
+//     const html = convenients.reduce((result, convenient) => {
+//         return result + (convenientMap[convenient.MA_TIENNGHI] || "");
+//     }, "");
+
+//     document.getElementById("convenients").innerHTML = html;
+// }
 
 async function createRate() {
     const rating = document.getElementById('ratingStars').getAttribute('data-selected');

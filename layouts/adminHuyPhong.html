@@ -54,40 +54,38 @@
       <i class="fa-solid fa-bars icon-menu mx-2"></i>
     </nav>
     <main>
-      <table class="table">
-          <thead>
-              <th>
-                  <h3 class="text-start">Quản lý hồ sơ</h3>
-              </th>
-              <th class="d-flex justify-content-end" style="margin-right: 30px;">
-                <div class="search-bar">
-                  <form class="search d-flex justify-content-center align-items-center">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="search" placeholder="Tìm kiếm hồ sơ" name="search"/>
-                  </form>
-                </div>
-              </th>
-          </thead>
-      </table>
-      <table class="table table-bordered">
-          <thead>
-              <th>ID</th>
-              <th>Họ tên</th>
-              <th>Email</th>
-              <th>SDT</th>
-              <th>Tên khách sạn</th>
-              <th>Địa chỉ</th>
-              <th>Mô tả</th>
-              <th>Số sao</th>
-              <th>Hình ảnh</th>
-              <th>Giấy phép kinh doanh</th>
-              <th>Trạng thái</th>
-              <th>Ngày đăng ký</th>
-              <th></th>
-          </thead>
-          <tbody id="hosos"></tbody>
-      </table>
-  </main>
+        <table class="table">
+            <thead>
+                <th>
+                    <h3 class="text-start">Hoàn trả cọc</h3>
+                </th>
+                <th class="d-flex justify-content-end" style="margin-right: 30px;">
+                  <div class="search-bar">
+                    <form class="search d-flex justify-content-center align-items-center">
+                      <i class="fa-solid fa-magnifying-glass"></i>
+                      <input type="search" placeholder="Tìm kiếm người dùng" name="search"/>
+                    </form>
+                  </div>
+                </th>
+            </thead>
+        </table>
+        <table class="table table-bordered">
+            <thead>
+                <th>ID</th>
+                <th>Họ tên</th>
+                <th>SDT</th>
+                <th>Khách sạn</th>
+                <th>Trạng thái</th>
+                <th>Ngày đến</th>
+                <th>Ngày đi</th>
+                <th>Ngày đặt phòng</th>
+                <th>Đã cọc</th>
+                <th>Xác nhận</th>
+                <th></th>
+            </thead>
+            <tbody id="bookings"></tbody>
+        </table>
+    </main>
   </div>
   <div id="pagination" class="d-flex justify-content-center mt-3"></div>
   <div id="loading-spinner" class="hidden spinner-overlay">
@@ -109,11 +107,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
     integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="/js/sidebar.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
+  integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="/js/class.js"></script>
   <script src="/services/callApi.js"></script>
-  <script src="/js/adminQLHS.js"></script>
+  <script src="/js/adminBooking.js"></script>
 </body>
 </html>
