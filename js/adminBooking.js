@@ -58,9 +58,9 @@ async function getBooking(){
             booking.ORDERCODE,
             booking.MA_PHONG_PHONG,
             booking.DACOC,
-            booking.MA_ND_NGUOIDUNG
+            booking.MA_ND_NGUOIDUNG,
+            booking.XACNHAN
         ));
-        console.log(bookingObj)
         renderBookings(bookingObj);
     } catch (error) {
         console.log("Lỗi từ máy chủ", error);
@@ -68,27 +68,53 @@ async function getBooking(){
 }
 
 function renderBookings(bookings) {
-    debugger
     const totalPages = Math.ceil(bookings.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentBookings = bookings.slice(startIndex, endIndex);
     const html = currentBookings.reduce((result, booking, index) => {
+        const actionButtons = booking.XACNHAN === false ? `
+        <button class="btn btn-outline-success mx-2" onclick="XacNhan('${booking.MA_DP}');">
+            <i class="fa-regular fa-circle-check"></i>
+        </button>
+        <button class="btn btn-outline-danger" onclick="TuChoi('${booking.MA_DP}')">
+            <i class="fa-regular fa-circle-xmark"></i>
+        </button>
+        ` : ''; 
         return (
             result +
             `
                 <tr>
                     <td>${index + 1}</td>
-                    <td>${booking.MA_ND_NGUOIDUNG.EMAIL}</td>       
-                    <td>${booking.MA_PHONG_PHONG.TENPHONG}</td>
+                    <td>${booking.MA_ND_NGUOIDUNG.HOTEN}</td>       
+                    <td>${booking.MA_ND_NGUOIDUNG.SDT}</td>
                     <td>${booking.MA_PHONG_PHONG.MA_KS_KHACHSAN.TEN_KS}</td>
+                    <td>${booking.TRANGTHAI}</td>
                     <td>${booking.NGAYDEN}</td>
                     <td>${booking.NGAYDI}</td>
-                    <td>${booking.TRANGTHAI}</td>
-                    <td>${booking.NGAYDATPHG}</td>       
-                    <td>${booking.MA_MGG}</td>       
-                    <td>${booking.THANHTIEN}</td>
-                    <td>${booking.DACOC}</td>                      
+                <td>${new Date(booking.NGAYDATPHG).toLocaleString('vi-VN', { 
+                    weekday: 'short', 
+                    year: 'numeric', 
+                    month: '2-digit', 
+                    day: '2-digit', 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit',
+                    hour12: false 
+                })}</td>                    
+                <td>${booking.DACOC}</td>      
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            ${booking.XACNHAN === false 
+                                ? '<span style="color: #64f317;">●</span>' 
+                                : '<span style="color: red;">●</span>'}
+                        </div>
+                    </td>    
+                    <td>
+                        <div class="d-flex justify-content-center align-items-center">
+                            ${actionButtons}
+                        </div>
+                    </td>                
                 </tr>
             `
             );
@@ -113,102 +139,6 @@ function renderPagination(totalPages) {
     document.getElementById("pagination").innerHTML = paginationHtml;
 }
   
-function prevPage() {
-    if (currentPage > 1) {
-        currentPage--;
-        getBooking();
-    }
-}
-  
-function nextPage() {
-    if (currentPage < Math.ceil(users.length / itemsPerPage)) {
-        currentPage++;
-        getBooking();
-    }
-}
-
-function goToPage(page) {
-    currentPage = page;
-    getBooking(); 
-}
-
-async function getSearchDiscountByName(searchParam) {
-    try {
-        if (!searchParam) {
-            getBooking(); 
-            return;
-        }
-
-        const response = await apiSearchDiscount(searchParam);
-        if (response && Array.isArray(response.data) && response.data.length > 0) {
-            discounts = response.data.map((discount) => new MAGIAMGIA(
-                discount.MA_MGG,
-                discount.MA_GIAMGIA,
-                discount.PHANTRAM,
-                discount.NGAYBATDAU,
-                discount.NGAYKETTHUC,
-                discount.DIEU_KIEN
-            ));
-            renderDiscountByName(discounts, searchParam);
-        } else {
-            console.log("Không có dữ liệu người dùng trả về từ API");
-            document.getElementById("discount").innerHTML = "<tr><td colspan='6'>No matching discounts found</td></tr>";
-        }
-
-    } catch (error) {
-        console.log("Lỗi từ máy chủ", error);
-    }
-}
-
-
-function renderDiscountByName(bookings, searchParam) {
-    const totalPages = Math.ceil(bookings.length / itemsPerPage);
-  
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentBookings = bookings.slice(startIndex, endIndex);
-  
-    const html = currentBookings.reduce((result, booking, index) => {
-      if (discount.booking.toLowerCase().includes(searchParam.toLowerCase())) {
-        return (
-            result +
-            `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${booking.MA_MGG}</td>
-                    <td>${booking.PHANTRAM}</td>
-                    <td>${booking.NGAYBATDAU}</td>
-                    <td>${booking.NGAYKETTHUC}</td>       
-                    <td>${booking.DIEU_KIEN}</td>       
-                    <td>
-                        <div class="d-flex justify-content-center align-items-center">
-                            <button class="btn btn-outline-success mx-2" onclick="selectDiscount('${discount.MA_MGG}');">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-outline-danger" onclick="deleteDiscount('${discount.MA_MGG}')">
-                                <i class="fa-regular fa-circle-xmark"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-          `
-        );
-      }
-      return result;
-    }, "");
-  
-    document.getElementById("bookings").innerHTML = html;
-    renderPagination(totalPages);
-}
-  
-
-function handleSearch(event) {
-    event.preventDefault(); 
-    const searchTerm = document.querySelector('.search-bar input[name="search"]').value;
-    getSearchDiscountByName(searchTerm);
-  }
-
-document.querySelector('.search-bar form').addEventListener('submit', handleSearch);
 
 function showSpinner() {
     getElement("#loading-spinner").classList.remove("hidden");
@@ -231,135 +161,36 @@ document.getElementById("logoutButton").addEventListener("click", function() {
     logout();
 });
 
-async function deleteDiscount(discountID) {
-    const willDelete = await Swal.fire({
-      title: "Bạn có muốn xóa tài khoản?",
-      text: "Nhấn OK để xác nhận xóa tài khoản.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "OK",
-      cancelButtonText: "Hủy",
-    });
-  
-    if (willDelete.isConfirmed) {
-      try {
-        await apiDeleteDiscount(discountID);
-        Swal.fire('Xóa mã giảm giá thành công', '', 'success').then(() => {
-          window.location.reload();
-        });
-      } catch (error) {
-        Swal.fire('Xóa mã giảm giá thất bại', '', 'error');
-      }
-    }
-}
-
-async function createDiscount() {
-    // Lấy dữ liệu từ các trường nhập liệu
-    const MA_MGG = document.getElementById("MA_MGG").value;
-    const PHANTRAM = document.getElementById("PHANTRAM").value;
-    const NGAYBATDAU = document.getElementById("NGAYBATDAU").value;
-    const NGAYKETTHUC = document.getElementById("NGAYKETTHUC").value;
-    const DIEU_KIEN = document.getElementById("DIEU_KIEN").value;
-
-    // Kiểm tra tính hợp lệ của dữ liệu
-    if (!MA_MGG || !PHANTRAM || !NGAYBATDAU || !NGAYKETTHUC || !DIEU_KIEN) {
-        Swal.fire({
-            title: 'Thông báo',
-            text: 'Vui lòng điền đầy đủ thông tin.',
-            icon: 'warning',
-            confirmButtonText: 'OK',
-            allowOutsideClick: false,
-            allowEscapeKey: true,
-            allowEnterKey: true
-        });
-        return;
-    }
-
-    // Kiểm tra PHANTRAM phải nhỏ hơn 100
-    if (parseFloat(PHANTRAM) >= 100) {
-        Swal.fire({
-            title: 'Lỗi',
-            text: 'Phần trăm giảm giá phải nhỏ hơn 100.',
-            icon: 'error',
-            confirmButtonText: 'OK',
-            allowOutsideClick: false,
-            allowEscapeKey: true,
-            allowEnterKey: true
-        });
-        return;
-    }
-
-    // Tạo đối tượng dữ liệu để gửi
-    const discountData = {
-        MA_MGG,
-        PHANTRAM: parseFloat(PHANTRAM),
-        NGAYBATDAU,
-        NGAYKETTHUC,
-        DIEU_KIEN,
-    };
-
+// Hàm xác nhận hồ sơ (gọi API `apiAccessHoso`)
+async function XacNhan(bookingID) {
     try {
-        // Gọi API để tạo mã giảm giá
-        const response = await apiCreateDiscount(discountData);
-
-        // Xử lý phản hồi từ server
-        if (response === "Mã giảm giá đã tồn tại.") {
-            Swal.fire({
-                title: 'Lỗi',
-                text: response,
-                icon: 'error',
-                confirmButtonText: 'OK',
-                allowOutsideClick: false,
-                allowEscapeKey: true,
-                allowEnterKey: true
-            });
-        } else if (response) {
-            Swal.fire({
-                title: 'Thông báo',
-                text: response,
-                icon: 'success',
-                confirmButtonText: 'OK',
-                allowOutsideClick: false,
-                allowEscapeKey: true,
-                allowEnterKey: true
-            }).then(() => {
-                location.reload();
-            });
+        const respone = await apiAccessHuyPhong(bookingID);
+        if (respone === "Bạn đã xác nhận hủy đặt phòng") {
+            alert("Đặt phòng đã được xác nhận thành công!");
+            // Sau khi xác nhận thành công, bạn có thể gọi lại `getDataHoSo()` để làm mới dữ liệu, nếu cần
+            getBooking();
         } else {
-            Swal.fire({
-                title: 'Lỗi không xác định',
-                text: 'Vui lòng thử lại sau.',
-                icon: 'error',
-                confirmButtonText: 'OK',
-                allowOutsideClick: false,
-                allowEscapeKey: true,
-                allowEnterKey: true
-            });
+            alert("Có lỗi xảy ra khi xác nhận Đặt phòng!");
         }
     } catch (error) {
-        console.error("Error creating discount:", error);
-        Swal.fire({
-            title: 'Đã có lỗi xảy ra',
-            text: 'Không thể hoàn thành yêu cầu của bạn. Vui lòng thử lại sau.',
-            icon: 'error',
-            confirmButtonText: 'OK',
-            allowOutsideClick: false,
-            allowEscapeKey: true,
-            allowEnterKey: true
-        });
+        console.error("Lỗi khi xác nhận Đặt phòng:", error);
+        alert("Có lỗi xảy ra khi xác nhận Đặt phòng!");
     }
 }
 
-
-async function selectDiscount(discountID) {
+// Hàm từ chối Đặt phòng (gọi API `apiDenyHoso`)
+async function TuChoi(bookingID) {
     try {
-        const response = await apiSelectDiscount(discountID);
-
-        localStorage.setItem('selectedDiscount', JSON.stringify(response));
-
-        window.location.href = "adminUpdateDiscount.html";
-        
+        const respone = await apiDenyHuyPhong(bookingID);
+        if (respone === "Bạn đã từ chối hủy đặt phòng") {
+            alert("Đặt phòng đã bị từ chối!");
+            // Sau khi từ chối thành công, bạn có thể gọi lại `getDataHoSo()` để làm mới dữ liệu, nếu cần
+            getBooking();
+        } else {
+            alert("Có lỗi xảy ra khi từ chối Đặt phòng!");
+        }
     } catch (error) {
-        console.log(error);
+        console.error("Lỗi khi từ chối Đặt phòng:", error);
+        alert("Có lỗi xảy ra khi từ chối hồ sơ!");
     }
 }

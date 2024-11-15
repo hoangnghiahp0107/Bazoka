@@ -1,3 +1,11 @@
+document.addEventListener('DOMContentLoaded', async () => {
+    await populateViTriOptions();
+    const vitriData = localStorage.getItem('selectedViTri');
+    const vitri = JSON.parse(vitriData);
+    document.getElementById('MA_VITRI').value = vitri.MA_VITRI;
+});
+
+
 document.getElementById("hotelRegistrationForm").addEventListener("submit", async function(event) {
     event.preventDefault(); // Ngừng hành động mặc định của form (không gửi form)
 
@@ -8,12 +16,13 @@ document.getElementById("hotelRegistrationForm").addEventListener("submit", asyn
     const TEN_KS = document.getElementById("TEN_KS").value;
     const DIACHI = document.getElementById("DIACHI").value;
     const MO_TA = document.getElementById("MO_TA").value;
+    const MA_VITRI = document.getElementById("MA_VITRI").value;
     const SOSAO = document.getElementById("SOSAO").value;
     const GIAYPHEPKINHDOANH = document.getElementById("GIAYPHEPKINHDOANH").files[0];
     const HINHANH = document.getElementById("HINHANH").files;
 
     // Kiểm tra các trường bắt buộc
-    if (!HOTEN || !EMAIL || !SDT || !TEN_KS || !DIACHI || !MO_TA || !SOSAO || !GIAYPHEPKINHDOANH || HINHANH.length === 0) {
+    if (!HOTEN || !EMAIL || !SDT || !TEN_KS || !DIACHI || !MO_TA || !SOSAO || !GIAYPHEPKINHDOANH || !MA_VITRI || HINHANH.length === 0) {
         Swal.fire({
             title: 'Thiếu thông tin',
             text: 'Vui lòng nhập đầy đủ các trường bắt buộc.',
@@ -35,6 +44,7 @@ document.getElementById("hotelRegistrationForm").addEventListener("submit", asyn
         formData.append('DIACHI', DIACHI);
         formData.append('MO_TA', MO_TA);
         formData.append('SOSAO', SOSAO);
+        formData.append('MA_VITRI', MA_VITRI);
         formData.append('GIAYPHEPKINHDOANH', GIAYPHEPKINHDOANH); // Thêm giấy phép kinh doanh
         formData.append('HINHANH', HINHANH[0]); // Thêm ảnh
 
@@ -127,3 +137,34 @@ document.getElementById('searchForm').addEventListener('submit', async function(
         console.error('Error fetching data:', error);
     }
 });
+
+async function populateViTriOptions() {
+    try {
+        // Gọi API để lấy dữ liệu các phòng
+        const vitris = await apiGetAllDiaDiem();
+        // Lấy phần tử select theo id
+        const selectElement = document.getElementById("MA_VITRI");
+
+        // Dọn dẹp các option cũ (nếu có)
+        selectElement.innerHTML = "";
+        
+        // Tạo và thêm một option mặc định
+        const defaultOption = document.createElement("option");
+        defaultOption.text = "Chọn vị trí";
+        defaultOption.value = "";
+        defaultOption.disabled = true;  // Disable option này
+        defaultOption.selected = true;  // Đảm bảo option mặc định được chọn
+        selectElement.appendChild(defaultOption);
+
+
+        // Duyệt qua dữ liệu các phòng và tạo option cho mỗi phòng
+        vitris.data.forEach(vitri => {
+            const option = document.createElement("option");
+            option.text = vitri.TENVITRI;   // Hiển thị tên phòng
+            option.value = vitri.MA_VITRI;  // Giá trị là mã phòng
+            selectElement.appendChild(option);  // Thêm option vào select
+        });
+    } catch (error) {
+        console.error("Lỗi khi lấy danh sách phòng:", error);
+    }
+}

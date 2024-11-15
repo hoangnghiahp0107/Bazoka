@@ -25,8 +25,7 @@ function sendMessage() {
             </div>
         `;
 
-        // Thêm tin nhắn vào container
-        chatContainer.innerHTML += messageHTML;
+
 
         // Cuộn đến cuối container để hiển thị tin nhắn mới nhất
         chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -35,7 +34,9 @@ function sendMessage() {
         const formData = {
             NOIDUNG: message
         };
-        apiChatWithCustomer(formData); // Gửi tin nhắn tới API
+
+        apiChatWithCustomer(formData) // Gửi tin nhắn tới API
+            .catch(error => console.error("Gửi tin nhắn lỗi:", error));
 
         // Xóa nội dung input sau khi gửi
         messageInput.value = '';
@@ -58,10 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return; 
     }
 
-    const base64Url = localStorageToken.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const decodedToken = JSON.parse(atob(base64));
-    const userRole = decodedToken && decodedToken.data && decodedToken.data.CHUCVU;
+    const decodedToken = decodeToken(localStorageToken);
+    const userRole = decodedToken?.data?.CHUCVU;
     if (!userRole || !userRole.startsWith("Partner")) {
         window.location.href = "/layouts/index.html";
         return;
@@ -71,14 +70,22 @@ document.addEventListener("DOMContentLoaded", function () {
     getChatAll();
 });
 
+// Giải mã token từ localStorage
+function decodeToken(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(atob(base64));
+}
+
 // Tải tất cả các tin nhắn từ API (giống như loadChatMessages)
 async function getChatAll() {
     try {
         // Lấy danh sách các cuộc trò chuyện từ API
         const response = await apiGetSupportAll();
+        if (!Array.isArray(response)) throw new Error("Dữ liệu trả về không hợp lệ");
 
         // Chuyển dữ liệu thành các đối tượng chat
-        const chatObj = response.map((chat) => new TINNHAN(
+        const chatObj = response.map(chat => new TINNHAN(
             chat.MA_TINNHAN,
             chat.MA_KS,
             chat.MA_ND,
@@ -92,18 +99,8 @@ async function getChatAll() {
         renderChatAll(chatObj);
 
         // Lấy thông tin từ localStorage về MA_KS (Hotel ID)
-        const localStorageToken = localStorage.getItem('localStorageToken');
-        let maKs = null;
-
-        if (localStorageToken) {
-            const base64Url = localStorageToken.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const decodedToken = JSON.parse(atob(base64));
-
-            const userRole = decodedToken?.data?.CHUCVU;
-            const partnerIdMatch = /Partner(\d+)/.exec(userRole);
-            maKs = partnerIdMatch ? partnerIdMatch[1] : null;
-        }
+        const userRole = decodeToken(localStorage.getItem('localStorageToken'))?.data?.CHUCVU;
+        const maKs = /Partner(\d+)/.exec(userRole)?.[1];
 
         // Kiểm tra nếu đã có userID trong localStorage
         const userID = localStorage.getItem('userID') || null;
@@ -115,18 +112,16 @@ async function getChatAll() {
         }
 
     } catch (error) {
-        console.log("Lỗi từ máy chủ", error);
+        console.error("Lỗi khi tải cuộc trò chuyện:", error);
     }
 }
 
-// Render tất cả các cuộc trò chuyện và gọi đến loadChatMessages khi chọn cuộc trò chuyện
 function renderChatAll(chats) {
     const html = chats.reduce((result, chat) => {
         const duongDanHinh = chat.MA_ND_NGUOIDUNG?.ANHDAIDIEN || 'default-avatar.jpg';
         const formattedTime = formatTime(chat.THOIGIAN);
 
-        return result + 
-            `
+        return result + `
             <a href="#" class="list-group-item list-group-item-action py-3" data-id="${chat.MA_ND}">
                 <div class="d-flex align-items-center">
                     <img src="../img/${duongDanHinh}" class="rounded-circle mx-2" width="40" height="40">
@@ -146,26 +141,13 @@ function renderChatAll(chats) {
     chatsContainer.innerHTML = html; // Render danh sách cuộc trò chuyện
 
     const chatItems = chatsContainer.querySelectorAll('.list-group-item');
+    const maKs = /Partner(\d+)/.exec(decodeToken(localStorage.getItem('localStorageToken'))?.data?.CHUCVU)?.[1];
 
-    // Lấy thông tin từ localStorage về MA_KS
-    const localStorageToken = localStorage.getItem('localStorageToken');
-    let maKs = null;
-
-    if (localStorageToken) {
-        const base64Url = localStorageToken.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const decodedToken = JSON.parse(atob(base64));
-
-        const userRole = decodedToken?.data?.CHUCVU;
-        const partnerIdMatch = /Partner(\d+)/.exec(userRole);
-        maKs = partnerIdMatch ? partnerIdMatch[1] : null;
-    }
-
-    // Kiểm tra nếu đã có userID trong localStorage hoặc mã hóa thông qua token
-    const userID = localStorage.getItem('userID') || null;
+    // Lấy userID từ localStorage
+    const userID = localStorage.getItem('userID');
 
     // Xử lý khi lần đầu tiên load, tự động chọn item đầu tiên và gọi loadChatMessages với MA_KS lấy từ token
-    if (chatItems.length > 0 && maKs) {
+    if (chatItems.length > 0 && maKs && userID) {
         // Làm nổi bật cuộc trò chuyện đầu tiên
         chatItems[0].classList.add('active');
         const maNd = chatItems[0].getAttribute('data-id');
@@ -193,7 +175,6 @@ function renderChatAll(chats) {
 }
 
 
-
 // Định dạng thời gian tin nhắn
 function formatTime(timeString) {
     const currentTime = new Date();
@@ -215,25 +196,34 @@ function formatTime(timeString) {
     }
 }
 
-// Tải tất cả tin nhắn cho một cuộc trò chuyện (giống như loadChatMessages)
+let lastMessageTime = 0; // Thời gian tin nhắn cuối cùng đã được tải
+
+// Tải tất cả tin nhắn cho một cuộc trò chuyện
 async function loadChatMessages(userID, hotelID) {
     try {
-        // Gửi request tới API để lấy tin nhắn của cuộc trò chuyện
         const response = await apiGetSupportCustomer(userID, hotelID);
 
-        const chatMessages = response.map((chat) => {
-            return {
-                content: chat.NOIDUNG,
-                sender: chat.SENDMESSAGE,
-                time: chat.THOIGIAN
-            };
+        // Lọc tin nhắn mới hơn lần tải cuối và không phải của người dùng hiện tại
+        const newMessages = response.filter(chat => {
+            const messageTime = new Date(chat.THOIGIAN).getTime();
+            return messageTime > lastMessageTime && chat.SENDMESSAGE !== userID;
         });
+
+        if (newMessages.length === 0) {
+            return; // Không có tin nhắn mới của người khác, không cần tải lại
+        }
+
+        const chatMessages = newMessages.map(chat => ({
+            content: chat.NOIDUNG,
+            sender: chat.SENDMESSAGE,
+            time: chat.THOIGIAN
+        }));
 
         const chatContainer = document.getElementById('chatContainer');
         
-        // Không xóa chat cũ mà chỉ thêm tin nhắn mới vào
+        // Thêm tin nhắn vào container
         chatMessages.forEach(chat => {
-            const isHotelMessage = chat.sender;  // Nếu là tin nhắn của khách sạn
+            const isHotelMessage = chat.sender; // Nếu là tin nhắn của khách sạn
             const messageTime = new Date(chat.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
             const messageHTML = `
@@ -241,7 +231,7 @@ async function loadChatMessages(userID, hotelID) {
                     <div class="message-bubble ${!isHotelMessage ? 'sent' : 'received'} mb-3">
                         <div class="d-flex ${!isHotelMessage ? 'justify-content-end' : ''}">
                             ${isHotelMessage ? 
-                                `<img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde" class="rounded-circle mx-2" width="30" height="30">` : ''
+                                `<img src="../img/noimg.png" class="rounded-circle mx-2" width="30" height="30">` : ''
                             }
                             <div class="${!isHotelMessage ? 'text-end' : ''}">
                                 <div class="bg-${!isHotelMessage ? 'primary' : 'white'} ${!isHotelMessage ? 'text-white' : ''} rounded p-3 shadow-sm">
@@ -257,6 +247,9 @@ async function loadChatMessages(userID, hotelID) {
             chatContainer.innerHTML += messageHTML; // Thêm tin nhắn vào container
         });
 
+        // Cập nhật thời gian tin nhắn cuối cùng đã tải
+        lastMessageTime = new Date(chatMessages[chatMessages.length - 1].time).getTime();
+
         chatContainer.scrollTop = chatContainer.scrollHeight; // Cuộn đến cuối container để hiển thị tin nhắn mới nhất
 
     } catch (error) {
@@ -265,16 +258,18 @@ async function loadChatMessages(userID, hotelID) {
 }
 
 // Bắt đầu polling tin nhắn mới từ API
-function startMessagePolling(userID, MA_KS) {
-    if (messageInterval) {
-        clearInterval(messageInterval); // Hủy interval cũ nếu có
-    }
+function startMessagePolling(userID, hotelID) {
+    // Thực hiện tải tin nhắn mới khi có thay đổi, không cần interval liên tục
+    loadChatMessages(userID, hotelID);
 
-    // Cập nhật tin nhắn mỗi giây
-    messageInterval = setInterval(async () => {
-        await loadChatMessages(userID, MA_KS); // Tải tin nhắn mới
-    }, 1000); // Thực hiện mỗi giây
+    // Cập nhật tin nhắn mới mỗi 5 giây (có thể điều chỉnh theo nhu cầu)
+    setInterval(() => {
+        loadChatMessages(userID, hotelID); // Tải tin nhắn mới nếu có
+    }, 5000); // Thực hiện mỗi 5 giây
 }
+
+
+
 
 // Dừng polling
 function stopMessagePolling() {

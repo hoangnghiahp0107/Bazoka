@@ -74,10 +74,11 @@ class DANHGIA{
 }
 
 class TIENNGHI{
-    constructor(MA_TIENNGHI, MA_KS, TENTIENNGHI){
+    constructor(MA_TIENNGHI, TENTIENNGHI, MA_KS, ICON){
         this.MA_TIENNGHI = MA_TIENNGHI;
         this.TENTIENNGHI = TENTIENNGHI;
         this.MA_KS = MA_KS;
+        this.ICON = ICON;
     }
 }
 

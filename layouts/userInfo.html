@@ -209,117 +209,119 @@
         </div>
     </div>
     <script>
-        let messageInterval;
+let messageInterval;
 
-        function startMessagePolling(userID, MA_KS) {
-            if (messageInterval) {
-                clearInterval(messageInterval);
-            }
+function startMessagePolling(userID, MA_KS) {
+    if (messageInterval) {
+        clearInterval(messageInterval);
+    }
 
-            messageInterval = setInterval(async () => {
-                await loadChatMessages(userID, MA_KS);
-            }, 1000); 
+    messageInterval = setInterval(async () => {
+        await loadChatMessages(userID, MA_KS);
+    }, 1000); // Thực hiện lấy tin nhắn mới mỗi giây
+}
+
+function stopMessagePolling() {
+    if (messageInterval) {
+        clearInterval(messageInterval);
+        messageInterval = null;
+    }
+}
+
+async function toggleChat(MA_KS) {
+    const chatWidget = document.getElementById('chatWidget');
+    chatWidget.classList.toggle('active');
+
+    if (MA_KS) {
+        localStorage.setItem('MA_KS', MA_KS);
+    }
+
+    const localStorageToken = localStorage.getItem('localStorageToken');
+    if (localStorageToken) {
+        const base64Url = localStorageToken.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const decodedToken = JSON.parse(atob(base64));
+        const userID = decodedToken?.data?.MA_ND;
+
+        if (userID && MA_KS) {
+            await loadChatMessages(userID, MA_KS);
+            startMessagePolling(userID, MA_KS);
+        } else {
+            console.error('Không thể lấy userID hoặc MA_KS');
+        }
+    } else {
+        console.error('Không tìm thấy token trong localStorage');
+    }
+}
+
+function sendMessage() {
+    const messageInput = document.getElementById('messageInput');
+    const message = messageInput.value.trim();
+
+    if (message) {
+        const chatBody = document.getElementById('chatBody');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message user-message';
+        messageDiv.textContent = message;
+        chatBody.querySelector('.chat-messages').appendChild(messageDiv);
+
+        messageInput.value = ''; // Xóa nội dung input
+        chatBody.scrollTop = chatBody.scrollHeight; // Cuộn xuống cuối cùng
+
+        const formData = {
+            NOIDUNG: message
+        };
+        apiChatWithHotel(formData);
+    }
+}
+
+document.getElementById('messageInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        sendMessage();
+    }
+});
+
+async function loadChatMessages(userID, hotelID) {
+    try {
+        const response = await apiGetSupportCustomer(userID, hotelID);
+
+        if (!response || !Array.isArray(response)) {
+            console.error("Dữ liệu trả về không hợp lệ");
+            return;
         }
 
-        function stopMessagePolling() {
-            if (messageInterval) {
-                clearInterval(messageInterval);
-                messageInterval = null;
-            }
-        }
+        const chatMessages = response.map((chat) => ({
+            content: chat.NOIDUNG,
+            sender: chat.SENDMESSAGE,
+        }));
 
-        async function toggleChat(MA_KS) {
-            const chatWidget = document.getElementById('chatWidget');
-            chatWidget.classList.toggle('active');
+        const chatBody = document.getElementById('chatBody');
+        const chatMessagesDiv = chatBody.querySelector('.chat-messages');
+        
+        // Xóa tất cả tin nhắn cũ trước khi thêm mới
+        chatMessagesDiv.innerHTML = '';
 
-            if (MA_KS) {
-                localStorage.setItem('MA_KS', MA_KS);
-            }
-
-            const localStorageToken = localStorage.getItem('localStorageToken');
-            if (localStorageToken) {
-                const base64Url = localStorageToken.split('.')[1];
-                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                const decodedToken = JSON.parse(atob(base64));
-                const userID = decodedToken && decodedToken.data && decodedToken.data.MA_ND;
-
-                if (userID && MA_KS) {
-                    await loadChatMessages(userID, MA_KS);
-
-                    startMessagePolling(userID, MA_KS);
-                } else {
-                    console.error('Không thể lấy userID hoặc MA_KS');
-                }
-            } else {
-                console.error('Không tìm thấy token trong localStorage');
-            }
-        }
-
-        function sendMessage() {
-            const messageInput = document.getElementById('messageInput');
-            const message = messageInput.value.trim();
-
-            if (message) {
-                const chatBody = document.getElementById('chatBody');
-                const messageDiv = document.createElement('div');
-                messageDiv.className = 'message user-message';
-                messageDiv.textContent = message;
-                chatBody.querySelector('.chat-messages').appendChild(messageDiv);
-                messageInput.value = '';
-                chatBody.scrollTop = chatBody.scrollHeight;
-
-                const formData = {
-                    NOIDUNG: message
-                };
-                apiChatWithHotel(formData);
-            }
-        }
-
-        document.getElementById('messageInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
+        // Thêm các tin nhắn mới vào
+        chatMessages.forEach(chat => {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = chat.sender ? 'message user-message' : 'message hotel-message';
+            messageDiv.textContent = chat.content;
+            chatMessagesDiv.appendChild(messageDiv);
         });
 
-        async function loadChatMessages(userID, hotelID) {
-            try {
-                const response = await apiGetSupportCustomer(userID, hotelID);
+        chatBody.scrollTop = chatBody.scrollHeight; // Cuộn xuống cuối cùng
 
-                const chatMessages = response.map((chat) => {
-                    return {
-                        content: chat.NOIDUNG,       
-                        sender: chat.SENDMESSAGE,     
-                    };
-                });
+    } catch (error) {
+        console.error("Lỗi khi tải tin nhắn chat:", error);
+    }
+}
 
-                const chatBody = document.getElementById('chatBody');
-                const chatMessagesDiv = chatBody.querySelector('.chat-messages');
+function closeChat() {
+    const chatWidget = document.getElementById('chatWidget');
+    chatWidget.classList.remove('active');
+    stopMessagePolling();
+}
 
-                chatMessages.forEach(chat => {
-                    const messageDiv = document.createElement('div');
-                    
-                    if (chat.sender === true) {
-                        messageDiv.className = 'message user-message'; 
-                    } else {
-                        messageDiv.className = 'message hotel-message'; 
-                    }
-
-                    messageDiv.textContent = chat.content; 
-                    chatMessagesDiv.appendChild(messageDiv);
-                });
-
-                chatBody.scrollTop = chatBody.scrollHeight;
-
-            } catch (error) {
-                console.error("Error loading chat messages:", error);
-            }
-        }
-        function closeChat() {
-            const chatWidget = document.getElementById('chatWidget');
-            chatWidget.classList.remove('active'); 
-
-            stopMessagePolling();
-        }
 
     </script>
     <script>

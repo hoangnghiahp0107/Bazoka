@@ -64,13 +64,16 @@
         <table class="table">
             <thead>
                 <th>
-                    <h3 class="text-start">Quản lý đánh giá</h3>
-                </th>
+                    <div class="d-flex">
+                      <h3 class="text-start">Quản lý tiện nghi</h3>
+                      <button class="btn btn-dark mx-2" type="button" data-toggle="modal" data-target="#myModal"><i class="fa-regular fa-square-plus"></i></button>
+                    </div>
+                  </th>
                 <th class="d-flex justify-content-end" style="margin-right: 30px;">
                   <div class="search-bar">
                       <form class="search d-flex justify-content-center align-items-center">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="search" placeholder="Tìm kiếm đánh giá" name="search"/>
+                        <input type="search" placeholder="Tìm kiếm tiện nghi" name="search"/>
                       </form>
                   </div>
                 </th>
@@ -79,14 +82,37 @@
         <table class="table table-bordered">
             <thead>
                 <th>ID</th>
-                <th>Họ tên</th>
-                <th>SDT</th>
-                <th>Số sao</th>
-                <th>Bình luận</th>
-                <th>Ngày đánh giá</th>
+                <th>Tên tiện nghi</th>
+                <th>Icon</th>
+                <th></th>
             </thead>
-            <tbody id="rates"></tbody>
+            <tbody id="tiennghis"></tbody>
         </table>
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3>Thêm tiện nghi</h3>
+                </div>
+                <div class="modal-body">
+                  <form id="createHotel" enctype="multipart/form-data" class="form-group">
+                    <div class="input-group">
+                        <input type="text" name="TENTIENNGHI" id="TENTIENNGHI" class="form-control input-sm" placeholder="Tên tiện nghi" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                      <input type="text" name="ICON" id="ICON" class="form-control input-sm" placeholder="ICON" required>
+                    </div>
+                    <span class="sp-thongbao text-danger" id="tbICON">&zwj;</span>
+                    <br>
+                </form>
+                <div class="modal-footer">
+                    <button id="btnThemUS" type="button" onclick="createTienNghi()" class="btn btn-dark">Thêm tiện nghi</button>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
     </main>
   </div>
   <div id="pagination" class="d-flex justify-content-center mt-3"></div>
@@ -112,6 +138,6 @@
   <script src="/js/sidebar.js"></script>
   <script src="/js/class.js"></script>
   <script src="/services/callApi.js"></script>
-  <script src="/js/adminRatePartner.js"></script>
+  <script src="/js/adminTienNghi.js"></script>
 </body>
 </html>

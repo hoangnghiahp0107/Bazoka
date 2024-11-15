@@ -6,6 +6,14 @@ async function apiGetCountry() {
       url: `${URL}/api/local/get-country`,
     });
 }
+
+async function apiGetAllDiaDiem() {
+  return await axios({
+    method: "GET",
+    url: `${URL}/api/local/get-all-diadiem`,
+  });
+}
+
 async function apiGetAllLocation() {
   try {
       const response = await axios({
@@ -441,6 +449,40 @@ async function apiAccessHoso(hosoID){
   }
 }
 
+async function apiDenyHuyPhong(bookingID){
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "PUT",
+      url: `${URL}/api/booking/deny-booking/${bookingID}`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiAccessHuyPhong(bookingID){
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "PUT",
+      url: `${URL}/api/booking/access-booking/${bookingID}`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
 async function apiSearchHotel(name, numberOfGuests = 1, numberOfRooms = 1, NGAYDEN, NGAYDI) {
   try {
       const response = await axios({
@@ -822,6 +864,24 @@ async function apiGetRoomIdPartner() {
   }
 }
 
+async function apiGetTienNghi() {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/local/get-tien-nghi`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+
 async function apiGetDataHoSo() {
   try {
     const localStorageToken = localStorage.getItem("localStorageToken");
@@ -912,6 +972,25 @@ async function apiCreateRoomPartner(formData) {
     throw error;
   }
 }
+
+async function apiCreateTienNghi(formData) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "POST",
+      url: `${URL}/api/local/create-tiennghi`,
+      headers: {
+        token: localStorageToken,
+      },
+      data: formData // Dữ liệu phòng sẽ được gửi qua body của yêu cầu
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating room:", error);
+    throw error;
+  }
+}
+
 
 async function apiCreateDiscountPartner(formData) {
   try {
