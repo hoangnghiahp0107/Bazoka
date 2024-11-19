@@ -163,7 +163,7 @@ async function deleteTienNghi(tiennghiID) {
 
     if (willDelete.isConfirmed) {
         try {
-            await apiDeleteDiscountPartner(tiennghiID);
+            await apiDeleteTienNghi(tiennghiID);
             Swal.fire('Xóa tiện nghi thành công', '', 'success').then(() => {
                 window.location.reload();
             });
@@ -173,13 +173,13 @@ async function deleteTienNghi(tiennghiID) {
     }
 }
 
-async function selectDiscount(discountID) {
+async function selectTienNghi(tiennghiID) {
     try {
-        const response = await apiSelectDiscountPartner(discountID);
+        const response = await apiSelectTienNghi(tiennghiID);
 
         localStorage.setItem('selectedTienNghi', JSON.stringify(response));
 
-        window.location.href = "adminUpdateDiscountPartner.html";
+        window.location.href = "adminUpdateTienNghi.html";
         
     } catch (error) {
         console.log(error);

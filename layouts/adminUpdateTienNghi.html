@@ -17,45 +17,38 @@
 
 </head>
 <body>
-  <div class="sidebar active">
-    <a href="index.html" class="logo">
-      <img width="50" height="50" src="/img/logo.png" alt="">
-      <div class="logo-name"><span>Bazo</span>ka</div>
-    </a>
-    <ul class="side-menu">
-      <li><a href="adminThongKePartner.html"><i class="fa-solid fa-chart-line"></i>Thống kê</a></li>
-    </ul>
-    <ul class="side-menu">
-      <li><a href="adminManageRoom.html"><i class="fa-solid fa-hotel"></i>Quản lý phòng</a></li>
-    </ul>
-    <ul class="side-menu">
-        <li><a href="adminBookingPartner.html"><i class="fa-solid fa-money-bill-wave"></i>Quản lý đặt phòng</a></li>
-    </ul>
-    <ul class="side-menu">
-        <li><a href="adminRatePartner.html"><i class="fa-solid fa-comment"></i>Quản lý đánh giá</a></li>
-    </ul>
-    <ul class="side-menu">
-        <li><a href="adminDiscountPartner.html"><i class="fa-solid fa-percent"></i>Mã khuyến mãi</a></li>
-    </ul>
-    <ul class="side-menu">
-        <li><a href="adminSupportCustomer.html"><i class="fa-solid fa-message"></i>Hỗ trợ khách hàng</a></li>
-    </ul>
-    <ul class="side-menu">
-      <li><a href="adminTypeRoom.html"><i class="fa-solid fa-font-awesome"></i>Quản lý loại phòng</a></li>
-  </ul>
-
-  <ul class="side-menu">
-    <li><a href="adminTienNghi.html"><i class="fa-solid fa-list-check"></i>Tiện nghi</a></li>
-    </ul>
-    <ul class="side-menu">
-      <li>
-        <a href="#" class="logout" id="logoutButton">
-          <i class="fa-solid fa-right-from-bracket"></i>
-          Đăng xuất
+    <div class="sidebar active">
+        <a href="index.html" class="logo">
+          <img width="50" height="50" src="/img/logo.png" alt="">
+          <div class="logo-name"><span>Bazo</span>ka</div>
         </a>
-      </li>
-    </ul>
-  </div>
+        <ul class="side-menu">
+          <li><a href="adminThongKePartner.html"><i class="fa-solid fa-chart-line"></i>Thống kê</a></li>
+        </ul>
+        <ul class="side-menu">
+          <li><a href="adminManageRoom.html"><i class="fa-solid fa-hotel"></i>Quản lý phòng</a></li>
+        </ul>
+        <ul class="side-menu">
+            <li><a href="adminBookingPartner.html"><i class="fa-solid fa-money-bill-wave"></i>Quản lý đặt phòng</a></li>
+        </ul>
+        <ul class="side-menu">
+            <li><a href="adminRatePartner.html"><i class="fa-solid fa-comment"></i>Quản lý đánh giá</a></li>
+        </ul>
+        <ul class="side-menu">
+            <li><a href="adminDiscountPartner.html"><i class="fa-solid fa-percent"></i>Mã khuyến mãi</a></li>
+        </ul>
+        <ul class="side-menu">
+          <li><a href="adminSupportCustomer.html"><i class="fa-solid fa-message"></i>Hỗ trợ khách hàng</a></li>
+      </ul>
+        <ul class="side-menu">
+          <li>
+            <a href="#" class="logout" id="logoutButton">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              Đăng xuất
+            </a>
+          </li>
+        </ul>
+      </div>
   <div class="content">
     <nav>
       <i class="fa-solid fa-bars icon-menu mx-2"></i>
@@ -64,11 +57,11 @@
         <table class="table">
             <thead>
                 <th>
-                    <h3 class="text-start">Quản lý khuyến mãi</h3>
+                    <h3 class="text-start">Quản lý tiện nghi</h3>
                 </th>
                 <th class="d-flex justify-content-end" style="margin-right: 30px;">
                     <div class="search-bar"> <i class="fa-solid fa-magnifying-glass"></i>
-                      <input type="search" placeholder="Tìm kiếm khuyến mãi" name="search"/>
+                      <input type="search" placeholder="Tìm kiếm tiện nghi" name="search"/>
                     </div>
                 </th>
             </thead>
@@ -77,25 +70,11 @@
             <div class="modal-body">
                 <form id="updateForm" enctype="multipart/form-data" class="form-group">
                   <div class="input-group">
-                        <input type="text" name="MA_KM" id="MA_KM" class="form-control input-sm" placeholder="Mã khuyến mãi" disabled>
+                        <input type="text" name="TENTIENNGHI" id="TENTIENNGHI" class="form-control input-sm" placeholder="Tên tiện nghi">
                   </div>
                   <br>
                   <div class="input-group">
-                        <input type="text" name="TEN_KM" id="TEN_KM" class="form-control input-sm" placeholder="Tên khuyến mãi">
-                  </div>
-                  <br>
-                  <div class="input-group">
-                    <input type="number" name="PHANTRAM" id="PHANTRAM" class="form-control input-sm" placeholder="Phần trăm khuyến mãi" max="100">
-                  </div>
-                  <br>
-                  <h5>Ngày bắt đầu</h5>
-                  <div class="input-group">
-                    <input class="form-control" type="date" id="NGAYBATDAU" name="NGAYBATDAU">
-                  </div>
-                  <br>
-                  <h5>Ngày kết thúc</h5>
-                  <div class="input-group">
-                    <input class="form-control" type="date" id="NGAYKETTHUC" name="NGAYKETTHUC">
+                    <input type="text" name="ICON" id="ICON" class="form-control input-sm" placeholder="ICON">
                   </div>
                   <br>
                   <div class="modal-content-popup"></div>
@@ -126,6 +105,6 @@
   <script src="../js/sidebar.js"></script>
   <script src="../js/class.js"></script>
   <script src="../services/callApi.js"></script>
-  <script src="../js/adminUpdateDiscountPartner.js"></script>
+  <script src="../js/adminUpdateTienNghi.js"></script>
 </body>
 </html>
