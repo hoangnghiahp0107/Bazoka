@@ -139,6 +139,19 @@ async function apiSelectDiscountPartner(discountID) {
   }
 }
 
+async function apiSelectTienNghi(tiennghiID) {
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `${URL}/api/local/select-tiennghi/${tiennghiID}`,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
 async function apiSelectBooking(bookingID) {
   try {
     const response = await axios({
@@ -178,6 +191,24 @@ async function apiUpdateDiscountPartner(discountID, discount) {
       method: "PUT",
       url: `${URL}/api/discount/update-discount-partner/${discountID}`,
       data: discount,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiUpdateTienNghi(tiennghiID, tiennghi) {
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "PUT",
+      url: `${URL}/api/local/update-tiennghi/${tiennghiID}`,
+      data: tiennghi,
       headers: {
         token: localStorageToken,
       },
@@ -319,6 +350,23 @@ async function apiDeleteDiscount(discountID){
     const response = await axios({
       method: "DELETE",
       url: `${URL}/api/discount/delete-discount/${discountID}`,
+      headers: {
+        token: localStorageToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+async function apiDeleteTienNghi(tiennghiID){
+  try {
+    const localStorageToken = localStorage.getItem("localStorageToken");
+    const response = await axios({
+      method: "DELETE",
+      url: `${URL}/api/local/delete-tiennghi/${tiennghiID}`,
       headers: {
         token: localStorageToken,
       },
