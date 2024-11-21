@@ -318,8 +318,10 @@
         </script>
         <script>
             document.getElementById('btnDatPhongPay').addEventListener('click', function() {
+                const sumPriceElement = document.getElementById('sumPrice');
+                const sumPrice = parseFloat(sumPriceElement.innerText.replace(/[,. ₫]/g, '')) || 0;
+                localStorage.setItem('sumPrice', sumPrice);
                 window.location.href = 'ThanhToan.html';
-
             });
         </script>
         <script
